@@ -15,7 +15,7 @@ CareerPath — bu sunʼiy intellekt yordamida foydalanuvchilarning shaxsiy xusus
 - **AI**: Google Gemini API.
 
 ## Loyihani ishga tushirish
-1. **Loyiha papkasini oching**: Barcha HTML fayllarni (`entrance.html`, `pages/register.html`, va boshqalar) bir papkaga joylashtiring.
+1. **Loyiha papkasini oching**: Barcha HTML fayllarni (`entrance.html`, `register.html`, va boshqalar) bir papkaga joylashtiring.
 2. **Firebase loyihasini sozlash**:
    - Firebase konsolida yangi loyiha yarating.
    - "Authentication" boʻlimida "Email/Password" usulini yoqing.
