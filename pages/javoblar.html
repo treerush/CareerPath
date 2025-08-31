@@ -1,0 +1,508 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test Natijalari - CareerPath</title>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap');
+
+        :root {
+            --primary-color: #4CAF50;
+            --secondary-color: #2196F3;
+            --background-color: #f0f2f5;
+            --text-color: #333;
+            --light-text-color: #fff;
+            --card-bg: #fff;
+            --menu-bg: #2d3436;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            min-height: 100vh;
+            background: var(--background-color);
+            color: var(--text-color);
+        }
+        
+        .side-nav {
+            position: fixed;
+            top: 0;
+            left: -250px;
+            width: 250px;
+            height: 100%;
+            background-color: var(--menu-bg);
+            color: var(--light-text-color);
+            padding-top: 60px;
+            transition: left 0.3s ease;
+            box-shadow: 2px 0 5px rgba(0, 0, 0, 0.3);
+            z-index: 20;
+        }
+
+        .side-nav.active {
+            left: 0;
+        }
+        
+        .side-nav a {
+            display: flex;
+            align-items: center;
+            padding: 15px 20px;
+            color: var(--light-text-color);
+            text-decoration: none;
+            font-weight: 500;
+            transition: background-color 0.3s ease;
+        }
+        
+        .side-nav a:hover {
+            background-color: #444;
+        }
+        
+        .side-nav a .material-icons {
+            margin-right: 15px;
+        }
+
+        .side-nav a .material-icons.ai-icon {
+            display: inline-flex; 
+            align-items: center; 
+            justify-content: center;
+            width: 24px; 
+            height: 24px;
+            font-size: 20px; 
+            line-height: 1; 
+            vertical-align: middle;
+            transform: none !important; 
+            padding: 0;
+            margin-left: -20px; 
+            margin-right: 34px; 
+        }
+
+        .main-content-container {
+            flex-grow: 1;
+            padding: 20px;
+            margin-left: 0;
+            transition: margin-left 0.3s ease;
+        }
+
+        .main-content-container.menu-open {
+            margin-left: 250px;
+        }
+        
+        .header {
+            background-color: var(--primary-color);
+            color: var(--light-text-color);
+            padding: 15px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        .header h1 {
+            margin: 0;
+            font-size: 1.5em;
+        }
+        
+        .menu-toggle {
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+            cursor: pointer;
+        }
+
+        .menu-toggle span {
+            display: block;
+            width: 25px;
+            height: 3px;
+            background-color: var(--light-text-color);
+            transition: transform 0.3s ease;
+        }
+
+        .menu-toggle.active span:nth-child(1) {
+            transform: rotate(45deg) translate(5px, 5px);
+        }
+        .menu-toggle.active span:nth-child(2) {
+            opacity: 0;
+        }
+        .menu-toggle.active span:nth-child(3) {
+            transform: rotate(-45deg) translate(5px, -5px);
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: var(--card-bg);
+            border-radius: 15px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+            line-height: 1.6;
+        }
+
+        .results-header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        .results-header h2 {
+            color: var(--primary-color);
+            margin: 0;
+        }
+        .results-header p {
+            font-style: italic;
+        }
+        
+        .result-section {
+            margin-bottom: 40px;
+        }
+
+        .result-section h3 {
+            color: var(--secondary-color);
+            border-left: 4px solid var(--secondary-color);
+            padding-left: 10px;
+            margin-bottom: 20px;
+        }
+
+        .career-list {
+            list-style: none;
+            padding: 0;
+        }
+
+        .career-list li {
+            padding: 10px 15px;
+            background-color: var(--background-color);
+            border-radius: 8px;
+            margin-bottom: 8px;
+        }
+
+        .career-category h4 {
+            font-size: 1.2em;
+            margin-top: 0;
+        }
+        .career-category ul {
+            padding-left: 15px;
+        }
+
+        .best-choice h4 {
+            color: var(--primary-color);
+        }
+        .good-choice h4 {
+            color: var(--secondary-color);
+        }
+        .worth-trying h4 {
+            color: #ff9800;
+        }
+        .not-for-you h4 {
+            color: #f44336;
+        }
+        
+        .cta-btn {
+            background-color: var(--primary-color);
+            color: var(--light-text-color);
+            border: none;
+            padding: 15px 30px;
+            font-size: 1.1em;
+            font-weight: 600;
+            border-radius: 8px;
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .profile-description p {
+            background-color: var(--background-color);
+            padding: 15px;
+            border-radius: 8px;
+            border-left: 3px solid #ff9800;
+        }
+        
+        .psychological-traits-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+        }
+        .trait-card {
+            background-color: var(--background-color);
+            padding: 15px;
+            border-radius: 8px;
+            text-align: center;
+        }
+        .trait-card h5 {
+            margin: 0 0 5px 0;
+            color: var(--secondary-color);
+        }
+        .trait-card p {
+            margin: 0;
+            font-size: 1.5em;
+            font-weight: 700;
+            color: var(--primary-color);
+        }
+
+        .final-thoughts {
+            margin-top: 40px;
+            border-top: 1px solid #ddd;
+            padding-top: 20px;
+        }
+
+        .final-thoughts h3 {
+            color: #666;
+            text-align: center;
+        }
+
+        .message {
+            text-align: center;
+            padding: 20px;
+            color: #555;
+        }
+
+    </style>
+</head>
+<body>
+    
+    <div class="side-nav" id="side-nav">
+        <a href="dashboard.html"><span class="material-icons">person</span> Mening profilim</a>
+        <a href="tests.html"><span class="material-icons">menu_book</span> Shaxsiyat testi</a>
+        <a href="aichat.html"><span class="material-icons ai-icon">auto_awesome</span>AI Maslahatchi</a>
+        <a href="jobs.html"><span class="material-icons">work</span> Ish topish</a>
+    </div>
+
+    <div class="main-content-container" id="main-content-container">
+        <header class="header">
+            <div class="menu-toggle" id="menu-toggle">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+            <h1>CareerPath</h1>
+            <div class="profile-menu">
+                <button class="profile-btn" id="profile-btn">
+                    <span id="user-email-display">foydalanuvchi@gmail.com</span> ▼
+                </button>
+                <div class="profile-dropdown" id="profile-dropdown" style="display:none; position:absolute; right:20px; background:#fff; color:#333; border-radius:6px; box-shadow:0 4px 12px rgba(0,0,0,0.12);">
+                    <a href="#" id="logout-link" class="logout-link" style="display:block; padding:10px 15px; text-decoration:none; color:inherit;">Tizimdan chiqish</a>
+                </div>
+            </div>
+        </header>
+
+        <div class="container" id="main-container">
+            <div class="results-header">
+                <h2>Sinov natijalari</h2>
+                <p>Muvaffaqiyatga erishish imkoniyati yuqori bo'lgan IT kasblari ro'yxatini o'rganing.</p>
+                <a href="tests.html" class="cta-btn">Sinovni qayta ishga tushiring</a>
+            </div>
+
+            <div id="loading" class="message">Natijalar yuklanmoqda…</div>
+
+            <div id="results-content" style="display:none;">
+                <div class="result-section career-recommendations">
+                    <h3>Kasb bo'yicha tavsiyalar</h3>
+                    <div id="career-recommendations-list">
+                    </div>
+                </div>
+
+                <div class="result-section psychological-profile">
+                    <h3>Psixologik portret</h3>
+                    <div class="profile-description">
+                        <p id="psychological-description">...</p>
+                    </div>
+                </div>
+                
+                <div class="result-section psychotype-traits">
+                    <h3>Xarakter xususiyatlari</h3>
+                    <div class="psychological-traits-grid" id="psychological-traits-grid">
+                    </div>
+                </div>
+
+                <div class="result-section final-thoughts">
+                    <h3>Esda tutish kerak bo'lgan narsalar</h3>
+                    <p id="final-thoughts-text">...</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/12.2.1/firebase-app.js";
+        import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/12.2.1/firebase-auth.js";
+        import { getFirestore, doc, getDoc } from "https://www.gstatic.com/firebasejs/12.2.1/firebase-firestore.js";
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyA86zhSVi4FSw-GvFBdOZsCPaHMS67XA78",
+            authDomain: "carrer-path-a5810.firebaseapp.com",
+            projectId: "carrer-path-a5810",
+            storageBucket: "carrer-path-a5810.firebasestorage.app",
+            messagingSenderId: "693831778129",
+            appId: "1:693831778129:web:911293c5c284eefe295d70"
+        };
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+        const db = getFirestore(app);
+
+        const categoryTitles = {
+            'best-choice': 'Eng mos kasblar',
+            'good-choice': 'Yaxshi variantlar',
+            'worth-trying': 'Urib ko‘rishga arziydiganlar',
+            'not-for-you': 'Sizga mos emas'
+        };
+
+        const analyzeTestResults = (answers) => {
+            if (answers && typeof answers === 'object' && !Array.isArray(answers)) {
+                const traits = answers;
+
+                const careerRecommendations = [];
+                const intro = traits['Introverziya'] ?? traits['Introversion'] ?? 0;
+                const ext = traits['Ekstraversiya'] ?? traits['Extroversion'] ?? 0;
+
+                if (intro >= 8) {
+                    careerRecommendations.push({ category: 'best-choice', jobs: ['Back-end dasturiy ta\'minot muhandisi', 'Ma\'lumot olimi'] });
+                    careerRecommendations.push({ category: 'good-choice', jobs: ['DevOps muhandisi'] });
+                } else if (ext >= 8) {
+                    careerRecommendations.push({ category: 'best-choice', jobs: ['Product menejeri', 'BI analyst'] });
+                    careerRecommendations.push({ category: 'good-choice', jobs: ['UX/UI dizayneri'] });
+                } else {
+                    careerRecommendations.push({ category: 'worth-trying', jobs: ['Frontend dasturchi', 'QA avtomatlashtirish muhandisi'] });
+                }
+
+                return {
+                    careerRecommendations,
+                    psychologicalDescription: 'Sizning test natijalaringiz asosida qisqacha psixologik portret: tizimli, tahliliy va mustaqil ishlashga moyil.',
+                    traits: traits,
+                    finalThoughts: 'Natijalar tavsiyanoma sifatida ko\'rib chiqilsin — haqiqiy kasbiy yo\'nalishlarni tanlash uchun amaliy tajriba va mentorlik muhim.'
+                };
+            }
+
+            if (Array.isArray(answers)) {
+                const total = answers.reduce((s, v) => s + (Number(v) || 0), 0);
+                let careerRecommendations = [];
+                if (total >= answers.length * 2) {
+                    careerRecommendations = [ { category: 'best-choice', jobs: ['Back-end dasturiy ta\'minot muhandisi', 'Ma\'lumot olimi'] } ];
+                } else if (total >= answers.length) {
+                    careerRecommendations = [ { category: 'good-choice', jobs: ['Frontend dasturchi', 'QA avtomatlashtirish muhandisi'] } ];
+                } else {
+                    careerRecommendations = [ { category: 'worth-trying', jobs: ['Loyihalar bo\'yicha menejer', 'UX/UI dizayneri'] } ];
+                }
+
+                return {
+                    careerRecommendations,
+                    psychologicalDescription: 'Siz testda o\'rtacha ball to\'pladingiz — qiziqishni oshirish va amaliy mashg\'ulotlar orqali yo\'nalishni aniqlang.',
+                    traits: { 'Ball': total, 'Savollar soni': answers.length },
+                    finalThoughts: 'Test natijalari — boshlang\'ich yo\'naltiruvchi signal. Real dunyoda sinab ko\'ring.'
+                };
+            }
+
+            return {
+                careerRecommendations: [ { category: 'worth-trying', jobs: ['IT sohasida umumiy boshlang\'ich kurslar'] } ],
+                psychologicalDescription: 'Test natijalari to\'liq emas yoki noto\'g\'ri formatda saqlandi.',
+                traits: {},
+                finalThoughts: 'Iltimos, testni qayta topshiring yoki admin bilan bog\'laning.'
+            };
+        };
+
+        const renderResults = (results) => {
+            document.getElementById('loading').style.display = 'none';
+            document.getElementById('results-content').style.display = 'block';
+
+            const careerListContainer = document.getElementById('career-recommendations-list');
+            careerListContainer.innerHTML = '';
+            results.careerRecommendations.forEach(cat => {
+                const categoryDiv = document.createElement('div');
+                categoryDiv.className = `career-category ${cat.category}`;
+                const title = categoryTitles[cat.category] || cat.category;
+                categoryDiv.innerHTML = `<h4>${title}</h4><ul class="career-list"></ul>`;
+                const ul = categoryDiv.querySelector('ul');
+                cat.jobs.forEach(job => {
+                    const li = document.createElement('li');
+                    li.textContent = job;
+                    ul.appendChild(li);
+                });
+                careerListContainer.appendChild(categoryDiv);
+            });
+
+            document.getElementById('psychological-description').textContent = results.psychologicalDescription;
+
+            const traitsGrid = document.getElementById('psychological-traits-grid');
+            traitsGrid.innerHTML = '';
+            for (const trait in results.traits) {
+                const card = document.createElement('div');
+                card.className = 'trait-card';
+                card.innerHTML = `<h5>${trait}</h5><p>${results.traits[trait]}</p>`;
+                traitsGrid.appendChild(card);
+            }
+
+            document.getElementById('final-thoughts-text').textContent = results.finalThoughts;
+        };
+
+        onAuthStateChanged(auth, async (user) => {
+            try {
+                if (user) {
+                    document.getElementById('user-email-display').textContent = user.email || 'Foydalanuvchi';
+
+                    const testResultsRef = doc(db, "test_results", user.uid);
+                    const docSnap = await getDoc(testResultsRef);
+
+                    if (docSnap.exists()) {
+                        const data = docSnap.data();
+                        const testAnswers = data.answers ?? data.testAnswers ?? null;
+                        if (!testAnswers) {
+                            const fallback = data.answersArray || data.answers_map || null;
+                            if (fallback) {
+                                const results = analyzeTestResults(fallback);
+                                renderResults(results);
+                            } else {
+                                alert('Test javoblari topilmadi. Iltimos, testni topshiring.');
+                                window.location.href = 'tests.html';
+                            }
+                        } else {
+                            const results = analyzeTestResults(testAnswers);
+                            renderResults(results);
+                        }
+
+                    } else {
+                        alert('Avval testni topshiring!');
+                        window.location.href = 'tests.html';
+                    }
+
+                } else {
+                    window.location.href = 'login.html';
+                }
+            } catch (err) {
+                console.error('Xato:', err);
+                document.getElementById('loading').textContent = 'Xatolik yuz berdi. Iltimos, keyinroq urinib ko\'ring.';
+            }
+        });
+
+        // UI interaktivlik
+        const profileBtn = document.getElementById('profile-btn');
+        const profileDropdown = document.getElementById('profile-dropdown');
+        profileBtn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            profileDropdown.style.display = profileDropdown.style.display === 'none' ? 'block' : 'none';
+        });
+        // yopish uchun tashqariga bosilganda
+        document.addEventListener('click', (e) => {
+            if (!profileBtn.contains(e.target)) profileDropdown.style.display = 'none';
+        });
+
+        const logoutLink = document.getElementById('logout-link');
+        logoutLink.addEventListener('click', (e) => {
+            e.preventDefault();
+            signOut(auth).then(() => {
+                window.location.href = 'login.html';
+            }).catch(err => {
+                console.error('Sign out xato:', err);
+                alert('Chiqishda xatolik yuz berdi.');
+            });
+        });
+        
+        const menuToggle = document.getElementById('menu-toggle');
+        const sideNav = document.getElementById('side-nav');
+        const mainContent = document.getElementById('main-content-container');
+        
+        menuToggle.addEventListener('click', () => {
+            sideNav.classList.toggle('active');
+            mainContent.classList.toggle('menu-open');
+            menuToggle.classList.toggle('active');
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ish o'rinlari - CareerPath</title>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap');
+
+        :root {
+            --primary-color: #4CAF50;
+            --secondary-color: #2196F3;
+            --background-color: #f0f2f5;
+            --text-color: #333;
+            --light-text-color: #fff;
+            --card-bg: #fff;
+            --menu-bg: #2d3436;
+            --border-color: #ddd;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            min-height: 100vh;
+            background: var(--background-color);
+            color: var(--text-color);
+            position: relative;
+        }
+
+        .side-nav {
+            position: fixed;
+            top: 0;
+            left: -250px;
+            width: 250px;
+            height: 100%;
+            background-color: var(--menu-bg);
+            color: var(--light-text-color);
+            padding-top: 60px;
+            transition: left 0.3s ease;
+            box-shadow: 2px 0 5px rgba(0, 0, 0, 0.3);
+            z-index: 20;
+        }
+
+        .side-nav.active {
+            left: 0;
+        }
+        
+        .side-nav a {
+            display: flex;
+            align-items: center;
+            padding: 15px 20px;
+            color: var(--light-text-color);
+            text-decoration: none;
+            font-weight: 500;
+            transition: background-color 0.3s ease;
+        }
+        
+        .side-nav a:hover {
+            background-color: #444;
+        }
+        
+        .side-nav a .material-icons {
+            margin-right: 15px;
+        }
+
+        .side-nav a .material-icons.ai-icon {
+            display: inline-flex; 
+            align-items: center; 
+            justify-content: center;
+            width: 24px; 
+            height: 24px;
+            font-size: 20px; 
+            line-height: 1; 
+            vertical-align: middle;
+            transform: none !important; 
+            padding: 0;
+            margin-left: -20px; 
+            margin-right: 34px; 
+        }
+
+        .main-content-container {
+            flex-grow: 1;
+            padding: 20px;
+            margin-left: 0;
+            transition: margin-left 0.3s ease;
+        }
+
+        .main-content-container.menu-open {
+            margin-left: 250px;
+        }
+        
+        .header {
+            background-color: var(--primary-color);
+            color: var(--light-text-color);
+            padding: 15px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        .header h1 {
+            margin: 0;
+            font-size: 1.5em;
+        }
+        
+        .menu-toggle {
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+            cursor: pointer;
+        }
+
+        .menu-toggle span {
+            display: block;
+            width: 25px;
+            height: 3px;
+            background-color: var(--light-text-color);
+            transition: transform 0.3s ease;
+        }
+
+        .menu-toggle.active span:nth-child(1) {
+            transform: rotate(45deg) translate(5px, 5px);
+        }
+        .menu-toggle.active span:nth-child(2) {
+            opacity: 0;
+        }
+        .menu-toggle.active span:nth-child(3) {
+            transform: rotate(-45deg) translate(5px, -5px);
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: var(--card-bg);
+            border-radius: 15px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+            line-height: 1.6;
+        }
+
+        .jobs-header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        .jobs-header h2 {
+            color: var(--primary-color);
+            margin: 0;
+        }
+
+        .job-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+        }
+        .job-card {
+            background-color: var(--background-color);
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+            transition: transform 0.3s ease;
+        }
+        .job-card:hover {
+            transform: translateY(-5px);
+        }
+        .job-card h3 {
+            margin: 0 0 10px 0;
+            color: var(--secondary-color);
+        }
+        .job-card p {
+            margin: 0 0 15px 0;
+        }
+        .job-card .job-actions {
+            display: flex;
+            gap: 10px;
+            margin-top: 15px;
+        }
+        .job-card .job-actions button, .job-card .job-actions a {
+            background-color: var(--primary-color);
+            color: var(--light-text-color);
+            text-decoration: none;
+            padding: 8px 15px;
+            border-radius: 5px;
+            display: inline-block;
+            border: none;
+            cursor: pointer;
+        }
+        .job-card .job-actions button:hover, .job-card .job-actions a:hover {
+            background-color: #45a049;
+        }
+    </style>
+</head>
+<body>
+    
+    <div class="side-nav" id="side-nav">
+        <a href="dashboard.html"><span class="material-icons">person</span> Mening profilim</a>
+        <a href="tests.html"><span class="material-icons">menu_book</span> Shaxsiyat testi</a>
+        <a href="aichat.html"><span class="material-icons ai-icon">gem_spark</span>AI Maslahatchi</a>
+        <a href="jobs.html"><span class="material-icons">work</span> Ish topish</a>
+    </div>
+
+    <div class="main-content-container" id="main-content-container">
+        <header class="header">
+            <div class="menu-toggle" id="menu-toggle">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+            <h1>CareerPath</h1>
+            <div class="profile-menu">
+                <button class="profile-btn" id="profile-btn">
+                    <span id="user-email-display">foydalanuvchi@gmail.com</span> ▼
+                </button>
+                <div class="profile-dropdown" id="profile-dropdown">
+                    <a href="#" id="logout-link" class="logout-link">Tizimdan chiqish</a>
+                </div>
+            </div>
+        </header>
+
+        <div class="container">
+            <div class="jobs-header">
+                <h2>Ish o'rinlari</h2>
+                <p>Sizning ko'nikmalaringizga mos keladigan ish e'lonlarini toping.</p>
+            </div>
+            
+            <div class="job-list" id="job-list">
+            </div>
+            
+        </div>
+    </div>
+
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/12.2.1/firebase-app.js";
+        import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/12.2.1/firebase-auth.js";
+        import { getFirestore, collection, getDocs } from "https://www.gstatic.com/firebasejs/12.2.1/firebase-firestore.js";
+        
+        const firebaseConfig = {
+            apiKey: "AIzaSyA86zhSVi4FSw-GvFBdOZsCPaHMS67XA78",
+            authDomain: "carrer-path-a5810.firebaseapp.com",
+            projectId: "carrer-path-a5810",
+            storageBucket: "carrer-path-a5810.firebasestorage.app",
+            messagingSenderId: "693831778129",
+            appId: "1:693831778129:web:911293c5c284eefe295d70"
+        };
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+        const db = getFirestore(app);
+
+        const fetchJobs = async () => {
+            const jobListContainer = document.getElementById('job-list');
+            jobListContainer.innerHTML = '<p style="text-align:center;">Ish e\'lonlari yuklanmoqda...</p>';
+            
+            const jobsCol = collection(db, "jobs");
+            const jobsSnapshot = await getDocs(jobsCol);
+            
+            const jobs = [];
+            jobsSnapshot.forEach(doc => {
+                jobs.push({ id: doc.id, ...doc.data() });
+            });
+            
+            renderJobs(jobs);
+        };
+
+        const renderJobs = (jobs) => {
+            const jobListContainer = document.getElementById('job-list');
+            jobListContainer.innerHTML = '';
+            if (jobs.length === 0) {
+                jobListContainer.innerHTML = '<p style="text-align:center;">Ish e\'lonlari topilmadi.</p>';
+                return;
+            }
+            jobs.forEach(job => {
+                const jobCard = document.createElement('div');
+                jobCard.className = 'job-card';
+                jobCard.innerHTML = `
+                    <h3>${job.title}</h3>
+                    <p><strong>Kompaniya:</strong> ${job.company}</p>
+                    <p><strong>Ish turi:</strong> ${job.type}</p>
+                    <p><strong>Joylashuv:</strong> ${job.location}</p>
+                    <p>${job.description}</p>
+                    <div class="job-actions">
+                        <button onclick="bookJob('${job.id}')">Bron qilish</button>
+                    </div>
+                `;
+                jobListContainer.appendChild(jobCard);
+            });
+        };
+        
+        window.bookJob = async (jobId) => {
+            const userId = auth.currentUser ? auth.currentUser.uid : null;
+            if (!userId) {
+                alert("Bron qilish uchun tizimga kirishingiz kerak.");
+                return;
+            }
+            
+            const applicationData = {
+                userId: userId,
+                jobId: jobId,
+                appliedAt: new Date(),
+                status: 'pending'
+            };
+            
+            try {
+                const applicationsCol = collection(db, "applications");
+                await addDoc(applicationsCol, applicationData);
+                alert(`Siz ${jobId} ID raqamli ishga bron qildingiz. Arizangiz ish beruvchiga yuborildi.`);
+            } catch (e) {
+                console.error("Ariza yuborishda xato:", e);
+                alert("Arizani yuborishda xato yuz berdi.");
+            }
+        };
+
+        onAuthStateChanged(auth, async (user) => {
+            if (user) {
+                document.getElementById('user-email-display').textContent = user.email;
+                await fetchJobs();
+            } else {
+                window.location.href = "login.html";
+            }
+        });
+
+        const profileBtn = document.getElementById('profile-btn');
+        const profileDropdown = document.getElementById('profile-dropdown');
+        profileBtn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            profileDropdown.style.display = profileDropdown.style.display === 'none' ? 'block' : 'none';
+        });
+        document.addEventListener('click', (e) => {
+            if (profileBtn && !profileBtn.contains(e.target)) profileDropdown.style.display = 'none';
+        });
+
+        const logoutLink = document.getElementById('logout-link');
+        logoutLink.addEventListener('click', (e) => {
+            e.preventDefault();
+            signOut(auth).then(() => {
+                window.location.href = "login.html";
+            });
+        });
+        
+        const menuToggle = document.getElementById('menu-toggle');
+        const sideNav = document.getElementById('side-nav');
+        const mainContent = document.getElementById('main-content-container');
+        
+        menuToggle.addEventListener('click', () => {
+            sideNav.classList.toggle('active');
+            mainContent.classList.toggle('menu-open');
+        });
+    </script>
+</body>
+</html>

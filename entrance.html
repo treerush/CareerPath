@@ -1,0 +1,685 @@
+<!DOCTYPE html> 
+<html lang="uz">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>CareerPath — AI asoslangan kasb tanlash</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+<meta name="description" content="AI yordamida qobiliyatingizni tahlil qiling va mos kasb yo'nalishini toping.">
+<style>
+:root{
+  --accent: #4CAF50;
+  --dark: #0b2240;
+  --muted: #6b7280;
+  --glass: rgba(255,255,255,0.9);
+  --maxw: 1300px;
+  --card-radius: 14px;
+}
+*{
+  box-sizing:border-box;
+}
+html,body{
+  height:100%;
+  margin:0;
+  font-family:'Poppins',sans-serif;
+  color:#222;
+  background:#f4f6f9;
+}
+.container{
+  max-width:var(--maxw);
+  margin:36px auto;
+  padding:28px;
+}
+.hero{
+  display:flex;
+  gap:28px;
+  align-items:flex-start;
+  background: linear-gradient(180deg, rgba(255,255,255,0.85), rgba(255,255,255,0.8));
+  border-radius:20px;
+  padding:30px;
+  box-shadow:0 10px 40px rgba(16,24,40,0.08);
+  position:relative;
+  overflow:hidden;
+}
+.hero-left{
+  flex:1;
+  min-width:320px;
+}
+.kicker{
+  display:inline-block;
+  background:rgba(11,34,64,0.06);
+  padding:8px 14px;
+  border-radius:999px;
+  color:var(--muted);
+  font-weight:600;
+  margin-bottom:14px;
+}
+h1{
+  font-size:2.6rem;
+  margin:0 0 12px;
+  color:var(--accent);
+}
+.lead{
+  color:var(--muted);
+  line-height:1.6;
+  margin-bottom:20px;
+}
+.cta-row{
+  display:flex;
+  gap:14px;
+  flex-wrap:wrap;
+}
+.btn{
+  padding:12px 20px;
+  border-radius:999px;
+  font-weight:700;
+  border:0;
+  cursor:pointer;
+  text-decoration:none;
+  display:inline-flex;
+  align-items:center;
+  gap:10px;
+}
+
+.btn-primary {
+  background: var(--accent);
+  color: #fff;
+  box-shadow: 0 8px 20px rgba(76,175,80,0.18);
+  transition: all 0.3s ease;
+}
+.btn-primary:hover {
+  background: #45a049;
+  box-shadow: 0 12px 24px rgba(76,175,80,0.3);
+  transform: translateY(-2px);
+}
+
+.btn-ghost {
+  background: transparent;
+  border: 1px solid rgba(11,34,64,0.06);
+  color: var(--dark);
+  transition: all 0.3s ease;
+}
+.btn-ghost:hover {
+  background: rgba(11,34,64,0.05);
+  border-color: var(--accent);
+  color: var(--accent);
+  transform: translateY(-1px);
+}
+
+.hero-right{
+  width:460px;
+  max-width:40%;
+  display:flex;
+  flex-direction:column;
+  gap:14px;
+  align-items:stretch;
+  justify-content:flex-start
+}
+.card{
+  width:100%;
+  background:var(--glass);
+  border-radius:var(--card-radius);
+  padding:16px;
+  box-shadow:0 8px 24px rgba(11,34,64,0.06);
+  position:relative;
+  overflow:hidden;
+}
+
+.carousel{
+  position:relative;
+  overflow:hidden;
+  height:110px;
+  display:flex;
+  align-items:center;
+}
+.carousel-track{
+  display:flex;
+  transition:transform .5s ease;
+}
+.carousel-item{
+  min-width:100%;
+  padding:6px 12px;
+  display:flex;
+  align-items:center;
+  gap:12px}
+.logo{
+  width:46px;
+  height:46px;
+  flex-shrink:0;
+  border-radius:10px;
+  background:#fff;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  box-shadow:0 6px 16px rgba(11,34,64,0.06);
+}
+.logo img{
+  max-width:90%;
+  max-height:90%;
+}
+.carousel-controls{
+  position:absolute;
+  right:10px;
+  top:8px;
+  display:flex;
+  gap:6px;
+}
+.ctrl-btn{
+  border:0;
+  background:rgba(11,34,64,0.06);
+  padding:6px 8px;
+  border-radius:8px;
+  cursor:pointer;
+  color:var(--dark);
+}
+
+.features{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:18px;margin-top:24px;
+}
+.feature{
+  background:#fff;
+  padding:18px;
+  border-radius:12px;
+  box-shadow:0 6px 18px rgba(16,24,40,0.04);
+  min-height:120px;
+}
+.feature h4{
+  margin:0 0 8px;
+  color:var(--dark);
+}
+.feature p{
+  margin:0;
+  color:var(--muted);
+  font-size:.95rem;
+}
+
+.features-summary{
+  margin-top:26px;
+  text-align:center;
+  display:flex;
+  flex-direction:column;
+  gap:10px;
+  align-items:center;
+}
+.features-summary .line{
+  font-family:'Poppins',sans-serif;
+  font-weight:600;
+  color:var(--dark);
+  font-size:clamp(16px,2vw,20px);
+  display:inline-block;
+  user-select:none;
+}
+
+.features-summary .char{
+  display:inline-block;
+  opacity:0;
+  transform: translateY(16px);
+  animation:
+    featIntro 420ms cubic-bezier(.2,.9,.2,1) forwards,
+    featBreathe 2800ms ease-in-out calc(420ms + var(--i) * 40ms) infinite alternate;
+  animation-delay: calc(var(--i) * 26ms), calc(420ms + var(--i) * 40ms);
+}
+@keyframes featIntro { to { opacity:1; transform:translateY(0); } }
+@keyframes featBreathe { from{ transform:translateY(0); } to{ transform:translateY(-6px); } }
+
+.testimonial-carousel{
+  position:relative;
+  overflow:hidden;
+  height:130px;
+}
+.testimonial-track{
+  display:flex;
+  transition:transform .5s ease;
+}
+.testimonial-item{
+  min-width:100%;
+  padding:12px;
+}
+.testimonial-item p{
+  margin:0;color:var(--muted);
+}
+.testimonial-meta{
+  margin-top:8px;
+  font-weight:600;
+  color:var(--dark);
+}
+
+.sketchfab-embed-wrapper{
+  margin-top:40px;
+  width:100%;
+  height:500px;
+  position: relative;
+  border-radius:16px;
+  overflow:hidden;
+  box-shadow:0 10px 30px rgba(0,0,0,0.08);
+  background:linear-gradient(135deg,#f7fafc,#eef2ff);
+}
+
+.embed-cta{
+  position:absolute;
+  bottom:20px;
+  left:50%;
+  transform:translateX(-50%);
+  text-align:center;
+  background:rgba(255,255,255,0.92);
+  padding:12px 20px;
+  border-radius:12px;
+  box-shadow:0 6px 20px rgba(11,34,64,0.06);
+}
+
+.footer{
+  margin-top:36px;
+  padding:18px;
+  text-align:center;
+  color:var(--muted);
+  font-size:.95rem;
+}
+
+@media(max-width:980px){
+  .hero{
+    flex-direction:column;
+    gap:20px;
+  }
+  .hero-right{
+    width:100%;
+    max-width:none;
+  }
+  .features{
+    grid-template-columns:repeat(2,1fr);
+  }
+  .sketchfab-embed-wrapper{
+    height:420px;
+  }
+}
+@media(max-width:560px){
+  .features{
+    grid-template-columns:1fr;
+  }
+  h1{
+    font-size:1.9rem;
+  }
+  .sketchfab-embed-wrapper{
+    height:360px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce){
+  .features-summary .char{
+    animation: none;
+    opacity:1;
+    transform:none;
+  }
+}
+</style>
+</head>
+<body>
+<div class="container">
+  <div class="hero">
+    <div class="hero-left">
+      <div class="kicker">Zamonaviy | Qulay | O‘zbekcha</div>
+      <h1>Kelajagingizga birinchi qadam — bugun</h1>
+      <p class="lead">
+        CareerPath sizning qobiliyatlaringiz va bozor talablarini AI orqali tahlil qilib, mos kasb yo‘nalishini va aniq yo‘l xaritasini taklif etadi. Roʻyxatdan oʻting, profil yarating va o‘zingiz uchun mos yo‘lni boshlang.
+      </p>
+
+      <div class="cta-row">
+        <a href="./pages/register.html" class="btn btn-primary" id="registerBtn">Ro'yxatdan o'tish</a>
+        <a href="./pages/login.html" class="btn btn-ghost">Tizimga kirish</a>
+      </div>
+
+      <div class="features" style="margin-top:22px">
+        <div class="feature">
+          <h4>Tez va samarali</h4>
+          <p>Maqsadli savollar orqali sizga mos kasblarni tez tanlaymiz.</p>
+        </div>
+        <div class="feature">
+          <h4>Ish topish</h4>
+          <p>Ish topish va ish e'lonlarini joylashtirish endi bir joyda</p>
+        </div>
+        <div class="feature">
+          <h4>AI maslahatlari</h4>
+          <p>AI orqali kerakli maslahatlarni oling va o'z maqsadlaringizga erishing.</p>
+        </div>
+      </div>
+
+      <div class="features-summary" aria-hidden="false">
+        <div id="animLine1" class="line">Aniq yo‘nalish – Kasb tanlashda chalkashlikni kamaytiradi.</div>
+        <div id="animLine2" class="line">Intellektual ishlash – AI bilan murakkab qarorlarni soddalashtiring.</div>
+        <div id="animLine3" class="line">Karyera ustuvorligi – Eng muhim yo‘nalish va ko‘nikmalarni tanlash.</div>
+      </div>
+    </div>
+
+    <div class="hero-right">
+      <div class="card" aria-label="Hamkor kompaniyalar">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px">
+          <strong>Hamkor kompaniyalar</strong>
+          <small style="color:var(--muted)">Biz bilan</small>
+        </div>
+        <div class="carousel" id="partnersCarousel" data-interval="2500">
+          <div class="carousel-track" id="partnersTrack">
+
+            <div class="carousel-item">
+              <div class="logo"><img src="./images/partner1.png" alt="Mohirdev"></div>
+              <div>
+                <div style="font-weight:700">Onlayn ta'lim platformasi</div>
+                <div style="color:var(--muted);font-size:.9rem"></div>
+              </div>
+            </div>
+            <div class="carousel-item">
+              <div class="logo"><img src="./images/partner2.jpg" alt="AloqaVentures"></div>
+              <div>
+                <div style="font-weight:700">Aloqa Ventures</div>
+                <div style="color:var(--muted);font-size:.9rem">Startaplarni qo'llab-quvvatlash</div>
+              </div>
+            </div>
+            <div class="carousel-item">
+              <div class="logo"><img src="./images/partner3.png" alt="IT Park Uzbekistan"></div>
+              <div>
+                <div style="font-weight:700">IT Park Uzbekistan</div>
+                <div style="color:var(--muted);font-size:.9rem">IT Park Uzbekistan</div>
+              </div>
+            </div>
+            <div class="carousel-item">
+              <div class="logo"><img src="./images/partner4.png" alt="Coursera"></div>
+              <div>
+                <div style="font-weight:700">Coursera</div>
+                <div style="color:var(--muted);font-size:.9rem">Onlayn ta'lim platformasi</div>
+              </div>
+            </div>
+          </div>
+          <div class="carousel-controls">
+            <button class="ctrl-btn" data-target="partners" data-dir="prev" aria-label="avvalgi">&lt;</button>
+            <button class="ctrl-btn" data-target="partners" data-dir="next" aria-label="keyingi">&gt;</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="card" aria-label="Oson integratsiya">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px">
+          <strong>Tushunish oson</strong>
+          <small style="color:var(--muted)">Bir necha qadamda</small>
+        </div>
+        <div class="carousel" id="integrationCarousel" data-interval="3000">
+          <div class="carousel-track" id="integrationTrack">
+            <div class="carousel-item">
+              <div>
+                <h4 style="margin:0">Tillar</h4>
+                <div style="color:var(--muted);font-size:.95rem">Hammasi O'zbek tilida.</div>
+              </div>
+            </div>
+            <div class="carousel-item">
+              <div>
+                <h4 style="margin:0">Sozlamalar ustuvorligi</h4>
+                <div style="color:var(--muted);font-size:.95rem">Sozlamalarga oson kirish.</div>
+              </div>
+            </div>
+            <div class="carousel-item">
+              <div>
+                <h4 style="margin:0">Ish e'lonlari</h4>
+                <div style="color:var(--muted);font-size:.95rem">Admin panel orqali e'lon qo'shing yoki import qiling.</div>
+              </div>
+            </div>
+          </div>
+          <div class="carousel-controls">
+            <button class="ctrl-btn" data-target="integration" data-dir="prev" aria-label="avvalgi">&lt;</button>
+            <button class="ctrl-btn" data-target="integration" data-dir="next" aria-label="keyingi">&gt;</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="card" aria-label="Qulay boshlanish">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px">
+          <strong>Qulay boshlanish</strong>
+          <small style="color:var(--muted)">Yo‘nalishli dastur</small>
+        </div>
+        <div class="carousel" id="onboardCarousel" data-interval="2800">
+          <div class="carousel-track" id="onboardTrack">
+            <div class="carousel-item">
+              <div>
+                <h4 style="margin:0">Profil yarating</h4>
+                <div style="color:var(--muted);font-size:.95rem">O‘z maqsadlaringizni va tajribalaringizni kiriting. Tayyor!</div>
+              </div>
+            </div>
+            <div class="carousel-item">
+              <div>
+                <h4 style="margin:0">Maxsus Testlar</h4>
+                <div style="color:var(--muted);font-size:.95rem">Shaxsiyat testlari orqali sohangizni tanlang.</div>
+              </div>
+            </div>
+            <div class="carousel-item">
+              <div>
+                <h4 style="margin:0">Ishga yo‘naltirish</h4>
+                <div style="color:var(--muted);font-size:.95rem">O'z sohangizni tanlang va platformani o'zidayoq ish toping.</div>
+              </div>
+            </div>
+          </div>
+          <div class="carousel-controls">
+            <button class="ctrl-btn" data-target="onboard" data-dir="prev" aria-label="avvalgi">&lt;</button>
+            <button class="ctrl-btn" data-target="onboard" data-dir="next" aria-label="keyingi">&gt;</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="card" aria-label="Foydalanuvchi fikrlari">
+        <strong>Foydalanuvchilar fikri</strong>
+        <div class="testimonial-carousel" id="testiCarousel" data-interval="3500" style="margin-top:8px">
+          <div class="testimonial-track" id="testiTrack">
+            <div class="testimonial-item">
+              <p>“Test orqali aniq nima o‘rganish kerakligini bilib oldim — va bir oy ichida amaliy ish topdim.”</p>
+              <div class="testimonial-meta">— Diyor, Frontend</div>
+            </div>
+            <div class="testimonial-item">
+              <p>“Platforma menga kerakli yo‘nalishni ko‘rsatdi — hozir portfolio ustida ishlayapman.”</p>
+              <div class="testimonial-meta">— Nilufar, Data Analyst</div>
+            </div>
+            <div class="testimonial-item">
+              <p>“Qisqa va to‘g‘ri savollar, natija esa aniq va amaliy.”</p>
+              <div class="testimonial-meta">— Aziz, DevOps</div>
+            </div>
+          </div>
+          <div class="carousel-controls" style="top:6px;right:8px">
+            <button class="ctrl-btn" data-target="testi" data-dir="prev" aria-label="avvalgi">&lt;</button>
+            <button class="ctrl-btn" data-target="testi" data-dir="next" aria-label="keyingi">&gt;</button>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+<div class="sketchfab-embed-wrapper">
+  <iframe 
+      title="Game Dev Workstation" 
+      frameborder="0" 
+      allowfullscreen 
+      mozallowfullscreen="true" 
+      webkitallowfullscreen="true" 
+      allow="autoplay; fullscreen; xr-spatial-tracking"
+      src="https://sketchfab.com/models/f0ed328f0689444b8caec10139273d0b/embed?autostart=1" 
+      style="width:100%; height:100%;">
+  </iframe>
+
+  <div class="embed-cta">
+    <div style="margin-bottom:8px; font-weight:600; font-size:1.05rem; color:#0b2240;">Keling, hoziroq ish stolingizni sozlash uchun                                                                                                                                                             ro'yxatdan o'ting</div>
+    <a href="./pages/register.html" class="btn btn-primary" style="padding:10px 24px; font-size:0.95rem;">Ro'yxatdan o'tish</a>
+  </div>
+</div>
+
+<div style="max-width:800px; margin:40px auto; padding:20px; text-align:center; background:#f9fafb; border-radius:12px; box-shadow:0 8px 24px rgba(0,0,0,0.05);">
+  <p style="font-size:1.1rem; line-height:1.7; color:#0b2240; margin-bottom:16px;">
+    Har bir kun – yangi imkoniyatlar bilan to‘la va sizning harakatlaringiz natija beradi. Ish stolingizni tartibga soling, fikrlaringizni aniq va samarali yo‘naltiring. Shu orqali har bir vazifa siz uchun osonroq, har bir maqsad esa yanada yaqqolroq bo‘ladi.
+  </p>
+  <p style="font-size:1.1rem; line-height:1.7; color:#0b2240;">
+    Harakatni hoziroq boshlash bilan siz o‘zingizni eng yaxshi versiyangizga yaqinlashtirasiz va kundalik hayotingizni mukammal boshqarishni boshlaysiz.
+  </p>
+</div>
+
+
+<div class="sketchfab-embed-wrapper" style="margin-top:40px; width:100%; height:500px; position: relative;">
+  <iframe 
+      title="Robot Playground" 
+      frameborder="0" 
+      allowfullscreen 
+      mozallowfullscreen="true" 
+      webkitallowfullscreen="true" 
+      allow="autoplay; fullscreen; xr-spatial-tracking"
+      src="https://sketchfab.com/models/59fc99d8dcb146f3a6c16dbbcc4680da/embed?autostart=1" 
+      style="width:100%; height:100%;"></iframe>
+
+  <div style="position:absolute; bottom:20px; left:50%; transform:translateX(-50%); text-align:center; background:rgba(255,255,255,0.85); padding:12px 20px; border-radius:12px;">
+    <div style="margin-bottom:8px; font-weight:600; font-size:1.1rem; color:#0b2240;">AI bilan suhbatlashing</div>
+    <a href="./pages/register.html" class="btn btn-primary" style="padding:10px 24px; font-size:0.95rem;">Ro'yxatdan o'tish</a>
+  </div>
+</div>
+
+<div style="max-width:800px; margin:40px auto; padding:20px; text-align:center; background:#f9fafb; border-radius:12px; box-shadow:0 8px 24px rgba(0,0,0,0.05);">
+  <p style="font-size:1.1rem; line-height:1.7; color:#0b2240; margin-bottom:16px;">
+    AI bilan suhbatlashish orqali siz o‘zingizning fikrlaringizni kengaytirasiz, yangi g‘oyalarni kashf qilasiz va har bir qarorni aniqroq qabul qilishingiz mumkin.
+  </p>
+  <p style="font-size:1.1rem; line-height:1.7; color:#0b2240;">
+    Sun’iy intellekt sizga yordam beradi, murakkab masalalarni soddalashtiradi va kreativ jarayoningizni tezlashtiradi. Shu orqali har bir suhbat sizni yanada bilimli, samarali va ijodiy qiladi.
+  </p>
+</div>
+
+
+<div class="sketchfab-embed-wrapper" style="margin-top:40px; width:100%; height:500px; position: relative;">
+  <iframe 
+      title="Steampunk Earth" 
+      frameborder="0" 
+      allowfullscreen 
+      mozallowfullscreen="true" 
+      webkitallowfullscreen="true" 
+      allow="autoplay; fullscreen; xr-spatial-tracking"
+      src="https://sketchfab.com/models/eb88f06b4bc342d6bfa99e7608f1d7be/embed?autostart=1" 
+      style="width:100%; height:100%;">
+  </iframe>
+
+  <div style="position:absolute; bottom:20px; left:50%; transform:translateX(-50%); text-align:center; background:rgba(255,255,255,0.85); padding:12px 20px; border-radius:12px;">
+    <div style="margin-bottom:8px; font-weight:600; font-size:1.1rem; color:#0b2240;">
+      Shaxsiyat testidan o'ting va o'zingiz uchun eng yaxshi yo'nalishni toping
+    </div>
+    <a href="./pages/register.html" class="btn btn-primary" style="padding:10px 24px; font-size:0.95rem;">
+      Ro'yxatdan o'tish
+    </a>
+  </div>
+</div>
+
+<div style="max-width:800px; margin:40px auto; padding:20px; text-align:center; background:#f9fafb; border-radius:12px; box-shadow:0 8px 24px rgba(0,0,0,0.05);">
+  <p style="font-size:1.1rem; line-height:1.7; color:#0b2240; margin-bottom:16px;">
+    Shaxsiyat testidan o‘ting va o‘zingizni yanada chuqurroq tushuning. Har bir insonning o‘ziga xos qobiliyatlari va kuchli tomonlari bor, va bu test sizga ular bilan tanishishga yordam beradi.
+  </p>
+  <p style="font-size:1.1rem; line-height:1.7; color:#0b2240;">
+    Natijada siz uchun eng mos yo‘nalishni topasiz, maqsadlaringizni aniq belgilaysiz va o‘z potentsialingizni maksimal darajada rivojlantirasiz. Har bir qadam sizni shaxsiy va professional o‘sishga yaqinlashtiradi.
+  </p>
+</div>
+
+
+<div id="animatedText" style="font-size:2rem; font-weight:700; color:#4CAF50; text-align:center; margin-top:40px; opacity:0; transition: opacity 1.2s;">
+  CareerPath — AI asoslangan kasb tanlash
+</div>
+
+<div class="footer">
+  © <span id="year"></span> CareerPath — AI yordamida kelajagingizni rejalashtiring
+</div>
+</div>
+
+<script>
+document.getElementById('year').textContent = new Date().getFullYear();
+</script>
+
+<script>
+(function(){
+  const carousels = [
+    { key: 'partners', trackId: 'partnersTrack' },
+    { key: 'integration', trackId: 'integrationTrack' },
+    { key: 'onboard', trackId: 'onboardTrack' },
+    { key: 'testi', trackId: 'testiTrack' }
+  ];
+
+  const state = {};
+
+  carousels.forEach(c => {
+    const track = document.getElementById(c.trackId);
+    if(!track) return;
+    const container = track.parentElement;
+    const interval = parseInt(container.dataset.interval) || 3000;
+    const items = track.children.length;
+    state[c.key] = { index:0, items, track, interval, timer:null };
+
+    const start = ()=> {
+      clearInterval(state[c.key].timer);
+      state[c.key].timer = setInterval(()=> {
+        move(c.key, 1);
+      }, state[c.key].interval);
+    };
+    const stop = ()=> {
+      clearInterval(state[c.key].timer);
+    };
+    state[c.key].start = start;
+    state[c.key].stop = stop;
+    start();
+  });
+
+  function move(key, dir){
+    const s = state[key];
+    if(!s) return;
+    s.index = (s.index + dir + s.items) % s.items;
+    s.track.style.transform = `translateX(-${s.index * 100}%)`;
+  }
+
+  document.querySelectorAll('.ctrl-btn').forEach(btn=>{
+    btn.addEventListener('click', (e)=>{
+      const target = btn.dataset.target;
+      const dir = btn.dataset.dir === 'next' ? 1 : -1;
+      move(target, dir);
+      if(state[target]) {
+        state[target].stop();
+        state[target].start();
+      }
+    });
+  });
+
+  document.querySelectorAll('.carousel, .testimonial-carousel').forEach(el=>{
+    el.addEventListener('mouseenter', ()=>{
+      const id = el.id;
+      const mapping = { partners:'partners', integration:'integration', onboard:'onboard', testi:'testi' };
+      for(const k in mapping) {
+        if(id.startsWith(k)) state[mapping[k]] && state[mapping[k]].stop();
+      }
+    });
+    el.addEventListener('mouseleave', ()=>{
+      const id = el.id;
+      const mapping = { partners:'partners', integration:'integration', onboard:'onboard', testi:'testi' };
+      for(const k in mapping) {
+        if(id.startsWith(k)) state[mapping[k]] && state[mapping[k]].start();
+      }
+    });
+  });
+
+  function splitAndAnimate(elId){
+    const el = document.getElementById(elId);
+    if(!el) return;
+    const text = el.textContent.trim();
+    el.textContent = '';
+    for(let i=0;i<text.length;i++){
+      const ch = text[i];
+      const span = document.createElement('span');
+      span.className = 'char';
+      span.style.setProperty('--i', i);
+      span.innerHTML = (ch === ' ') ? '&nbsp;' : ch;
+      el.appendChild(span);
+    }
+  }
+
+  ['animLine1','animLine2','animLine3'].forEach(id => splitAndAnimate(id));
+
+})();
+
+document.addEventListener('DOMContentLoaded', () => {
+  document.getElementById('animatedText').style.opacity = 1;
+});
+</script>
+</body>
+</html>

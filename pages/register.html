@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ro'yxatdan o'tish - CareerPath</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap');
+
+        :root {
+            --primary-color: #4CAF50;
+            --secondary-color: #2196F3;
+            --background-color: #f0f2f5;
+            --text-color: #333;
+            --light-text-color: #fff;
+            --card-bg: #fff;
+            --border-color: #ddd;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background: var(--background-color);
+            color: var(--text-color);
+        }
+
+        body::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('../images/entrance-bg.jpg') no-repeat center center/cover;
+            filter: blur(1px) brightness(0.6); /* Rasmni xiralashtirish va qoraytirish */
+            z-index: -1;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 500px;
+            background: var(--card-bg);
+            padding: 30px;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        h2 {
+            text-align: center;
+            color: var(--primary-color);
+            margin-bottom: 20px;
+        }
+
+        .tab-buttons {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 20px;
+            border-bottom: 2px solid var(--border-color);
+        }
+
+        .tab-button {
+            padding: 10px 20px;
+            border: none;
+            background: transparent;
+            cursor: pointer;
+            font-size: 1em;
+            font-weight: 600;
+            color: #888;
+            transition: color 0.3s ease;
+        }
+
+        .tab-button.active {
+            color: var(--primary-color);
+            border-bottom: 2px solid var(--primary-color);
+        }
+
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+            animation: fadeIn 0.5s ease-in-out;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+            font-size: 1em;
+        }
+
+        .submit-btn {
+            width: 100%;
+            padding: 15px;
+            background-color: var(--primary-color);
+            color: var(--light-text-color);
+            border: none;
+            border-radius: 8px;
+            font-size: 1.1em;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .submit-btn:hover {
+            background-color: #45a049;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h2>Ro'yxatdan o'tish</h2>
+    <div class="tab-buttons">
+        <button id="user-tab" class="tab-button active">Oddiy foydalanuvchi</button>
+        <button id="employer-tab" class="tab-button">Ish beruvchi</button>
+    </div>
+
+    <div id="user-form" class="tab-content active">
+        <form id="user-form-element">
+            <div class="form-group">
+                <label for="user-email">Email</label>
+                <input type="email" id="user-email" name="user-email" required>
+            </div>
+            <div class="form-group">
+                <label for="user-password">Parol</label>
+                <input type="password" id="user-password" name="user-password" required>
+            </div>
+            <div class="form-group">
+                <label for="user-confirm-password">Parolni takrorlang</label>
+                <input type="password" id="user-confirm-password" name="user-confirm-password" required>
+            </div>
+            <button type="submit" class="submit-btn">Ro'yxatdan o'tish</button>
+        </form>
+    </div>
+
+    <div id="employer-form" class="tab-content">
+        <form id="employer-form-element">
+            <div class="form-group">
+                <label for="company-name">Kompaniya nomi</label>
+                <input type="text" id="company-name" name="company-name" required>
+            </div>
+            <div class="form-group">
+                <label for="employer-email">Korporativ Email</label>
+                <input type="email" id="employer-email" name="employer-email" required>
+            </div>
+            <div class="form-group">
+                <label for="employer-password">Parol</label>
+                <input type="password" id="employer-password" name="employer-password" required>
+            </div>
+            <button type="submit" class="submit-btn">Ro'yxatdan o'tish</button>
+        </form>
+    </div>
+</div>
+
+<script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/12.2.1/firebase-app.js";
+    import { getAuth, createUserWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/12.2.1/firebase-auth.js";
+    import { getFirestore } from "https://www.gstatic.com/firebasejs/12.2.1/firebase-firestore.js";
+
+    const firebaseConfig = {
+        apiKey: "AIzaSyA86zhSVi4FSw-GvFBdOZsCPaHMS67XA78",
+        authDomain: "carrer-path-a5810.firebaseapp.com",
+        projectId: "carrer-path-a5810",
+        storageBucket: "carrer-path-a5810.firebasestorage.app",
+        messagingSenderId: "693831778129",
+        appId: "1:693831778129:web:911293c5c284eefe295d70"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+
+    const userTab = document.getElementById('user-tab');
+    const employerTab = document.getElementById('employer-tab');
+    const userFormContainer = document.getElementById('user-form');
+    const employerFormContainer = document.getElementById('employer-form');
+
+    userTab.addEventListener('click', () => {
+        userTab.classList.add('active');
+        employerTab.classList.remove('active');
+        userFormContainer.classList.add('active');
+        employerFormContainer.classList.remove('active');
+    });
+
+    employerTab.addEventListener('click', () => {
+        employerTab.classList.add('active');
+        userTab.classList.remove('active');
+        employerFormContainer.classList.add('active');
+        userFormContainer.classList.remove('active');
+    });
+
+    const userRegisterForm = document.getElementById('user-form-element');
+    const employerRegisterForm = document.getElementById('employer-form-element');
+
+    userRegisterForm.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const email = document.getElementById('user-email').value;
+        const password = document.getElementById('user-password').value;
+        const confirmPassword = document.getElementById('user-confirm-password').value;
+
+        if (password !== confirmPassword) {
+            alert("Parollar bir-biriga mos kelmadi!");
+            return;
+        }
+
+        try {
+            await createUserWithEmailAndPassword(auth, email, password);
+            alert("Muvaffaqiyatli ro'yxatdan o'tdingiz!");
+            window.location.href = "pages/login.html";
+        } catch (error) {
+            const errorMessage = error.message;
+            alert(`Ro'yxatdan o'tishda xato: ${errorMessage}`);
+            console.error(error);
+        }
+    });
+
+    employerRegisterForm.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const email = document.getElementById('employer-email').value;
+        const password = document.getElementById('employer-password').value;
+        
+        try {
+            await createUserWithEmailAndPassword(auth, email, password);
+            alert("Muvaffaqiyatli ro'yxatdan o'tdingiz!");
+            window.location.href = "pages/login.html";
+        } catch (error) {
+            const errorMessage = error.message;
+            alert(`Ro'yxatdan o'tishda xato: ${errorMessage}`);
+            console.error(error);
+        }
+    });
+</script>
+</body>
+</html>

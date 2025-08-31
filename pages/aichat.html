@@ -1,0 +1,442 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Maslahatchi - CareerPath</title>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap');
+
+        :root {
+            --primary-color: #4CAF50;
+            --secondary-color: #2196F3;
+            --background-color: #f0f2f5;
+            --text-color: #333;
+            --light-text-color: #fff;
+            --card-bg: #fff;
+            --menu-bg: #2d3436;
+            --border-color: #ddd;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            min-height: 100vh;
+            background: var(--background-color);
+            color: var(--text-color);
+        }
+
+        .side-nav {
+            position: fixed;
+            top: 0;
+            left: -250px;
+            width: 250px;
+            height: 100%;
+            background-color: var(--menu-bg);
+            color: var(--light-text-color);
+            padding-top: 60px;
+            transition: left 0.3s ease;
+            box-shadow: 2px 0 5px rgba(0, 0, 0, 0.3);
+            z-index: 20;
+        }
+
+        .side-nav.active {
+            left: 0;
+        }
+        
+        .side-nav a {
+            display: flex;
+            align-items: center;
+            padding: 15px 20px;
+            color: var(--light-text-color);
+            text-decoration: none;
+            font-weight: 500;
+            transition: background-color 0.3s ease;
+        }
+        
+        .side-nav a:hover {
+            background-color: #444;
+        }
+        
+        .side-nav a .material-icons {
+            margin-right: 15px;
+        }
+
+        .side-nav a .material-icons.ai-icon {
+            display: inline-flex; 
+            align-items: center; 
+            justify-content: center;
+            width: 24px; 
+            height: 24px;
+            font-size: 20px; 
+            line-height: 1; 
+            vertical-align: middle;
+            transform: none !important; 
+            padding: 0;
+            margin-left: -20px; 
+            margin-right: 34px; 
+        }
+
+        .main-content-container {
+            flex-grow: 1;
+            padding: 20px;
+            margin-left: 0;
+            transition: margin-left 0.3s ease;
+        }
+
+        .main-content-container.menu-open {
+            margin-left: 250px;
+        }
+        
+        .header {
+            background-color: var(--primary-color);
+            color: var(--light-text-color);
+            padding: 15px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        .header h1 {
+            margin: 0;
+            font-size: 1.5em;
+        }
+        
+        .menu-toggle {
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+            cursor: pointer;
+        }
+
+        .menu-toggle span {
+            display: block;
+            width: 25px;
+            height: 3px;
+            background-color: var(--light-text-color);
+            transition: transform 0.3s ease;
+        }
+
+        .menu-toggle.active span:nth-child(1) {
+            transform: rotate(45deg) translate(5px, 5px);
+        }
+        .menu-toggle.active span:nth-child(2) {
+            opacity: 0;
+        }
+        .menu-toggle.active span:nth-child(3) {
+            transform: rotate(-45deg) translate(5px, -5px);
+        }
+        
+        .container {
+            max-width: 900px;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: var(--card-bg);
+            border-radius: 15px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+        }
+        
+        .chat-container {
+            height: 60vh;
+            display: flex;
+            flex-direction: column;
+            border: 1px solid var(--border-color);
+            border-radius: 10px;
+            overflow: hidden;
+        }
+        
+        .chat-messages {
+            flex-grow: 1;
+            padding: 20px;
+            overflow-y: auto;
+            background-color: var(--background-color);
+        }
+        
+        .message-row {
+            display: flex;
+            margin-bottom: 15px;
+        }
+        .message-row.user {
+            justify-content: flex-end;
+        }
+        .message-row.ai {
+            justify-content: flex-start;
+        }
+        
+        .message-bubble {
+            max-width: 70%;
+            padding: 10px 15px;
+            border-radius: 15px;
+            line-height: 1.4;
+            font-size: 0.9em;
+        }
+        
+        .message-row.user .message-bubble {
+            background-color: var(--secondary-color);
+            color: var(--light-text-color);
+            border-bottom-right-radius: 2px;
+        }
+        .message-row.ai .message-bubble {
+            background-color: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-bottom-left-radius: 2px;
+        }
+        
+        .chat-input-bar {
+            display: flex;
+            padding: 10px;
+            border-top: 1px solid var(--border-color);
+        }
+        
+        .chat-input-bar input {
+            flex-grow: 1;
+            padding: 10px;
+            border: 1px solid var(--border-color);
+            border-radius: 20px;
+            outline: none;
+            font-family: 'Poppins', sans-serif;
+        }
+        
+        .chat-input-bar button {
+            background-color: var(--primary-color);
+            color: var(--light-text-color);
+            border: none;
+            padding: 10px 15px;
+            border-radius: 20px;
+            margin-left: 10px;
+            cursor: pointer;
+        }
+        
+        .chat-input-bar button:hover {
+            background-color: #45a049;
+        }
+        .loading-dots {
+            display: none;
+            text-align: center;
+            font-size: 2em;
+            color: var(--primary-color);
+        }
+        
+        @keyframes loading-blink {
+            0% { opacity: 0.2; }
+            20% { opacity: 1; }
+            100% { opacity: 0.2; }
+        }
+        .loading-dots span {
+            animation: loading-blink 1.4s infinite;
+        }
+        .loading-dots span:nth-child(2) {
+            animation-delay: 0.2s;
+        }
+        .loading-dots span:nth-child(3) {
+            animation-delay: 0.4s;
+        }
+    </style>
+</head>
+<body>
+    
+    <div class="side-nav" id="side-nav">
+        <a href="dashboard.html"><span class="material-icons">person</span> Mening profilim</a>
+        <a href="tests.html"><span class="material-icons">menu_book</span> Shaxsiyat testi</a>
+        <a href="aichat.html"><span class="material-icons ai-icon">gem_spark</span>AI Maslahatchi</a>
+        <a href="jobs.html"><span class="material-icons">work</span> Ish topish</a>
+    </div>
+
+    <div class="main-content-container" id="main-content-container">
+        <header class="header">
+            <div class="menu-toggle" id="menu-toggle">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+            <h1>CareerPath</h1>
+            <div class="profile-menu">
+                <button class="profile-btn" id="profile-btn">
+                    <span id="user-email-display">foydalanuvchi@gmail.com<</span> ▼
+                </button>
+                <div class="profile-dropdown" id="profile-dropdown">
+                    <a href="#" id="logout-link" class="logout-link">Tizimdan chiqish</a>
+                </div>
+            </div>
+        </header>
+
+        <div class="container">
+            <h2 class="test-title">AI Maslahatchi</h2>
+
+            <div class="chat-container">
+                <div class="chat-messages" id="chat-messages">
+                    <div class="message-row ai">
+                        <div class="message-bubble">Salom! Men CareerPath AI Maslahatchisi. Sizga qanday yordam bera olaman?</div>
+                    </div>
+                </div>
+                <div class="loading-dots" id="loading-dots">
+                    <span>.</span><span>.</span><span>.</span>
+                </div>
+                <div class="chat-input-bar">
+                    <input type="text" id="chat-input" placeholder="Xabar yuboring...">
+                    <button id="send-btn">Yuborish</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/12.2.1/firebase-app.js";
+        import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/12.2.1/firebase-auth.js";
+        import { getFirestore, collection, addDoc, query, orderBy, limit, getDocs } from "https://www.gstatic.com/firebasejs/12.2.1/firebase-firestore.js";
+        
+        const API_KEY = "AIzaSyAVYsRTfnBz12-Eu50s0TswMNMv-irk7n0"; 
+        const API_URL = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-05-20:generateContent?key=${API_KEY}`;
+        
+        const firebaseConfig = {
+            apiKey: "AIzaSyA86zhSVi4FSw-GvFBdOZsCPaHMS67XA78",
+            authDomain: "carrer-path-a5810.firebaseapp.com",
+            projectId: "carrer-path-a5810",
+            storageBucket: "carrer-path-a5810.firebasestorage.app",
+            messagingSenderId: "693831778129",
+            appId: "1:693831778129:web:911293c5c284eefe295d70"
+        };
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+        const db = getFirestore(app);
+        
+        let currentUserId = null;
+        let chatHistory = [];
+
+        const chatMessages = document.getElementById('chat-messages');
+        const chatInput = document.getElementById('chat-input');
+        const sendBtn = document.getElementById('send-btn');
+        const loadingDots = document.getElementById('loading-dots');
+
+        const appendMessage = (message, sender) => {
+            const messageRow = document.createElement('div');
+            messageRow.className = `message-row ${sender}`;
+            const messageBubble = document.createElement('div');
+            messageBubble.className = 'message-bubble';
+            messageBubble.textContent = message;
+            messageRow.appendChild(messageBubble);
+            chatMessages.appendChild(messageRow);
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+        };
+
+        const fetchChatHistory = async (userId) => {
+            const chatsRef = collection(db, `users/${userId}/chats`);
+            const q = query(chatsRef, orderBy('createdAt', 'desc'), limit(10));
+            const querySnapshot = await getDocs(q);
+            
+            chatHistory = [];
+            querySnapshot.docs.reverse().forEach(doc => {
+                chatHistory.push(doc.data().message);
+            });
+            
+            chatMessages.innerHTML = '';
+            chatHistory.forEach(msg => {
+                appendMessage(msg.text, msg.role);
+            });
+            
+            if (chatHistory.length === 0) {
+                appendMessage("Salom! Men CareerPath AI Maslahatchisi. Sizga qanday yordam bera olaman?", 'ai');
+            }
+        };
+
+        const saveMessage = async (message) => {
+            if (!currentUserId) return;
+            const chatsRef = collection(db, `users/${currentUserId}/chats`);
+            await addDoc(chatsRef, {
+                message,
+                createdAt: new Date(),
+            });
+        };
+
+        const sendMessage = async () => {
+            const userMessageText = chatInput.value.trim();
+            if (userMessageText === '') return;
+
+            const userMessage = { role: 'user', text: userMessageText };
+            appendMessage(userMessage.text, userMessage.role);
+            chatHistory.push(userMessage);
+            chatInput.value = '';
+            
+            loadingDots.style.display = 'flex';
+            sendBtn.disabled = true;
+
+            try {
+                await saveMessage(userMessage);
+
+                const payload = {
+                    contents: chatHistory.map(msg => ({ role: msg.role === 'model' ? 'model' : 'user', parts: [{ text: msg.text }] })),
+                };
+                
+                const response = await fetch(API_URL, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(payload)
+                });
+                const result = await response.json();
+                const aiResponseText = result.candidates?.[0]?.content?.parts?.[0]?.text;
+                
+                if (aiResponseText) {
+                    const aiResponse = { role: 'model', text: aiResponseText };
+                    appendMessage(aiResponse.text, aiResponse.role);
+                    chatHistory.push(aiResponse);
+                    await saveMessage(aiResponse);
+                } else {
+                    const errorMessage = "Kechirasiz, javob olishda xatolik yuz berdi.";
+                    appendMessage(errorMessage, 'ai');
+                }
+            } catch (error) {
+                console.error("Gemini API xatosi:", error);
+                const errorMessage = "Kechirasiz, xatolik yuz berdi. Iltimos, keyinroq urinib ko'ring.";
+                appendMessage(errorMessage, 'ai');
+            } finally {
+                loadingDots.style.display = 'none';
+                sendBtn.disabled = false;
+            }
+        };
+
+        sendBtn.addEventListener('click', sendMessage);
+        chatInput.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') {
+                sendMessage();
+            }
+        });
+        
+        onAuthStateChanged(auth, async (user) => {
+            if (user) {
+                currentUserId = user.uid;
+                document.getElementById('user-email-display').textContent = user.email;
+                await fetchChatHistory(currentUserId);
+            } else {
+                window.location.href = "login.html";
+            }
+        });
+
+        const profileBtn = document.getElementById('profile-btn');
+        const profileDropdown = document.getElementById('profile-dropdown');
+        profileBtn.addEventListener('click', () => {
+            profileDropdown.classList.toggle('active');
+        });
+
+        const logoutLink = document.getElementById('logout-link');
+        logoutLink.addEventListener('click', (e) => {
+            e.preventDefault();
+            signOut(auth).then(() => {
+                window.location.href = "login.html";
+            });
+        });
+        
+        const menuToggle = document.getElementById('menu-toggle');
+        const sideNav = document.getElementById('side-nav');
+        const mainContent = document.getElementById('main-content-container');
+        
+        menuToggle.addEventListener('click', () => {
+            sideNav.classList.toggle('active');
+            mainContent.classList.toggle('menu-open');
+        });
+    </script>
+</body>
+</html>
