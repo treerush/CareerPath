@@ -213,6 +213,10 @@
       setProcessing(false);
     }
   });
+
+  if (typeof injectSpeedInsights === 'function') {
+    injectSpeedInsights();
+  }
 </script>
 </body>
 </html>

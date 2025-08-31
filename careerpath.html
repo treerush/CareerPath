@@ -439,6 +439,10 @@
                 requestAnimationFrame(run);
             });
         });
+
+        if (typeof injectSpeedInsights === 'function') {
+            injectSpeedInsights();
+        }    
     </script>
 
     <script type="module" src="/role-router.js"></script>

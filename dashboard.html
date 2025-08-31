@@ -753,6 +753,10 @@
             sideNav.classList.toggle('active');
             mainContent.classList.toggle('menu-open');
         });
+
+        if (typeof injectSpeedInsights === 'function') {
+            injectSpeedInsights();
+        }
     </script>
 
     <script type="module" src="/role-router.js"></script>
