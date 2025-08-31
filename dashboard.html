@@ -538,226 +538,274 @@
     </div>
 
     <script type="module">
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/12.2.1/firebase-app.js";
-        import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/12.2.1/firebase-auth.js";
-        import { getFirestore, doc, getDoc, setDoc } from "https://www.gstatic.com/firebasejs/12.2.1/firebase-firestore.js";
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/12.2.1/firebase-app.js";
+    import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/12.2.1/firebase-auth.js";
+    import { getFirestore, doc, getDoc, setDoc, collection, query, where, getDocs } from "https://www.gstatic.com/firebasejs/12.2.1/firebase-firestore.js";
 
-        const CLOUDINARY_CLOUD_NAME = "djhm1elly"; 
-        const CLOUDINARY_UPLOAD_PRESET = "careerpath"; 
+    const CLOUDINARY_CLOUD_NAME = "djhm1elly"; 
+    const CLOUDINARY_UPLOAD_PRESET = "careerpath"; 
 
-        const firebaseConfig = {
-            apiKey: "AIzaSyA86zhSVi4FSw-GvFBdOZsCPaHMS67XA78",
-            authDomain: "carrer-path-a5810.firebaseapp.com",
-            projectId: "carrer-path-a5810",
-            storageBucket: "carrer-path-a5810.firebasestorage.app",
-            messagingSenderId: "693831778129",
-            appId: "1:693831778129:web:911293c5c284eefe295d70"
-        };
+    const firebaseConfig = {
+        apiKey: "AIzaSyA86zhSVi4FSw-GvFBdOZsCPaHMS67XA78",
+        authDomain: "carrer-path-a5810.firebaseapp.com",
+        projectId: "carrer-path-a5810",
+        storageBucket: "carrer-path-a5810.firebasestorage.app",
+        messagingSenderId: "693831778129",
+        appId: "1:693831778129:web:911293c5c284eefe295d70"
+    };
 
-        const app = initializeApp(firebaseConfig);
-        const auth = getAuth(app);
-        const db = getFirestore(app);
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+    const db = getFirestore(app);
+    
+    let userId = null;
+    let isEditMode = false;
+
+    const calculateCompleteness = (userData) => {
+        const fields = [
+            userData?.fullName || "",
+            userData?.phoneNumber || "",
+            userData?.location || "",
+            userData?.birthDate || "",
+            userData?.biography || "",
+            userData?.photoURL || ""
+        ];
         
-        let userId = null;
-        let isEditMode = false;
+        const filledFields = fields.filter(field => String(field).trim() !== "").length;
+        const percentage = Math.round((filledFields / fields.length) * 100);
+        document.getElementById('profile-completeness').textContent = percentage + "%";
+    };
 
-        const calculateCompleteness = (userData) => {
-            const fields = [
-                userData.fullName,
-                userData.phoneNumber,
-                userData.location,
-                userData.birthDate,
-                userData.biography,
-                userData.photoURL
-            ];
-            
-            const filledFields = fields.filter(field => field !== null && field.trim() !== "").length;
-            const percentage = Math.round((filledFields / fields.length) * 100);
-            document.getElementById('profile-completeness').textContent = percentage + "%";
-        };
-
-        const updateUI = (userData) => {
-            const userName = userData.fullName ? userData.fullName.split(" ")[0] : auth.currentUser.email.split('@')[0];
-            document.getElementById('user-display-name').textContent = userName;
-            document.getElementById('full-name-span').textContent = userData.fullName || "Ism va familiya kiritilmagan";
-            document.getElementById('phone-number-span').textContent = userData.phoneNumber || "Telefon raqami kiritilmagan";
-            document.getElementById('location-span').textContent = userData.location || "Joylashuv kiritilmagan";
-            document.getElementById('birth-date-span').textContent = userData.birthDate || "Tug'ilgan sana kiritilmagan";
-            document.getElementById('biography-span').textContent = userData.biography || "Biografiya kiritilmagan";
-            
-            if (userData.photoURL) {
-                document.getElementById('profile-image').src = userData.photoURL;
-            } else {
-                const initial = (userName ? userName[0].toUpperCase() : 'DU');
-                document.getElementById('profile-image').src = "https://placehold.co/150x150/4CAF50/fff?text=" + initial;
-            }
-
-            calculateCompleteness(userData);
-        };
-
-        onAuthStateChanged(auth, async (user) => {
-            if (user) {
-                userId = user.uid;
-                document.getElementById('user-email-display').textContent = user.email;
-                document.getElementById('user-email-full').textContent = user.email;
-                
-                const profileRef = doc(db, "users", userId);
-                const docSnap = await getDoc(profileRef);
-                
-                if (docSnap.exists()) {
-                    updateUI(docSnap.data());
-                } else {
-                    const defaultUserData = {
-                        fullName: null,
-                        phoneNumber: null,
-                        location: null,
-                        birthDate: null,
-                        biography: null,
-                        photoURL: null,
-                        testsCompleted: 0,
-                        careerRecommendations: 0,
-                        jobsApplied: 0
-                    };
-                    await setDoc(profileRef, defaultUserData);
-                    updateUI(defaultUserData);
-                }
-            } else {
-                window.location.href = "login.html";
-            }
-        });
-
-        const toggleEditMode = () => {
-            isEditMode = !isEditMode;
-            const editBtn = document.getElementById('edit-profile-btn');
-            
-            const spans = document.querySelectorAll('.info-item span, .info-item p');
-            const inputs = document.querySelectorAll('.info-item input, .info-item textarea');
-            
-            if (isEditMode) {
-                editBtn.textContent = "Saqlash";
-                spans.forEach(span => {
-                    span.style.display = 'none';
-                });
-                inputs.forEach(input => {
-                    input.style.display = 'block';
-                    const spanId = input.id.replace('-input', '-span');
-                    const spanElement = document.getElementById(spanId);
-                    if (spanElement && spanElement.textContent.trim() !== "Ism va familiya kiritilmagan" && spanElement.textContent.trim() !== "Telefon raqami kiritilmagan" && spanElement.textContent.trim() !== "Joylashuv kiritilmagan" && spanElement.textContent.trim() !== "Tug'ilgan sana kiritilmagan" && spanElement.textContent.trim() !== "Biografiya kiritilmagan") {
-                        input.value = spanElement.textContent.trim();
-                    } else {
-                        input.value = '';
-                    }
-                });
-            } else {
-                editBtn.textContent = "Tahrirlash";
-                spans.forEach(span => {
-                    span.style.display = 'block';
-                });
-                inputs.forEach(input => {
-                    input.style.display = 'none';
-                });
-            }
-        };
-
-        const saveChanges = async () => {
-            const fullName = document.getElementById('full-name-input').value.trim();
-            const phoneNumber = document.getElementById('phone-number-input').value.trim();
-            const location = document.getElementById('location-input').value.trim();
-            const birthDate = document.getElementById('birth-date-input').value;
-            const biography = document.getElementById('biography-input').value.trim();
-
-            if (userId) {
-                const profileRef = doc(db, "users", userId);
-                await setDoc(profileRef, {
-                    fullName: fullName || null,
-                    phoneNumber: phoneNumber || null,
-                    location: location || null,
-                    birthDate: birthDate || null,
-                    biography: biography || null
-                }, { merge: true });
-                alert("Ma'lumotlar saqlandi!");
-                location.reload();
-            }
-        };
-
-        document.getElementById('edit-profile-btn').addEventListener('click', () => {
-            if (isEditMode) {
-                saveChanges();
-            } else {
-                toggleEditMode();
-            }
-        });
-
-        document.getElementById('upload-input').addEventListener('change', async (e) => {
-            const file = e.target.files[0];
-            if (!file) return;
-
-            const formData = new FormData();
-            formData.append("file", file);
-            formData.append("upload_preset", CLOUDINARY_UPLOAD_PRESET);
-
-            try {
-                const response = await fetch(`https://api.cloudinary.com/v1_1/${CLOUDINARY_CLOUD_NAME}/image/upload`, {
-                    method: 'POST',
-                    body: formData
-                });
-                const data = await response.json();
-                
-                if (data.secure_url) {
-                    const photoURL = data.secure_url;
-                    const profileRef = doc(db, "users", userId);
-                    await setDoc(profileRef, { photoURL: photoURL }, { merge: true });
-                    alert("Rasm muvaffaqiyatli yuklandi!");
-                    location.reload();
-                } else {
-                    alert("Rasm yuklashda xato yuz berdi!");
-                    console.error("Cloudinary xatosi:", data);
-                }
-            } catch (error) {
-                alert("Rasm yuklashda xato yuz berdi!");
-                console.error("Fetch xatosi:", error);
-            }
-        });
-
-        document.getElementById('delete-image-btn').addEventListener('click', async () => {
-            if (userId) {
-                const profileRef = doc(db, "users", userId);
-                await setDoc(profileRef, { photoURL: null }, { merge: true });
-                alert("Rasm o'chirildi!");
-                location.reload();
-            }
-        });
-
-        const profileBtn = document.getElementById('profile-btn');
-        const profileDropdown = document.getElementById('profile-dropdown');
-        profileBtn.addEventListener('click', () => {
-            profileDropdown.classList.toggle('active');
-        });
-
-        const logoutBtn = document.getElementById('logout-btn');
-        logoutBtn.addEventListener('click', (e) => {
-            e.preventDefault();
-            signOut(auth).then(() => {
-                window.location.href = "login.html";
-            }).catch((error) => {
-                console.error("Logoutda xato:", error);
-                alert("Tizimdan chiqishda xato yuz berdi.");
-            });
-        });
+    const updateUI = (userData) => {
+        const userName = userData && userData.fullName ? userData.fullName.split(" ")[0] : (auth.currentUser ? auth.currentUser.email.split('@')[0] : 'Foydalanuvchi');
+        document.getElementById('user-display-name').textContent = userName;
+        document.getElementById('full-name-span').textContent = userData.fullName || "Ism va familiya kiritilmagan";
+        document.getElementById('phone-number-span').textContent = userData.phoneNumber || "Telefon raqami kiritilmagan";
+        document.getElementById('location-span').textContent = userData.location || "Joylashuv kiritilmagan";
+        document.getElementById('birth-date-span').textContent = userData.birthDate || "Tug'ilgan sana kiritilmagan";
+        document.getElementById('biography-span').textContent = userData.biography || "Biografiya kiritilmagan";
         
-        const menuToggle = document.getElementById('menu-toggle');
-        const sideNav = document.getElementById('side-nav');
-        const mainContent = document.getElementById('main-content-container');
-        
-        menuToggle.addEventListener('click', () => {
-            sideNav.classList.toggle('active');
-            mainContent.classList.toggle('menu-open');
-        });
-
-        if (typeof injectSpeedInsights === 'function') {
-            injectSpeedInsights();
+        if (userData.photoURL) {
+            document.getElementById('profile-image').src = userData.photoURL;
+        } else {
+            const initial = (userName ? userName[0].toUpperCase() : 'DU');
+            document.getElementById('profile-image').src = "https://placehold.co/150x150/4CAF50/fff?text=" + initial;
         }
-    </script>
+
+        calculateCompleteness(userData);
+    };
+
+    // ---------- NEW: stats updater ----------
+    async function updateStatsForUser(uid) {
+        try {
+            // 1) Topshirilgan testlar
+            let testsCount = 0;
+            try {
+                const testsQ = query(collection(db, "test_results"), where("userId", "==", uid));
+                const testsSnap = await getDocs(testsQ);
+                testsCount = testsSnap.size;
+                // fallback: maybe document stored under id == uid (single result)
+                if (testsCount === 0) {
+                    const maybeDoc = await getDoc(doc(db, "test_results", uid));
+                    if (maybeDoc.exists()) testsCount = 1;
+                }
+            } catch (e) {
+                console.warn("test_results count failed:", e);
+            }
+            document.getElementById('tests-completed').textContent = testsCount;
+
+            // 2) Kasb tavsiyalari
+            let recCount = 0;
+            try {
+                const recQ = query(collection(db, "recommendations"), where("userId", "==", uid));
+                const recSnap = await getDocs(recQ);
+                recCount = recSnap.size;
+            } catch (e) {
+                console.warn("recommendations count failed (maybe collection missing):", e);
+            }
+            document.getElementById('career-recommendations').textContent = recCount;
+
+            // 3) Ish o'rinlari (arizalar)
+            let jobsCount = 0;
+            try {
+                const jobsQ = query(collection(db, "jobApplications"), where("userId", "==", uid));
+                const jobsSnap = await getDocs(jobsQ);
+                jobsCount = jobsSnap.size;
+            } catch (e) {
+                console.warn("jobApplications count failed (maybe collection missing):", e);
+            }
+            document.getElementById('jobs-applied').textContent = jobsCount;
+
+            // (Optional) update profile completeness again if you want it to consider stats:
+            // calculateCompleteness(currentUserData)  // already called in updateUI
+
+        } catch (err) {
+            console.error("updateStatsForUser error:", err);
+        }
+    }
+    // ---------- END stats updater ----------
+
+    onAuthStateChanged(auth, async (user) => {
+        if (user) {
+            userId = user.uid;
+            document.getElementById('user-email-display').textContent = user.email;
+            document.getElementById('user-email-full').textContent = user.email;
+            
+            const profileRef = doc(db, "users", userId);
+            const docSnap = await getDoc(profileRef);
+            
+            if (docSnap.exists()) {
+                updateUI(docSnap.data());
+            } else {
+                const defaultUserData = {
+                    fullName: null,
+                    phoneNumber: null,
+                    location: null,
+                    birthDate: null,
+                    biography: null,
+                    photoURL: null,
+                    testsCompleted: 0,
+                    careerRecommendations: 0,
+                    jobsApplied: 0
+                };
+                await setDoc(profileRef, defaultUserData);
+                updateUI(defaultUserData);
+            }
+
+            // call stats updater (important)
+            updateStatsForUser(userId);
+
+        } else {
+            window.location.href = "login.html";
+        }
+    });
+
+    const toggleEditMode = () => {
+        isEditMode = !isEditMode;
+        const editBtn = document.getElementById('edit-profile-btn');
+        
+        const spans = document.querySelectorAll('.info-item span, .info-item p');
+        const inputs = document.querySelectorAll('.info-item input, .info-item textarea');
+        
+        if (isEditMode) {
+            editBtn.textContent = "Saqlash";
+            spans.forEach(span => { span.style.display = 'none'; });
+            inputs.forEach(input => {
+                input.style.display = 'block';
+                const spanId = input.id.replace('-input', '-span');
+                const spanElement = document.getElementById(spanId);
+                if (spanElement && spanElement.textContent.trim() !== "Ism va familiya kiritilmagan" && spanElement.textContent.trim() !== "Telefon raqami kiritilmagan" && spanElement.textContent.trim() !== "Joylashuv kiritilmagan" && spanElement.textContent.trim() !== "Tug'ilgan sana kiritilmagan" && spanElement.textContent.trim() !== "Biografiya kiritilmagan") {
+                    input.value = spanElement.textContent.trim();
+                } else {
+                    input.value = '';
+                }
+            });
+        } else {
+            editBtn.textContent = "Tahrirlash";
+            spans.forEach(span => { span.style.display = 'block'; });
+            inputs.forEach(input => { input.style.display = 'none'; });
+        }
+    };
+
+    const saveChanges = async () => {
+        const fullName = document.getElementById('full-name-input').value.trim();
+        const phoneNumber = document.getElementById('phone-number-input').value.trim();
+        const location = document.getElementById('location-input').value.trim();
+        const birthDate = document.getElementById('birth-date-input').value;
+        const biography = document.getElementById('biography-input').value.trim();
+
+        if (userId) {
+            const profileRef = doc(db, "users", userId);
+            await setDoc(profileRef, {
+                fullName: fullName || null,
+                phoneNumber: phoneNumber || null,
+                location: location || null,
+                birthDate: birthDate || null,
+                biography: biography || null
+            }, { merge: true });
+            alert("Ma'lumotlar saqlandi!");
+            location.reload();
+        }
+    };
+
+    document.getElementById('edit-profile-btn').addEventListener('click', () => {
+        if (isEditMode) {
+            saveChanges();
+        } else {
+            toggleEditMode();
+        }
+    });
+
+    document.getElementById('upload-input').addEventListener('change', async (e) => {
+        const file = e.target.files[0];
+        if (!file) return;
+
+        const formData = new FormData();
+        formData.append("file", file);
+        formData.append("upload_preset", CLOUDINARY_UPLOAD_PRESET);
+
+        try {
+            const response = await fetch(`https://api.cloudinary.com/v1_1/${CLOUDINARY_CLOUD_NAME}/image/upload`, {
+                method: 'POST',
+                body: formData
+            });
+            const data = await response.json();
+            
+            if (data.secure_url) {
+                const photoURL = data.secure_url;
+                const profileRef = doc(db, "users", userId);
+                await setDoc(profileRef, { photoURL: photoURL }, { merge: true });
+                alert("Rasm muvaffaqiyatli yuklandi!");
+                location.reload();
+            } else {
+                alert("Rasm yuklashda xato yuz berdi!");
+                console.error("Cloudinary xatosi:", data);
+            }
+        } catch (error) {
+            alert("Rasm yuklashda xato yuz berdi!");
+            console.error("Fetch xatosi:", error);
+        }
+    });
+
+    document.getElementById('delete-image-btn').addEventListener('click', async () => {
+        if (userId) {
+            const profileRef = doc(db, "users", userId);
+            await setDoc(profileRef, { photoURL: null }, { merge: true });
+            alert("Rasm o'chirildi!");
+            location.reload();
+        }
+    });
+
+    const profileBtn = document.getElementById('profile-btn');
+    const profileDropdown = document.getElementById('profile-dropdown');
+    profileBtn.addEventListener('click', () => {
+        profileDropdown.classList.toggle('active');
+    });
+
+    const logoutBtn = document.getElementById('logout-btn');
+    logoutBtn.addEventListener('click', (e) => {
+        e.preventDefault();
+        signOut(auth).then(() => {
+            window.location.href = "login.html";
+        }).catch((error) => {
+            console.error("Logoutda xato:", error);
+            alert("Tizimdan chiqishda xato yuz berdi.");
+        });
+    });
+    
+    const menuToggle = document.getElementById('menu-toggle');
+    const sideNav = document.getElementById('side-nav');
+    const mainContent = document.getElementById('main-content-container');
+    
+    menuToggle.addEventListener('click', () => {
+        sideNav.classList.toggle('active');
+        mainContent.classList.toggle('menu-open');
+    });
+
+    if (typeof injectSpeedInsights === 'function') {
+        injectSpeedInsights();
+    }
+</script>
 
     <script type="module" src="/role-router.js"></script>
 </body>
