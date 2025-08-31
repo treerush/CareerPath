@@ -13,7 +13,7 @@ Loyiha faol rivojlantirilmoqda, shuning uchun faqat eng so‘nggi barqaror versi
 
 Agar siz CareerPath platformasida xavfsizlik bilan bog‘liq muammo topsangiz:
 
-- Email orqali bog‘laning: **murodbek.tuychiyev@example.com**  
+- Email orqali bog‘laning: **murodbektuychiyev83@gmail.com**  
 - Yoki GitHub’dagi **Issues** bo‘limida maxfiy ravishda xabar qoldiring  
 
 Biz odatda **48 soat ichida** javob beramiz va muammo tasdiqlansa, imkon qadar tezkorlik bilan tuzatamiz.  
