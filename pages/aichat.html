@@ -5,10 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>AI Maslahatchi - CareerPath</title>
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-    <link rel="icon" type="image/jpeg" href="../images/careerpathlogo.jpg">
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap');
-
         :root {
             --primary-color: #4CAF50;
             --secondary-color: #2196F3;
@@ -19,7 +17,6 @@
             --menu-bg: #2d3436;
             --border-color: #ddd;
         }
-
         body {
             font-family: 'Poppins', sans-serif;
             margin: 0;
@@ -29,7 +26,6 @@
             background: var(--background-color);
             color: var(--text-color);
         }
-
         .side-nav {
             position: fixed;
             top: 0;
@@ -43,11 +39,9 @@
             box-shadow: 2px 0 5px rgba(0, 0, 0, 0.3);
             z-index: 20;
         }
-
         .side-nav.active {
             left: 0;
         }
-        
         .side-nav a {
             display: flex;
             align-items: center;
@@ -57,15 +51,12 @@
             font-weight: 500;
             transition: background-color 0.3s ease;
         }
-        
         .side-nav a:hover {
             background-color: #444;
         }
-        
         .side-nav a .material-icons {
             margin-right: 15px;
         }
-
         .side-nav a .material-icons.ai-icon {
             display: inline-flex; 
             align-items: center; 
@@ -80,18 +71,15 @@
             margin-left: -20px; 
             margin-right: 34px; 
         }
-
         .main-content-container {
             flex-grow: 1;
             padding: 20px;
             margin-left: 0;
             transition: margin-left 0.3s ease;
         }
-
         .main-content-container.menu-open {
             margin-left: 250px;
         }
-        
         .header {
             background-color: var(--primary-color);
             color: var(--light-text-color);
@@ -101,19 +89,16 @@
             align-items: center;
             box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
         }
-
         .header h1 {
             margin: 0;
             font-size: 1.5em;
         }
-        
         .menu-toggle {
             display: flex;
             flex-direction: column;
             gap: 5px;
             cursor: pointer;
         }
-
         .menu-toggle span {
             display: block;
             width: 25px;
@@ -121,7 +106,6 @@
             background-color: var(--light-text-color);
             transition: transform 0.3s ease;
         }
-
         .menu-toggle.active span:nth-child(1) {
             transform: rotate(45deg) translate(5px, 5px);
         }
@@ -131,7 +115,6 @@
         .menu-toggle.active span:nth-child(3) {
             transform: rotate(-45deg) translate(5px, -5px);
         }
-        
         .container {
             max-width: 900px;
             margin: 20px auto;
@@ -140,7 +123,6 @@
             border-radius: 15px;
             box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
         }
-        
         .chat-container {
             height: 60vh;
             display: flex;
@@ -148,15 +130,14 @@
             border: 1px solid var(--border-color);
             border-radius: 10px;
             overflow: hidden;
+            position: relative;
         }
-        
         .chat-messages {
             flex-grow: 1;
             padding: 20px;
             overflow-y: auto;
             background-color: var(--background-color);
         }
-        
         .message-row {
             display: flex;
             margin-bottom: 15px;
@@ -167,7 +148,6 @@
         .message-row.ai {
             justify-content: flex-start;
         }
-        
         .message-bubble {
             max-width: 70%;
             padding: 10px 15px;
@@ -175,7 +155,6 @@
             line-height: 1.4;
             font-size: 0.9em;
         }
-        
         .message-row.user .message-bubble {
             background-color: var(--secondary-color);
             color: var(--light-text-color);
@@ -186,13 +165,11 @@
             border: 1px solid var(--border-color);
             border-bottom-left-radius: 2px;
         }
-        
         .chat-input-bar {
             display: flex;
             padding: 10px;
             border-top: 1px solid var(--border-color);
         }
-        
         .chat-input-bar input {
             flex-grow: 1;
             padding: 10px;
@@ -201,7 +178,6 @@
             outline: none;
             font-family: 'Poppins', sans-serif;
         }
-        
         .chat-input-bar button {
             background-color: var(--primary-color);
             color: var(--light-text-color);
@@ -211,7 +187,6 @@
             margin-left: 10px;
             cursor: pointer;
         }
-        
         .chat-input-bar button:hover {
             background-color: #45a049;
         }
@@ -221,7 +196,6 @@
             font-size: 2em;
             color: var(--primary-color);
         }
-        
         @keyframes loading-blink {
             0% { opacity: 0.2; }
             20% { opacity: 1; }
@@ -257,7 +231,7 @@
             <h1>CareerPath</h1>
             <div class="profile-menu">
                 <button class="profile-btn" id="profile-btn">
-                    <span id="user-email-display">foydalanuvchi@gmail.com<</span> ▼
+                    <span id="user-email-display">...</span> ▼
                 </button>
                 <div class="profile-dropdown" id="profile-dropdown">
                     <a href="#" id="logout-link" class="logout-link">Tizimdan chiqish</a>
@@ -267,7 +241,6 @@
 
         <div class="container">
             <h2 class="test-title">AI Maslahatchi</h2>
-
             <div class="chat-container">
                 <div class="chat-messages" id="chat-messages">
                     <div class="message-row ai">
@@ -284,14 +257,13 @@
             </div>
         </div>
     </div>
-
+    
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/12.2.1/firebase-app.js";
         import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/12.2.1/firebase-auth.js";
-        import { getFirestore, collection, addDoc, query, orderBy, limit, getDocs } from "https://www.gstatic.com/firebasejs/12.2.1/firebase-firestore.js";
+        import { getFirestore } from "https://www.gstatic.com/firebasejs/12.2.1/firebase-firestore.js";
         
-        const API_KEY = "AIzaSyAVYsRTfnBz12-Eu50s0TswMNMv-irk7n0"; 
-        const API_URL = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-05-20:generateContent?key=${API_KEY}`;
+        // Bu yerda API kaliti o'chirilgan, chunki u frontenda bo'lmasligi kerak
         
         const firebaseConfig = {
             apiKey: "AIzaSyA86zhSVi4FSw-GvFBdOZsCPaHMS67XA78",
@@ -305,8 +277,7 @@
         const auth = getAuth(app);
         const db = getFirestore(app);
         
-        let currentUserId = null;
-        let chatHistory = [];
+        let chatHistory = []; 
 
         const chatMessages = document.getElementById('chat-messages');
         const chatInput = document.getElementById('chat-input');
@@ -324,75 +295,48 @@
             chatMessages.scrollTop = chatMessages.scrollHeight;
         };
 
-        const fetchChatHistory = async (userId) => {
-            const chatsRef = collection(db, `users/${userId}/chats`);
-            const q = query(chatsRef, orderBy('createdAt', 'desc'), limit(10));
-            const querySnapshot = await getDocs(q);
-            
-            chatHistory = [];
-            querySnapshot.docs.reverse().forEach(doc => {
-                chatHistory.push(doc.data().message);
-            });
-            
-            chatMessages.innerHTML = '';
-            chatHistory.forEach(msg => {
-                appendMessage(msg.text, msg.role);
-            });
-            
-            if (chatHistory.length === 0) {
-                appendMessage("Salom! Men CareerPath AI Maslahatchisi. Sizga qanday yordam bera olaman?", 'ai');
-            }
-        };
-
-        const saveMessage = async (message) => {
-            if (!currentUserId) return;
-            const chatsRef = collection(db, `users/${currentUserId}/chats`);
-            await addDoc(chatsRef, {
-                message,
-                createdAt: new Date(),
-            });
-        };
+        const initialAIMessage = "Salom! Men CareerPath AI Maslahatchisi. Sizga qanday yordam bera olaman?";
+        appendMessage(initialAIMessage, 'ai');
+        chatHistory.push({ role: 'model', parts: [{ text: initialAIMessage }] });
 
         const sendMessage = async () => {
             const userMessageText = chatInput.value.trim();
             if (userMessageText === '') return;
-
-            const userMessage = { role: 'user', text: userMessageText };
-            appendMessage(userMessage.text, userMessage.role);
-            chatHistory.push(userMessage);
+            
+            appendMessage(userMessageText, 'user');
             chatInput.value = '';
             
             loadingDots.style.display = 'flex';
             sendBtn.disabled = true;
 
             try {
-                await saveMessage(userMessage);
-
-                const payload = {
-                    contents: chatHistory.map(msg => ({ role: msg.role === 'model' ? 'model' : 'user', parts: [{ text: msg.text }] })),
-                };
-                
-                const response = await fetch(API_URL, {
+                // Front-end serverless funksiyaga so'rov yuborish
+                const response = await fetch('/api/chat', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify(payload)
+                    body: JSON.stringify({
+                        chatHistory: chatHistory,
+                        userMessage: userMessageText
+                    })
                 });
-                const result = await response.json();
-                const aiResponseText = result.candidates?.[0]?.content?.parts?.[0]?.text;
                 
-                if (aiResponseText) {
-                    const aiResponse = { role: 'model', text: aiResponseText };
-                    appendMessage(aiResponse.text, aiResponse.role);
-                    chatHistory.push(aiResponse);
-                    await saveMessage(aiResponse);
+                if (!response.ok) {
+                    throw new Error(`Serverdan xato: ${response.status}`);
+                }
+                
+                const result = await response.json();
+                const aiResponse = result.response;
+                
+                if (aiResponse) {
+                    appendMessage(aiResponse, 'ai');
+                    chatHistory.push({ role: 'user', parts: [{ text: userMessageText }] });
+                    chatHistory.push({ role: 'model', parts: [{ text: aiResponse }] });
                 } else {
-                    const errorMessage = "Kechirasiz, javob olishda xatolik yuz berdi.";
-                    appendMessage(errorMessage, 'ai');
+                    appendMessage("Kechirasiz, javob olishda xatolik yuz berdi. (AI dan bo'sh javob)", 'ai');
                 }
             } catch (error) {
-                console.error("Gemini API xatosi:", error);
-                const errorMessage = "Kechirasiz, xatolik yuz berdi. Iltimos, keyinroq urinib ko'ring.";
-                appendMessage(errorMessage, 'ai');
+                console.error("Ulanish xatosi:", error);
+                appendMessage("Kechirasiz, ulanishda xatolik yuz berdi. Iltimos, keyinroq urinib ko'ring.", 'ai');
             } finally {
                 loadingDots.style.display = 'none';
                 sendBtn.disabled = false;
@@ -406,11 +350,9 @@
             }
         });
         
-        onAuthStateChanged(auth, async (user) => {
+        onAuthStateChanged(auth, (user) => {
             if (user) {
-                currentUserId = user.uid;
                 document.getElementById('user-email-display').textContent = user.email;
-                await fetchChatHistory(currentUserId);
             } else {
                 window.location.href = "login.html";
             }
@@ -439,7 +381,6 @@
             mainContent.classList.toggle('menu-open');
         });
     </script>
-
     <script type="module" src="/role-router.js"></script>
 </body>
 </html>

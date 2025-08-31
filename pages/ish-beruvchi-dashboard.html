@@ -20,6 +20,7 @@
             --border-color: #ddd;
         }
 
+        *{box-sizing:border-box}
         body {
             font-family: 'Poppins', sans-serif;
             margin: 0;
@@ -175,6 +176,7 @@
             border-radius: 10px;
             box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
             transition: transform 0.3s ease;
+            position: relative;
         }
         .job-card:hover {
             transform: translateY(-5px);
@@ -200,8 +202,11 @@
             border: none;
             cursor: pointer;
         }
+        .job-card .job-actions button.delete {
+            background-color: #f44336;
+        }
         .job-card .job-actions button:hover {
-            background-color: #45a049;
+            opacity: .95;
         }
 
         .job-form-container {
@@ -218,7 +223,7 @@
             flex-direction: column;
             gap: 15px;
         }
-        .job-form-container input, .job-form-container textarea {
+        .job-form-container input, .job-form-container textarea, .job-form-container select {
             padding: 10px;
             border: 1px solid var(--border-color);
             border-radius: 8px;
@@ -226,6 +231,7 @@
         }
         .job-form-container textarea {
             resize: vertical;
+            min-height: 120px;
         }
         .job-form-container button {
             background-color: var(--primary-color);
@@ -235,6 +241,28 @@
             border-radius: 8px;
             cursor: pointer;
         }
+        .job-form-container .file-input-container {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .job-form-container .file-input-container input[type="file"] {
+            flex-grow: 1;
+        }
+        .job-form-container .file-input-container button {
+            padding: 10px 15px;
+            font-size: 0.9em;
+            border-radius: 8px;
+        }
+        .job-card img.logo {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            object-fit: cover;
+            position: absolute;
+            top: 20px;
+            right: 20px;
+        }
     </style>
 </head>
 <body>
@@ -243,7 +271,7 @@
         <a href="dashboard.html"><span class="material-icons">person</span> Mening profilim</a>
         <a href="tests.html"><span class="material-icons">menu_book</span> Shaxsiyat testi</a>
         <a href="aichat.html"><span class="material-icons ai-icon">gem_spark</span>AI Maslahatchi</a>
-        <a href="jobs.html"><span class="material-icons">work</span> Ish topish</a>
+        <a href="#" id="jobs-link"><span class="material-icons">work</span> Ish topish</a>
     </div>
 
     <div class="main-content-container" id="main-content-container">
@@ -274,9 +302,14 @@
                 <button id="add-job-btn">Yangi e'lon joylashtirish</button>
             </div>
 
-            <div class="job-form-container" id="job-form-container">
-                <h3>Yangi ish e'lonini joylashtirish</h3>
+            <div class="job-form-container" id="job-form-container" aria-hidden="true">
+                <h3 id="job-form-title">Yangi ish e'lonini joylashtirish</h3>
                 <form id="job-form">
+                    <input type="hidden" id="job-logo-url">
+                    <div class="file-input-container">
+                        <input type="file" id="job-logo-upload" accept="image/*">
+                        <button type="button" id="upload-logo-btn">Logoni yuklash</button>
+                    </div>
                     <input type="text" id="job-title" placeholder="Ish nomi" required>
                     <input type="text" id="job-company" placeholder="Kompaniya nomi" required>
                     <input type="text" id="job-location" placeholder="Joylashuv" required>
@@ -287,11 +320,12 @@
                         <option value="remote">Masofaviy ish</option>
                     </select>
                     <textarea id="job-description" placeholder="Ish haqida batafsil ma'lumot" required></textarea>
-                    <button type="submit">E'lonni saqlash</button>
+                    <button type="submit" id="job-save-btn">E'lonni saqlash</button>
+                    <button type="button" id="job-cancel-btn" style="background:#ccc;color:#000;">Bekor qilish</button>
                 </form>
             </div>
 
-            <div class="job-list" id="job-list">
+            <div class="job-list" id="job-list" aria-live="polite">
             </div>
         </div>
     </div>
@@ -299,8 +333,13 @@
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/12.2.1/firebase-app.js";
         import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/12.2.1/firebase-auth.js";
-        import { getFirestore, collection, getDocs, addDoc, query, where } from "https://www.gstatic.com/firebasejs/12.2.1/firebase-firestore.js";
+        import { 
+            getFirestore, collection, getDocs, addDoc, query, where, doc, getDoc, updateDoc, deleteDoc, serverTimestamp 
+        } from "https://www.gstatic.com/firebasejs/12.2.1/firebase-firestore.js";
         
+        const CLOUDINARY_CLOUD_NAME = "djhm1elly"; 
+        const CLOUDINARY_UPLOAD_PRESET = "careerpath"; 
+
         const firebaseConfig = {
             apiKey: "AIzaSyA86zhSVi4FSw-GvFBdOZsCPaHMS67XA78",
             authDomain: "carrer-path-a5810.firebaseapp.com",
@@ -314,132 +353,276 @@
         const db = getFirestore(app);
 
         let currentUser = null;
+        let editingJobId = null;
 
-        const fetchJobs = async () => {
-            const jobListContainer = document.getElementById('job-list');
-            jobListContainer.innerHTML = '<p style="text-align:center;">Ish e\'lonlari yuklanmoqda...</p>';
-            
-            const jobsColRef = collection(db, "jobs");
-            const q = query(jobsColRef, where("employerId", "==", currentUser.uid));
-            const jobsSnapshot = await getDocs(q);
-            
-            const jobs = [];
-            jobsSnapshot.forEach(doc => {
-                jobs.push({ id: doc.id, ...doc.data() });
-            });
-            
-            renderJobs(jobs);
-        };
+        const userEmailDisplay = document.getElementById('user-email-display');
+        const addJobBtn = document.getElementById('add-job-btn');
+        const jobFormContainer = document.getElementById('job-form-container');
+        const jobForm = document.getElementById('job-form');
+        const jobList = document.getElementById('job-list');
+        const jobFormTitle = document.getElementById('job-form-title');
+        const jobSaveBtn = document.getElementById('job-save-btn');
+        const jobCancelBtn = document.getElementById('job-cancel-btn');
 
-        const renderJobs = (jobs) => {
-            const jobListContainer = document.getElementById('job-list');
-            jobListContainer.innerHTML = '';
-            if (jobs.length === 0) {
-                jobListContainer.innerHTML = '<p style="text-align:center;">Siz hali ish e\'lonlari joylashtirmagansiz.</p>';
+        const inputTitle = document.getElementById('job-title');
+        const inputCompany = document.getElementById('job-company');
+        const inputLocation = document.getElementById('job-location');
+        const inputType = document.getElementById('job-type');
+        const inputDescription = document.getElementById('job-description');
+        const inputLogoUpload = document.getElementById('job-logo-upload');
+        const inputLogoUrl = document.getElementById('job-logo-url');
+        
+        function escapeHtml(str){
+            if (!str) return '';
+            return String(str)
+                .replaceAll('&','&amp;')
+                .replaceAll('<','&lt;')
+                .replaceAll('>','&gt;')
+                .replaceAll('"','&quot;')
+                .replaceAll("'",'&#039;');
+        }
+
+        function showJobForm(edit=false){
+            jobFormContainer.style.display = 'block';
+            jobFormContainer.setAttribute('aria-hidden','false');
+            jobFormTitle.textContent = edit ? "E'lonni tahrirlash" : "Yangi e'lon joylashtirish";
+            jobSaveBtn.textContent = edit ? "Saqlash (yangilash)" : "E'lonni saqlash";
+            inputTitle.focus();
+        }
+        function hideJobForm(){
+            jobFormContainer.style.display = 'none';
+            jobFormContainer.setAttribute('aria-hidden','true');
+            jobForm.reset();
+            editingJobId = null;
+            jobSaveBtn.textContent = "E'lonni saqlash";
+            jobFormTitle.textContent = "Yangi e'lon joylashtirish";
+            inputLogoUrl.value = '';
+        }
+
+        async function fetchJobs(){
+            if (!currentUser) return;
+            jobList.innerHTML = '<p style="text-align:center;">Ish e`lonlari yuklanmoqda...</p>';
+            try {
+                const jobsColRef = collection(db, "jobs");
+                const q = query(jobsColRef, where("employerId", "==", currentUser.uid));
+                const snap = await getDocs(q);
+                const jobs = [];
+                snap.forEach(d => jobs.push({ id: d.id, ...d.data() }));
+                
+                jobs.sort((a,b)=>{
+                    const ta = a.createdAt && a.createdAt.toMillis ? a.createdAt.toMillis() : 0;
+                    const tb = b.createdAt && b.createdAt.toMillis ? b.createdAt.toMillis() : 0;
+                    return tb - ta;
+                });
+                renderJobs(jobs);
+            } catch(err) {
+                console.error("fetchJobs error", err);
+                jobList.innerHTML = '<p style="text-align:center;color:#f00;">Ish e`lonlarini yuklashda xatolik yuz berdi.</p>';
             }
-            jobs.forEach(job => {
-                const jobCard = document.createElement('div');
-                jobCard.className = 'job-card';
-                jobCard.innerHTML = `
-                    <h3>${job.title}</h3>
-                    <p><strong>Kompaniya:</strong> ${job.company}</p>
-                    <p><strong>Ish turi:</strong> ${job.type}</p>
-                    <p><strong>Joylashuv:</strong> ${job.location}</p>
-                    <p>${job.description}</p>
+        }
+
+        function renderJobs(jobs){
+            jobList.innerHTML = '';
+            if (!jobs.length){
+                jobList.innerHTML = '<p style="text-align:center;">Siz hali ish e`lonlari joylashtirmagansiz.</p>';
+                return;
+            }
+            jobs.forEach(job=>{
+                const card = document.createElement('div');
+                card.className = 'job-card';
+                card.innerHTML = `
+                    <div style="display:flex; align-items:center; gap:15px;">
+                        ${job.logoUrl ? `<img src="${escapeHtml(job.logoUrl)}" alt="Kompaniya logosi" style="width:50px;height:50px;border-radius:50%;object-fit:cover;">` : `<div style="width:50px;height:50px;background:#ccc;border-radius:50%;"></div>`}
+                        <div>
+                            <h3>${escapeHtml(job.title)}</h3>
+                            <p style="margin:0;"><strong>Kompaniya:</strong> ${escapeHtml(job.company)}</p>
+                        </div>
+                    </div>
+                    <p style="margin-top:15px;"><strong>Ish turi:</strong> ${escapeHtml(job.type)}</p>
+                    <p><strong>Joylashuv:</strong> ${escapeHtml(job.location)}</p>
+                    <p>${escapeHtml(job.description)}</p>
                     <div class="job-actions">
-                        <button onclick="editJob('${job.id}')">Tahrirlash</button>
-                        <button onclick="deleteJob('${job.id}')" style="background-color: #f44336;">O'chirish</button>
+                        <button class="edit" data-id="${job.id}">Tahrirlash</button>
+                        <button class="delete" data-id="${job.id}">O'chirish</button>
                     </div>
                 `;
-                jobListContainer.appendChild(jobCard);
+                jobList.appendChild(card);
             });
-        };
-        
-        const showJobForm = () => {
-            document.getElementById('job-form-container').style.display = 'block';
-        };
 
-        document.getElementById('add-job-btn').addEventListener('click', showJobForm);
+            jobList.querySelectorAll('button.edit').forEach(btn=>{
+                btn.addEventListener('click', async (e)=>{
+                    const id = btn.dataset.id;
+                    await beginEditJob(id);
+                });
+            });
+            jobList.querySelectorAll('button.delete').forEach(btn=>{
+                btn.addEventListener('click', async (e)=>{
+                    const id = btn.dataset.id;
+                    if (!confirm("Haqiqatan ham bu e'lonni o'chirmoqchimisiz?")) return;
+                    try {
+                        await deleteDoc(doc(db, "jobs", id));
+                        alert("E'lon o'chirildi.");
+                        fetchJobs();
+                    } catch(err){
+                        console.error("delete error", err);
+                        alert("O'chirishda xato yuz berdi.");
+                    }
+                });
+            });
+        }
 
-        document.getElementById('job-form').addEventListener('submit', async (e) => {
-            e.preventDefault();
-            const jobData = {
-                title: document.getElementById('job-title').value,
-                company: document.getElementById('job-company').value,
-                location: document.getElementById('job-location').value,
-                type: document.getElementById('job-type').value,
-                description: document.getElementById('job-description').value,
-                employerId: currentUser.uid,
-                createdAt: new Date()
-            };
-            
+        async function beginEditJob(jobId){
             try {
-                const jobsCol = collection(db, "jobs");
-                await addDoc(jobsCol, jobData);
-                alert("Yangi ish e'loni muvaffaqiyatli joylashtirildi!");
-                document.getElementById('job-form').reset();
-                document.getElementById('job-form-container').style.display = 'none';
+                const jobSnap = await getDoc(doc(db, "jobs", jobId));
+                if (!jobSnap.exists()){
+                    alert("E'lon topilmadi.");
+                    return;
+                }
+                const data = jobSnap.data();
+                inputTitle.value = data.title || '';
+                inputCompany.value = data.company || '';
+                inputLocation.value = data.location || '';
+                inputType.value = data.type || '';
+                inputDescription.value = data.description || '';
+                inputLogoUrl.value = data.logoUrl || ''; // Logo URL'ni saqlash
+                editingJobId = jobId;
+                showJobForm(true);
+            } catch(err){
+                console.error("beginEditJob err", err);
+                alert("E'lonni yuklashda xato yuz berdi.");
+            }
+        }
+
+        jobForm.addEventListener('submit', async (e)=>{
+            e.preventDefault();
+            if (!currentUser) { alert("Iltimos, tizimga kiring."); return; }
+
+            const payload = {
+                title: inputTitle.value.trim(),
+                company: inputCompany.value.trim(),
+                location: inputLocation.value.trim(),
+                type: inputType.value,
+                description: inputDescription.value.trim(),
+                logoUrl: inputLogoUrl.value || null, // Logo URL'ni qo'shish
+            };
+            if (!payload.title || !payload.company){
+                alert("Iltimos, sarlavha va kompaniya maydonlarini to'ldiring.");
+                return;
+            }
+
+            try {
+                if (editingJobId){
+                    await updateDoc(doc(db, "jobs", editingJobId), {
+                        ...payload,
+                        updatedAt: serverTimestamp()
+                    });
+                    alert("E'lon muvaffaqiyatli yangilandi.");
+                } else {
+                    await addDoc(collection(db, "jobs"), {
+                        ...payload,
+                        employerId: currentUser.uid,
+                        createdAt: serverTimestamp()
+                    });
+                    alert("Yangi ish e'loni muvaffaqiyatli joylashtirildi!");
+                }
+                hideJobForm();
                 fetchJobs();
-            } catch (error) {
-                console.error("E'lonni saqlashda xato:", error);
+            } catch(err){
+                console.error("save job err", err);
                 alert("E'lonni saqlashda xato yuz berdi.");
             }
         });
-        
-        window.editJob = (jobId) => {
-            alert(`Siz ${jobId} ID raqamli e'lonni tahrirlamoqchisiz.`);
-            // Bu yerda tahrirlash funksiyasi qo'shiladi
-        };
 
-        window.deleteJob = (jobId) => {
-            if (confirm("Haqiqatan ham bu e'lonni o'chirmoqchimisiz?")) {
-                alert(`Siz ${jobId} ID raqamli e'lonni o'chirdingiz.`);
-                // Bu yerda o'chirish funksiyasi qo'shiladi
-            }
-        };
+        jobCancelBtn.addEventListener('click', (e)=>{
+            hideJobForm();
+        });
 
-        onAuthStateChanged(auth, async (user) => {
-            if (user) {
-                const userProfileRef = doc(db, "users", user.uid);
-                const userDoc = await getDoc(userProfileRef);
-                if (userDoc.exists() && userDoc.data().userType === 'employer') {
-                    currentUser = user;
-                    document.getElementById('user-email-display').textContent = user.email;
-                    await fetchJobs();
+        addJobBtn.addEventListener('click', ()=>{
+            editingJobId = null;
+            jobForm.reset();
+            showJobForm(false);
+        });
+
+        inputLogoUpload.addEventListener('change', async (e)=>{
+            const file = e.target.files[0];
+            if (!file) return;
+
+            const formData = new FormData();
+            formData.append("file", file);
+            formData.append("upload_preset", CLOUDINARY_UPLOAD_PRESET);
+
+            try {
+                const response = await fetch(`https://api.cloudinary.com/v1_1/${CLOUDINARY_CLOUD_NAME}/image/upload`, {
+                    method: 'POST',
+                    body: formData
+                });
+                const data = await response.json();
+                if (data.secure_url) {
+                    inputLogoUrl.value = data.secure_url;
+                    alert("Logo muvaffaqiyatli yuklandi!");
                 } else {
-                    alert("Siz bu sahifaga kirish huquqiga ega emassiz.");
-                    window.location.href = "careerpath.html";
+                    alert("Logo yuklashda xato yuz berdi!");
+                    console.error("Cloudinary xatosi:", data);
                 }
-            } else {
-                window.location.href = "login.html";
+            } catch (error) {
+                alert("Logo yuklashda xato yuz berdi!");
+                console.error("Fetch xatosi:", error);
             }
         });
 
+        // profile dropdown + logout
         const profileBtn = document.getElementById('profile-btn');
         const profileDropdown = document.getElementById('profile-dropdown');
-        profileBtn.addEventListener('click', (e) => {
+        profileBtn.addEventListener('click', (e)=>{
             e.stopPropagation();
-            profileDropdown.style.display = profileDropdown.style.display === 'none' ? 'block' : 'none';
+            profileDropdown.style.display = profileDropdown.style.display === 'block' ? 'none' : 'block';
         });
-        document.addEventListener('click', (e) => {
-            if (profileBtn && !profileBtn.contains(e.target)) profileDropdown.style.display = 'none';
+        document.addEventListener('click', (e)=>{
+            if (!profileBtn.contains(e.target)) profileDropdown.style.display = 'none';
+        });
+        const logoutLink = document.getElementById('logout-link');
+        logoutLink.addEventListener('click', async (e)=>{
+            e.preventDefault();
+            try {
+                await signOut(auth);
+                window.location.href = "login.html";
+            } catch(err){
+                console.error("logout err", err);
+                alert("Chiqishda xato yuz berdi.");
+            }
         });
 
-        const logoutLink = document.getElementById('logout-link');
-        logoutLink.addEventListener('click', (e) => {
-            e.preventDefault();
-            signOut(auth).then(() => {
-                window.location.href = "login.html";
-            });
-        });
-        
+        // menu toggle
         const menuToggle = document.getElementById('menu-toggle');
         const sideNav = document.getElementById('side-nav');
         const mainContent = document.getElementById('main-content-container');
-        
         menuToggle.addEventListener('click', () => {
             sideNav.classList.toggle('active');
             mainContent.classList.toggle('menu-open');
+        });
+
+        // Auth state: tekshiradi va role 'employer' bo'lsa fetchJobs
+        onAuthStateChanged(auth, async (user) => {
+            if (!user) {
+                window.location.href = "login.html";
+                return;
+            }
+            currentUser = user;
+            userEmailDisplay.textContent = user.displayName ? user.displayName : (user.email || 'Hisob');
+
+            try {
+                const userDoc = await getDoc(doc(db, "users", user.uid));
+                const role = userDoc.exists() ? (userDoc.data().role || userDoc.data().userType || 'user') : 'user';
+                if (role !== 'employer') {
+                    alert("Siz bu sahifaga kirish huquqiga ega emassiz.");
+                    window.location.href = "careerpath.html";
+                    return;
+                }
+            } catch(err){
+                console.error("role check err", err);
+            }
+
+            await fetchJobs();
         });
     </script>
 </body>
