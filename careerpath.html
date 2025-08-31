@@ -89,10 +89,11 @@
 </head>
 <body>
     <div class="side-nav" id="side-nav">
-        <a href="dashboard.html"><span class="material-icons">home</span> Asosiy sahifa</a>
-        <a href="tests.html"><span class="material-icons">menu_book</span> Shaxsiyat testi</a>
-        <a href="aichat.html"><span class="material-icons">chat</span> AI Maslahatchi</a>
-        <a href="#" id="jobs-link"><span class="material-icons">work</span> Ish topish</a>
+        <a href="./dashboard.html"><span class="material-icons">home</span> Asosiy sahifa</a>
+        <a href="./dashboard.html"><span class="material-icons">person</span> Mening profilim</a>
+        <a href="./tests.html"><span class="material-icons">menu_book</span> Shaxsiyat testi</a>
+        <a href="./aichat.html"><span class="material-icons ai-icon">gem_spark</span>AI Maslahatchi</a>
+        <a href="./jobs.html"><span class="material-icons">work</span> Ish topish</a>
     </div>
 
     <div class="main-content-container" id="main-content-container">
@@ -130,7 +131,7 @@
                 <div class="card">
                     <h3>💼 Ish topish</h3>
                     <p>Sizning ko'nikmalaringizga mos keladigan ish e'lonlarini toping.</p>
-                    <a href="#" class="cta-link" id="jobs-cta-link">Ish qidirish</a>
+                    <a href="./jobs.html" class="cta-link" id="jobs-cta-link">Ish qidirish</a>
                 </div>
             </div>
             
@@ -169,37 +170,30 @@
         const auth = getAuth(app);
         const db = getFirestore(app);
 
-        // UI elements
         const jobsLink = document.getElementById('jobs-link');
         const jobsCtaLink = document.getElementById('jobs-cta-link');
         const userEmailDisplay = document.getElementById('user-email-display');
 
-        // Auth state + role check
         onAuthStateChanged(auth, async (user) => {
             if (!user) {
-                // Not logged in -> redirect to login
                 window.location.href = "login.html";
                 return;
             }
 
             userEmailDisplay.textContent = user.email || 'Foydalanuvchi';
 
-            // Try to read user profile doc and check role (support both 'role' and legacy 'userType')
             try {
                 const userRef = doc(db, "users", user.uid);
                 const userSnap = await getDoc(userRef);
 
-                let role = 'user'; // default
+                let role = 'user';
                 if (userSnap.exists()) {
                     const data = userSnap.data();
-                    // support both field names
                     role = data.role || data.userType || 'user';
                 } else {
-                    // If no doc exists yet, keep default 'user'
                     role = 'user';
                 }
 
-                // set links depending on role
                 if (role === 'employer') {
                     jobsLink.setAttribute('href', 'ish-beruvchi-dashboard.html');
                     jobsCtaLink.setAttribute('href', 'ish-beruvchi-dashboard.html');
@@ -210,13 +204,11 @@
 
             } catch (err) {
                 console.error("Role lookup error:", err);
-                // fallback: point to public jobs page
                 jobsLink.setAttribute('href', 'jobs.html');
                 jobsCtaLink.setAttribute('href', 'jobs.html');
             }
         });
 
-        // Profile dropdown toggle & logout
         const profileBtn = document.getElementById('profile-btn');
         const profileDropdown = document.getElementById('profile-dropdown');
 
@@ -249,10 +241,9 @@
             menuToggle.classList.toggle('active');
         });
 
-        // Counters animation (safe & uses data-target + data-suffix)
         document.addEventListener('DOMContentLoaded', () => {
             const counters = document.querySelectorAll('.small-card h4');
-            const speed = 60; // higher -> slower
+            const speed = 60;
             counters.forEach(counter => {
                 const target = parseInt(counter.getAttribute('data-target')) || 0;
                 const suffix = counter.getAttribute('data-suffix') || '';

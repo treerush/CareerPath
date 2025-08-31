@@ -90,7 +90,6 @@
       <button id="employer-tab" class="tab-button" role="tab" aria-selected="false" aria-controls="employer-form">Ish beruvchi</button>
     </div>
 
-    <!-- Oddiy foydalanuvchi -->
     <div id="user-form" class="tab-content active" role="tabpanel" aria-hidden="false">
       <form id="user-form-element" autocomplete="on">
         <div class="form-group">
@@ -110,7 +109,6 @@
       <p class="note">Allaqachon hisobingiz bormi? <a href="login.html">Tizimga kirish</a></p>
     </div>
 
-    <!-- Ish beruvchi -->
     <div id="employer-form" class="tab-content" role="tabpanel" aria-hidden="true">
       <form id="employer-form-element" autocomplete="on">
         <div class="form-group">
@@ -133,12 +131,10 @@
   </div>
 
   <script type="module">
-    /* Firebase imports (modular) */
     import { initializeApp } from "https://www.gstatic.com/firebasejs/12.2.1/firebase-app.js";
     import { getAuth, createUserWithEmailAndPassword, sendEmailVerification } from "https://www.gstatic.com/firebasejs/12.2.1/firebase-auth.js";
     import { getFirestore, doc, setDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/12.2.1/firebase-firestore.js";
 
-    /* Firebase config - sizniki bilan almashtirmang (allaqachon faylda bor) */
     const firebaseConfig = {
       apiKey: "AIzaSyA86zhSVi4FSw-GvFBdOZsCPaHMS67XA78",
       authDomain: "carrer-path-a5810.firebaseapp.com",
@@ -152,7 +148,6 @@
     const auth = getAuth(app);
     const db = getFirestore(app);
 
-    /* DOM */
     const userTab = document.getElementById('user-tab');
     const employerTab = document.getElementById('employer-tab');
     const userFormContainer = document.getElementById('user-form');
@@ -183,10 +178,8 @@
       else btn.textContent = "Ro'yxatdan o'tish";
     }
 
-    // Action URL for verification links (set in Firebase console too)
     const ACTION_URL = 'https://carrer-path-a5810.firebaseapp.com/__/auth/action';
 
-    /* USER registration (role: user) */
     userRegisterForm.addEventListener('submit', async (e) => {
       e.preventDefault();
       const email = document.getElementById('user-email').value.trim();
@@ -208,10 +201,8 @@
         const cred = await createUserWithEmailAndPassword(auth, email, password);
         const uid = cred.user.uid;
 
-        // send verification email
         await sendEmailVerification(cred.user, { url: ACTION_URL });
 
-        // save profile in Firestore
         await setDoc(doc(db, "users", uid), {
           email,
           role: "user",
@@ -229,7 +220,6 @@
       }
     });
 
-    /* EMPLOYER registration (role: employer) */
     employerRegisterForm.addEventListener('submit', async (e) => {
       e.preventDefault();
       const company = document.getElementById('company-name').value.trim();
@@ -245,10 +235,8 @@
         const cred = await createUserWithEmailAndPassword(auth, email, password);
         const uid = cred.user.uid;
 
-        // send verification email
         await sendEmailVerification(cred.user, { url: ACTION_URL });
 
-        // Create user profile doc with role 'employer' and company
         await setDoc(doc(db, "users", uid), {
           email,
           role: "employer",
