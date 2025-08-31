@@ -17,9 +17,11 @@
         --card-bg:#fff;
         --border-color:#ddd;
     }
+
     *{
         box-sizing:border-box;
     }
+
     body{
         font-family:'Poppins',sans-serif;
         margin:0;
@@ -31,6 +33,7 @@
         color:var(--text-color);
         position:relative;
     }
+
     body::before{
         content:'';
         position:absolute;
@@ -41,16 +44,68 @@
         filter:blur(0.9px) brightness(1);
         z-index:-1;
     }
-  .container{width:100%;max-width:450px;background:var(--card-bg);padding:40px;border-radius:20px;box-shadow:0 10px 30px rgba(0,0,0,0.1)}
-  h2{text-align:center;color:var(--secondary-color);margin-bottom:30px}
-  .form-group{margin-bottom:20px}
-  .form-group label{display:block;margin-bottom:8px;font-weight:500}
-  .form-group input{width:100%;padding:12px;border:1px solid var(--border-color);border-radius:8px;font-family:'Poppins',sans-serif;font-size:1em}
-  .submit-btn{width:100%;padding:15px;background-color:var(--secondary-color);color:var(--light-text-color);border:none;border-radius:8px;font-size:1.1em;font-weight:600;cursor:pointer;transition:background-color .3s}
+
+  .container{
+    width:100%;
+    max-width:450px;
+    background:var(--card-bg);
+    padding:40px;
+    border-radius:20px;
+    box-shadow:0 10px 30px rgba(0,0,0,0.1);
+  }
+
+  h2{
+    text-align:center;
+    color:var(--secondary-color);
+    margin-bottom:30px;
+  }
+
+  .form-group{
+    margin-bottom:20px;
+  }
+
+  .form-group label{
+    display:block;
+    margin-bottom:8px;
+    font-weight:500;
+  }
+
+  .form-group input{
+    width:100%;
+    padding:12px;
+    border:1px solid var(--border-color);
+    border-radius:8px;
+    font-family:'Poppins',sans-serif;
+    font-size:1em;
+  }
+
+  .submit-btn{
+    width:100%;
+    padding:15px;
+    background-color:var(--secondary-color);
+    color:var(--light-text-color);
+    border:none;
+    border-radius:8px;
+    font-size:1.1em;
+    font-weight:600;
+    cursor:pointer;
+    transition:background-color .3s;
+    }
+    
   .submit-btn[disabled]{opacity:.7;cursor:not-allowed}
+
   .submit-btn:hover:not([disabled]){background-color:#1a7bb9}
-  .link{text-align:center;margin-top:20px}
-  .link a{color:var(--primary-color);text-decoration:none;font-weight:600}
+
+  .link{
+    text-align:center;
+    margin-top:20px;
+  }
+
+  .link a{
+    color:var(--primary-color);
+    text-decoration:none;
+    font-weight:600;
+    }
 </style>
 </head>
 <body>
