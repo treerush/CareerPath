@@ -3,10 +3,10 @@
 Agar siz CareerPath platformasidan ilmiy maqola, loyiha yoki prezentatsiyada foydalansangiz, quyidagi ko‘rinishda keltiring:
 
 ## O‘zbekcha:
-CareerPath: Sun’iy intellekt asosida kasbiy yo‘naltirish platformasi. https://career-path-beryl.vercel.app
+CareerPath: Sun’iy intellekt asosida kasbiy yo‘naltirish platformasi: https://careerpath-uz.vercel.app/
 
 ## Inglizcha:
-CareerPath: AI-driven career guidance platform. https://career-path-beryl.vercel.app
+CareerPath: AI-driven career guidance platform: https://careerpath-uz.vercel.app/
 
 ## Tavsiyalar
 - DOI mavjud bo‘lsa, uni ham qo‘shing.  
