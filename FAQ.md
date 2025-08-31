@@ -10,4 +10,4 @@ Google AI Studio’dan API kalitini yarating va `aichat.html` faylidagi `API_KEY
 Firebase Storage yoqilganinga va Database yoqilganini tekshiring.
 
 ### 4. Loyihani qanday ishga tushiraman?
-VS Code’da Live Server orqali yoki biror server orqali. Masalan: `https://vercel.com/` yoki `https://netlify.com/`
+VS Code’da Live Server orqali yoki biror server orqali. Masalan: https://vercel.com/ yoki https://netlify.com/
