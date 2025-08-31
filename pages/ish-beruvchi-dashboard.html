@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Ish beruvchi paneli - CareerPath</title>
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-    <link rel="icon" type="image/jpeg" href="../images/careerpathlogo.jpg">
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap');
 
@@ -256,7 +255,7 @@
             <h1>CareerPath</h1>
             <div class="profile-menu">
                 <button class="profile-btn" id="profile-btn">
-                    <span id="user-email-display">foydalanuvchi@gmail.com<</span> ▼
+                    <span id="user-email-display">...</span> ▼
                 </button>
                 <div class="profile-dropdown" id="profile-dropdown">
                     <a href="#" id="logout-link" class="logout-link">Tizimdan chiqish</a>
@@ -400,9 +399,16 @@
 
         onAuthStateChanged(auth, async (user) => {
             if (user) {
-                currentUser = user;
-                document.getElementById('user-email-display').textContent = user.email;
-                await fetchJobs();
+                const userProfileRef = doc(db, "users", user.uid);
+                const userDoc = await getDoc(userProfileRef);
+                if (userDoc.exists() && userDoc.data().userType === 'employer') {
+                    currentUser = user;
+                    document.getElementById('user-email-display').textContent = user.email;
+                    await fetchJobs();
+                } else {
+                    alert("Siz bu sahifaga kirish huquqiga ega emassiz.");
+                    window.location.href = "careerpath.html";
+                }
             } else {
                 window.location.href = "login.html";
             }

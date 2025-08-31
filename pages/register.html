@@ -1,258 +1,271 @@
 <!DOCTYPE html>
 <html lang="uz">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ro'yxatdan o'tish - CareerPath</title>
-    <link rel="icon" type="image/jpeg" href="../images/careerpathlogo.jpg">
-    <style>
-        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap');
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Ro'yxatdan o'tish - CareerPath</title>
+  <link rel="icon" type="image/jpeg" href="../images/careerpathlogo.jpg">
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap');
 
-        :root {
-            --primary-color: #4CAF50;
-            --secondary-color: #2196F3;
-            --background-color: #f0f2f5;
-            --text-color: #333;
-            --light-text-color: #fff;
-            --card-bg: #fff;
-            --border-color: #ddd;
-        }
+    :root {
+      --primary-color: #4CAF50;
+      --secondary-color: #2196F3;
+      --background-color: #f0f2f5;
+      --text-color: #333;
+      --light-text-color: #fff;
+      --card-bg: #fff;
+      --border-color: #ddd;
+    }
 
-        body {
-            font-family: 'Poppins', sans-serif;
-            margin: 0;
-            padding: 0;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
-            background: var(--background-color);
-            color: var(--text-color);
-        }
+    *{box-sizing:border-box}
+    body {
+      font-family: 'Poppins', sans-serif;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      background: var(--background-color);
+      color: var(--text-color);
+      position: relative;
+    }
 
-        body::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: url('../images/entrance-bg.jpg') no-repeat center center/cover;
-            filter: blur(1px) brightness(0.6); /* Rasmni xiralashtirish va qoraytirish */
-            z-index: -1;
-        }
+    body::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: url('../images/entrance-bg.jpg') no-repeat center center/cover;
+      filter: blur(1px) brightness(0.6);
+      z-index: -1;
+    }
 
-        .container {
-            width: 100%;
-            max-width: 500px;
-            background: var(--card-bg);
-            padding: 30px;
-            border-radius: 20px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-        }
+    .container {
+      width: 100%;
+      max-width: 540px;
+      background: var(--card-bg);
+      padding: 30px;
+      border-radius: 20px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    }
 
-        h2 {
-            text-align: center;
-            color: var(--primary-color);
-            margin-bottom: 20px;
-        }
+    h2 { text-align:center; color:var(--primary-color); margin-bottom:20px; }
 
-        .tab-buttons {
-            display: flex;
-            justify-content: center;
-            margin-bottom: 20px;
-            border-bottom: 2px solid var(--border-color);
-        }
+    .tab-buttons { display:flex; justify-content:center; margin-bottom:20px; border-bottom:2px solid var(--border-color); }
+    .tab-button {
+      padding:10px 20px; border:none; background:transparent; cursor:pointer; font-size:1em; font-weight:600; color:#888;
+    }
+    .tab-button.active { color:var(--primary-color); border-bottom:2px solid var(--primary-color); }
 
-        .tab-button {
-            padding: 10px 20px;
-            border: none;
-            background: transparent;
-            cursor: pointer;
-            font-size: 1em;
-            font-weight: 600;
-            color: #888;
-            transition: color 0.3s ease;
-        }
+    .tab-content { display:none; }
+    .tab-content.active { display:block; animation: fadeIn .4s ease-in-out; }
 
-        .tab-button.active {
-            color: var(--primary-color);
-            border-bottom: 2px solid var(--primary-color);
-        }
+    .form-group { margin-bottom:16px; }
+    .form-group label { display:block; margin-bottom:8px; font-weight:500; }
+    .form-group input { width:100%; padding:12px; border:1px solid var(--border-color); border-radius:8px; font-family:'Poppins',sans-serif; font-size:1em; }
 
-        .tab-content {
-            display: none;
-        }
+    .submit-btn {
+      width:100%; padding:14px; background-color:var(--primary-color); color:var(--light-text-color);
+      border:none; border-radius:8px; font-size:1.05em; font-weight:600; cursor:pointer; transition:background-color .25s;
+    }
+    .submit-btn:disabled { opacity:.7; cursor:not-allowed; }
 
-        .tab-content.active {
-            display: block;
-            animation: fadeIn 0.5s ease-in-out;
-        }
+    .note { font-size:.9em; color:#666; margin-top:10px; text-align:center; }
 
-        .form-group {
-            margin-bottom: 20px;
-        }
-        .form-group label {
-            display: block;
-            margin-bottom: 8px;
-            font-weight: 500;
-        }
-
-        .form-group input {
-            width: 100%;
-            padding: 12px;
-            border: 1px solid var(--border-color);
-            border-radius: 8px;
-            box-sizing: border-box;
-            font-family: 'Poppins', sans-serif;
-            font-size: 1em;
-        }
-
-        .submit-btn {
-            width: 100%;
-            padding: 15px;
-            background-color: var(--primary-color);
-            color: var(--light-text-color);
-            border: none;
-            border-radius: 8px;
-            font-size: 1.1em;
-            font-weight: 600;
-            cursor: pointer;
-            transition: background-color 0.3s ease;
-        }
-
-        .submit-btn:hover {
-            background-color: #45a049;
-        }
-        
-        @keyframes fadeIn {
-            from { opacity: 0; }
-            to { opacity: 1; }
-        }
-    </style>
+    @keyframes fadeIn { from{opacity:0; transform:translateY(6px)} to{opacity:1; transform:none} }
+    @media(max-width:560px){ .container{padding:22px} }
+  </style>
 </head>
 <body>
 
-<div class="container">
-    <h2>Ro'yxatdan o'tish</h2>
-    <div class="tab-buttons">
-        <button id="user-tab" class="tab-button active">Oddiy foydalanuvchi</button>
-        <button id="employer-tab" class="tab-button">Ish beruvchi</button>
+  <div class="container" role="main" aria-labelledby="regTitle">
+    <h2 id="regTitle">Ro'yxatdan o'tish</h2>
+
+    <div class="tab-buttons" role="tablist" aria-label="Ro'yxat turini tanlang">
+      <button id="user-tab" class="tab-button active" role="tab" aria-selected="true" aria-controls="user-form">Oddiy foydalanuvchi</button>
+      <button id="employer-tab" class="tab-button" role="tab" aria-selected="false" aria-controls="employer-form">Ish beruvchi</button>
     </div>
 
-    <div id="user-form" class="tab-content active">
-        <form id="user-form-element">
-            <div class="form-group">
-                <label for="user-email">Email</label>
-                <input type="email" id="user-email" name="user-email" required>
-            </div>
-            <div class="form-group">
-                <label for="user-password">Parol</label>
-                <input type="password" id="user-password" name="user-password" required>
-            </div>
-            <div class="form-group">
-                <label for="user-confirm-password">Parolni takrorlang</label>
-                <input type="password" id="user-confirm-password" name="user-confirm-password" required>
-            </div>
-            <button type="submit" class="submit-btn">Ro'yxatdan o'tish</button>
-        </form>
+    <!-- Oddiy foydalanuvchi -->
+    <div id="user-form" class="tab-content active" role="tabpanel" aria-hidden="false">
+      <form id="user-form-element" autocomplete="on">
+        <div class="form-group">
+          <label for="user-email">Email</label>
+          <input type="email" id="user-email" name="user-email" required placeholder="you@example.com" />
+        </div>
+        <div class="form-group">
+          <label for="user-password">Parol</label>
+          <input type="password" id="user-password" name="user-password" required minlength="6" placeholder="Kamida 6 belgidan iborat" />
+        </div>
+        <div class="form-group">
+          <label for="user-confirm-password">Parolni takrorlang</label>
+          <input type="password" id="user-confirm-password" name="user-confirm-password" required minlength="6" />
+        </div>
+        <button type="submit" class="submit-btn" id="user-submit">Ro'yxatdan o'tish</button>
+      </form>
+      <p class="note">Allaqachon hisobingiz bormi? <a href="login.html">Tizimga kirish</a></p>
     </div>
 
-    <div id="employer-form" class="tab-content">
-        <form id="employer-form-element">
-            <div class="form-group">
-                <label for="company-name">Kompaniya nomi</label>
-                <input type="text" id="company-name" name="company-name" required>
-            </div>
-            <div class="form-group">
-                <label for="employer-email">Korporativ Email</label>
-                <input type="email" id="employer-email" name="employer-email" required>
-            </div>
-            <div class="form-group">
-                <label for="employer-password">Parol</label>
-                <input type="password" id="employer-password" name="employer-password" required>
-            </div>
-            <button type="submit" class="submit-btn">Ro'yxatdan o'tish</button>
-        </form>
-    </div>
-</div>
+    <!-- Ish beruvchi -->
+    <div id="employer-form" class="tab-content" role="tabpanel" aria-hidden="true">
+      <form id="employer-form-element" autocomplete="on">
+        <div class="form-group">
+          <label for="company-name">Kompaniya nomi</label>
+          <input type="text" id="company-name" name="company-name" required placeholder="Masalan: MyCompany LLC" />
+        </div>
+        <div class="form-group">
+          <label for="employer-email">Korporativ Email</label>
+          <input type="email" id="employer-email" name="employer-email" required placeholder="hr@company.uz" />
+        </div>
+        <div class="form-group">
+          <label for="employer-password">Parol</label>
+          <input type="password" id="employer-password" name="employer-password" required minlength="6" placeholder="Kamida 6 belgidan iborat" />
+        </div>
 
-<script type="module">
+        <button type="submit" class="submit-btn" id="employer-submit">Ro'yxatdan o'tish</button>
+      </form>
+      <p class="note">Ro'yxatdan o'tgach, siz avtomatik ravishda ish beruvchi sifatida saqlanasiz.</p>
+    </div>
+  </div>
+
+  <script type="module">
+    /* Firebase imports (modular) */
     import { initializeApp } from "https://www.gstatic.com/firebasejs/12.2.1/firebase-app.js";
-    import { getAuth, createUserWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/12.2.1/firebase-auth.js";
-    import { getFirestore } from "https://www.gstatic.com/firebasejs/12.2.1/firebase-firestore.js";
+    import { getAuth, createUserWithEmailAndPassword, sendEmailVerification } from "https://www.gstatic.com/firebasejs/12.2.1/firebase-auth.js";
+    import { getFirestore, doc, setDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/12.2.1/firebase-firestore.js";
 
+    /* Firebase config - sizniki bilan almashtirmang (allaqachon faylda bor) */
     const firebaseConfig = {
-        apiKey: "AIzaSyA86zhSVi4FSw-GvFBdOZsCPaHMS67XA78",
-        authDomain: "carrer-path-a5810.firebaseapp.com",
-        projectId: "carrer-path-a5810",
-        storageBucket: "carrer-path-a5810.firebasestorage.app",
-        messagingSenderId: "693831778129",
-        appId: "1:693831778129:web:911293c5c284eefe295d70"
+      apiKey: "AIzaSyA86zhSVi4FSw-GvFBdOZsCPaHMS67XA78",
+      authDomain: "carrer-path-a5810.firebaseapp.com",
+      projectId: "carrer-path-a5810",
+      storageBucket: "carrer-path-a5810.firebasestorage.app",
+      messagingSenderId: "693831778129",
+      appId: "1:693831778129:web:911293c5c284eefe295d70"
     };
 
     const app = initializeApp(firebaseConfig);
     const auth = getAuth(app);
+    const db = getFirestore(app);
 
+    /* DOM */
     const userTab = document.getElementById('user-tab');
     const employerTab = document.getElementById('employer-tab');
     const userFormContainer = document.getElementById('user-form');
     const employerFormContainer = document.getElementById('employer-form');
 
     userTab.addEventListener('click', () => {
-        userTab.classList.add('active');
-        employerTab.classList.remove('active');
-        userFormContainer.classList.add('active');
-        employerFormContainer.classList.remove('active');
+      userTab.classList.add('active'); userTab.setAttribute('aria-selected','true');
+      employerTab.classList.remove('active'); employerTab.setAttribute('aria-selected','false');
+      userFormContainer.classList.add('active'); userFormContainer.setAttribute('aria-hidden','false');
+      employerFormContainer.classList.remove('active'); employerFormContainer.setAttribute('aria-hidden','true');
     });
 
     employerTab.addEventListener('click', () => {
-        employerTab.classList.add('active');
-        userTab.classList.remove('active');
-        employerFormContainer.classList.add('active');
-        userFormContainer.classList.remove('active');
+      employerTab.classList.add('active'); employerTab.setAttribute('aria-selected','true');
+      userTab.classList.remove('active'); userTab.setAttribute('aria-selected','false');
+      employerFormContainer.classList.add('active'); employerFormContainer.setAttribute('aria-hidden','false');
+      userFormContainer.classList.remove('active'); userFormContainer.setAttribute('aria-hidden','true');
     });
 
     const userRegisterForm = document.getElementById('user-form-element');
     const employerRegisterForm = document.getElementById('employer-form-element');
+    const userSubmitBtn = document.getElementById('user-submit');
+    const employerSubmitBtn = document.getElementById('employer-submit');
 
+    function setProcessing(btn, on=true){
+      btn.disabled = on;
+      if(on) btn.textContent = 'Kuting...';
+      else btn.textContent = "Ro'yxatdan o'tish";
+    }
+
+    // Action URL for verification links (set in Firebase console too)
+    const ACTION_URL = 'https://carrer-path-a5810.firebaseapp.com/__/auth/action';
+
+    /* USER registration (role: user) */
     userRegisterForm.addEventListener('submit', async (e) => {
-        e.preventDefault();
-        const email = document.getElementById('user-email').value;
-        const password = document.getElementById('user-password').value;
-        const confirmPassword = document.getElementById('user-confirm-password').value;
+      e.preventDefault();
+      const email = document.getElementById('user-email').value.trim();
+      const password = document.getElementById('user-password').value;
+      const confirmPassword = document.getElementById('user-confirm-password').value;
 
-        if (password !== confirmPassword) {
-            alert("Parollar bir-biriga mos kelmadi!");
-            return;
-        }
+      if (password !== confirmPassword) {
+        alert("Parollar bir-biriga mos kelmadi!");
+        return;
+      }
+      if (password.length < 6) {
+        alert("Parol kamida 6 belgidan iborat bo'lishi kerak.");
+        return;
+      }
 
-        try {
-            await createUserWithEmailAndPassword(auth, email, password);
-            alert("Muvaffaqiyatli ro'yxatdan o'tdingiz!");
-            window.location.href = "pages/login.html";
-        } catch (error) {
-            const errorMessage = error.message;
-            alert(`Ro'yxatdan o'tishda xato: ${errorMessage}`);
-            console.error(error);
-        }
+      try {
+        setProcessing(userSubmitBtn, true);
+
+        const cred = await createUserWithEmailAndPassword(auth, email, password);
+        const uid = cred.user.uid;
+
+        // send verification email
+        await sendEmailVerification(cred.user, { url: ACTION_URL });
+
+        // save profile in Firestore
+        await setDoc(doc(db, "users", uid), {
+          email,
+          role: "user",
+          emailVerified: false,
+          createdAt: serverTimestamp()
+        });
+
+        alert("Ro'yxatdan muvaffaqiyatli o'tdingiz! Tasdiqlash xati emailingizga yuborildi. Iltimos, emailingizni tekshirib tasdiqlang.");
+        window.location.href = "login.html";
+      } catch (err) {
+        console.error("Register (user) error:", err);
+        alert("Ro'yxatdan o'tishda xato: " + (err.message || err));
+      } finally {
+        setProcessing(userSubmitBtn, false);
+      }
     });
 
+    /* EMPLOYER registration (role: employer) */
     employerRegisterForm.addEventListener('submit', async (e) => {
-        e.preventDefault();
-        const email = document.getElementById('employer-email').value;
-        const password = document.getElementById('employer-password').value;
-        
-        try {
-            await createUserWithEmailAndPassword(auth, email, password);
-            alert("Muvaffaqiyatli ro'yxatdan o'tdingiz!");
-            window.location.href = "pages/login.html";
-        } catch (error) {
-            const errorMessage = error.message;
-            alert(`Ro'yxatdan o'tishda xato: ${errorMessage}`);
-            console.error(error);
-        }
+      e.preventDefault();
+      const company = document.getElementById('company-name').value.trim();
+      const email = document.getElementById('employer-email').value.trim();
+      const password = document.getElementById('employer-password').value;
+
+      if (!company) { alert("Iltimos, kompaniya nomini kiriting."); return; }
+      if (password.length < 6) { alert("Parol kamida 6 belgidan iborat bo'lishi kerak."); return; }
+
+      try {
+        setProcessing(employerSubmitBtn, true);
+
+        const cred = await createUserWithEmailAndPassword(auth, email, password);
+        const uid = cred.user.uid;
+
+        // send verification email
+        await sendEmailVerification(cred.user, { url: ACTION_URL });
+
+        // Create user profile doc with role 'employer' and company
+        await setDoc(doc(db, "users", uid), {
+          email,
+          role: "employer",
+          company,
+          emailVerified: false,
+          createdAt: serverTimestamp()
+        });
+
+        alert("Ro'yxatdan muvaffaqiyatli o'tdingiz! Tasdiqlash xati emailingizga yuborildi. Iltimos, emailingizni tekshirib tasdiqlang.");
+        window.location.href = "login.html";
+      } catch (err) {
+        console.error("Register (employer) error:", err);
+        alert("Ro'yxatdan o'tishda xato: " + (err.message || err));
+      } finally {
+        setProcessing(employerSubmitBtn, false);
+      }
     });
-</script>
+  </script>
 </body>
 </html>

@@ -1,11 +1,10 @@
 <!DOCTYPE html>
 <html lang="uz">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <title>CareerPath - Asosiy sahifa</title>
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-    <link rel="icon" type="image/jpeg" href="../images/careerpathlogo.jpg">
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap');
 
@@ -19,6 +18,7 @@
             --menu-bg: #2d3436;
         }
 
+        * { box-sizing: border-box; }
         body {
             font-family: 'Poppins', sans-serif;
             margin: 0;
@@ -39,213 +39,80 @@
             color: var(--light-text-color);
             padding-top: 60px;
             transition: left 0.3s ease;
-            box-shadow: 2px 0 5px rgba(0, 0, 0, 0.3);
+            box-shadow: 2px 0 5px rgba(0,0,0,0.3);
             z-index: 20;
         }
+        .side-nav.active { left: 0; }
+        .side-nav a { display:flex; align-items:center; padding:15px 20px; color:var(--light-text-color); text-decoration:none; font-weight:500; transition:background-color .3s; }
+        .side-nav a:hover { background:#444; }
+        .side-nav a .material-icons { margin-right:15px; }
 
-        .side-nav.active {
-            left: 0;
-        }
-        
-        .side-nav a {
-            display: flex;
-            align-items: center;
-            padding: 15px 20px;
-            color: var(--light-text-color);
-            text-decoration: none;
-            font-weight: 500;
-            transition: background-color 0.3s ease;
-        }
-        
-        .side-nav a:hover {
-            background-color: #444;
-        }
-        
-        .side-nav a .material-icons {
-            margin-right: 15px;
-        }
+        .main-content-container { flex-grow:1; padding:20px; margin-left:0; transition: margin-left .3s ease; }
+        .main-content-container.menu-open { margin-left:250px; }
 
-        .side-nav a .material-icons.ai-icon {
-            display: inline-flex;        
-            align-items: center;         
-            justify-content: center;
-            width: 24px;                 
-            height: 24px;
-            font-size: 20px;             
-            line-height: 1;              
-            vertical-align: middle;
-            transform: none !important;  
-            padding: 0;
-            margin-left: -20px;
-            margin-right: 34px;
-        }
+        .header { background-color:var(--primary-color); color:var(--light-text-color); padding:15px 20px; display:flex; justify-content:space-between; align-items:center; box-shadow:0 2px 5px rgba(0,0,0,0.1); }
+        .header h1 { margin:0; font-size:1.5em; }
 
+        .menu-toggle { display:flex; flex-direction:column; gap:5px; cursor:pointer; }
+        .menu-toggle span { display:block; width:25px; height:3px; background-color:var(--light-text-color); transition: transform .3s; }
+        .menu-toggle.active span:nth-child(1) { transform: rotate(45deg) translate(5px,5px); }
+        .menu-toggle.active span:nth-child(2) { opacity:0; }
+        .menu-toggle.active span:nth-child(3) { transform: rotate(-45deg) translate(5px,-5px); }
 
+        .profile-menu { position:relative; }
+        .profile-btn { background:transparent; border:0; color:var(--light-text-color); cursor:pointer; font-weight:600; }
+        .profile-dropdown { display:none; position:absolute; right:0; top:40px; background:#fff; color:#111; border-radius:8px; box-shadow:0 8px 24px rgba(0,0,0,0.08); overflow:hidden; min-width:160px; z-index:30; }
+        .profile-dropdown a { display:block; padding:10px 14px; color:#111; text-decoration:none; border-bottom:1px solid #eee; }
+        .profile-dropdown a:hover { background:#f6f6f6; }
 
-        .main-content-container {
-            flex-grow: 1;
-            padding: 20px;
-            margin-left: 0;
-            transition: margin-left 0.3s ease;
-        }
+        .container { max-width:1200px; margin:20px auto; padding:20px; background-color:var(--card-bg); border-radius:15px; box-shadow:0 4px 20px rgba(0,0,0,0.05); line-height:1.6; }
 
-        .main-content-container.menu-open {
-            margin-left: 250px;
-        }
+        .card-container { display:grid; grid-template-columns:repeat(auto-fit, minmax(300px, 1fr)); gap:20px; margin-bottom:40px; }
+        .card { background-color:var(--card-bg); padding:30px; border-radius:15px; box-shadow:0 2px 10px rgba(0,0,0,0.05); transition:transform .3s; }
+        .card:hover { transform:translateY(-5px); }
+        .card h3 { color:var(--secondary-color); margin-top:0; }
+        .card p { font-size:.95em; line-height:1.6; margin:0; }
+        .cta-link { display:inline-block; padding:10px 20px; background-color:var(--primary-color); color:var(--light-text-color); text-decoration:none; border-radius:8px; margin-top:15px; transition:background-color .3s; }
+        .cta-link:hover { background-color:#45a049; }
 
-        .header {
-            background-color: var(--primary-color);
-            color: var(--light-text-color);
-            padding: 15px 20px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-        }
+        .small-card-container { display:grid; grid-template-columns:repeat(auto-fit, minmax(200px, 1fr)); gap:15px; text-align:center; margin-top:20px; }
+        .small-card { background-color:var(--card-bg); padding:20px; border-radius:10px; box-shadow:0 1px 5px rgba(0,0,0,0.05); }
+        .small-card h4 { color:var(--primary-color); margin:0; font-size:1.6rem; }
+        .small-card p { font-size:.95rem; color:#777; margin-top:8px; }
 
-        .header h1 {
-            margin: 0;
-            font-size: 1.5em;
-        }
-
-        .menu-toggle {
-            display: flex;
-            flex-direction: column;
-            gap: 5px;
-            cursor: pointer;
-        }
-
-        .menu-toggle span {
-            display: block;
-            width: 25px;
-            height: 3px;
-            background-color: var(--light-text-color);
-            transition: transform 0.3s ease;
-        }
-
-        .menu-toggle.active span:nth-child(1) {
-            transform: rotate(45deg) translate(5px, 5px);
-        }
-
-        .menu-toggle.active span:nth-child(2) {
-            opacity: 0;
-        }
-
-        .menu-toggle.active span:nth-child(3) {
-            transform: rotate(-45deg) translate(5px, -5px);
-        }
-        
-        .card-container {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 20px;
-            margin-bottom: 40px;
-            margin-top: 18px; /* <-- cards moved slightly down */
-        }
-
-        .card {
-            background-color: var(--card-bg);
-            padding: 30px;
-            border-radius: 15px;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
-            transition: transform 0.3s ease;
-        }
-
-        .card:hover {
-            transform: translateY(-5px);
-        }
-        
-        .card h3 {
-            color: var(--secondary-color);
-            margin-top: 0;
-        }
-        
-        .card p {
-            font-size: 0.9em;
-            line-height: 1.6;
-        }
-        
-        .cta-link {
-            display: inline-block;
-            padding: 10px 20px;
-            background-color: var(--primary-color);
-            color: var(--light-text-color);
-            text-decoration: none;
-            border-radius: 8px;
-            margin-top: 15px;
-            transition: background-color 0.3s ease;
-        }
-        
-        .cta-link:hover {
-            background-color: #45a049;
-        }
-
-        .small-card-container {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 15px;
-            text-align: center;
-        }
-
-        .small-card {
-            background-color: var(--card-bg);
-            padding: 20px;
-            border-radius: 10px;
-            box-shadow: 0 1px 5px rgba(0, 0, 0, 0.05);
-            transition: all 0.3s ease;   /* hover animatsiya uchun */
-            cursor: pointer;
-        }
-
-        .small-card:hover {
-            transform: translateY(-6px) scale(1.03);
-            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.15);
-        }
-
-        .small-card h4 {
-            color: var(--primary-color);
-            margin-top: 0;
-            font-size: 1.2em;
-            transition: color 0.3s ease; /* hoverda rang ham yumshoq o‘tsin */
-        }
-
-        .small-card:hover h4 {
-            color: var(--secondary-color); /* hoverda boshqa rangga o‘tadi */
-        }
-
-        .small-card p {
-            font-size: 0.9em;
-            color: #777;
+        /* responsive */
+        @media(max-width:980px){
+            .card-container{grid-template-columns:1fr}
         }
     </style>
 </head>
 <body>
     <div class="side-nav" id="side-nav">
-        <a href="careerpath.html"><span class="material-icons">home</span> Asosiy</a>
-        <a href="dashboard.html"><span class="material-icons">person</span> Mening profilim</a>
+        <a href="dashboard.html"><span class="material-icons">home</span> Asosiy sahifa</a>
         <a href="tests.html"><span class="material-icons">menu_book</span> Shaxsiyat testi</a>
-        <a href="aichat.html"><span class="material-icons ai-icon" aria-hidden="true">gem_spark</span>AI Maslahatchi</a>
-        <a href="jobs.html"><span class="material-icons">work</span> Ish topish</a>
+        <a href="aichat.html"><span class="material-icons">chat</span> AI Maslahatchi</a>
+        <a href="#" id="jobs-link"><span class="material-icons">work</span> Ish topish</a>
     </div>
 
     <div class="main-content-container" id="main-content-container">
         <header class="header">
-            <div class="menu-toggle" id="menu-toggle">
-                <span></span>
-                <span></span>
-                <span></span>
+            <div style="display:flex;align-items:center;gap:12px">
+                <div class="menu-toggle" id="menu-toggle" aria-label="menu toggle" role="button" tabindex="0">
+                    <span></span><span></span><span></span>
+                </div>
+                <h1 style="margin:0">CareerPath</h1>
             </div>
-            <h1>CareerPath</h1>
+
             <div class="profile-menu">
-                <button class="profile-btn" id="profile-btn">
-                    <span id="user-email-display">foydalanuvchi@gmail.com</span> ▼
-                </button>
+                <button class="profile-btn" id="profile-btn"><span id="user-email-display">...</span> ▼</button>
                 <div class="profile-dropdown" id="profile-dropdown">
-                    <a href="#" id="logout-link" class="logout-link">Tizimdan chiqish</a>
+                    <a href="dashboard.html">Mening profilim</a>
+                    <a href="#" id="logout-link">Tizimdan chiqish</a>
                 </div>
             </div>
         </header>
 
-        <div class="container">
+        <div class="container" role="main">
             <div class="card-container">
                 <div class="card">
                     <h3>🧠 Shaxsiyat testi</h3>
@@ -262,21 +129,21 @@
                 <div class="card">
                     <h3>💼 Ish topish</h3>
                     <p>Sizning ko'nikmalaringizga mos keladigan ish e'lonlarini toping.</p>
-                    <a href="jobs.html" class="cta-link">Ish qidirish</a>
+                    <a href="#" class="cta-link" id="jobs-cta-link">Ish qidirish</a>
                 </div>
             </div>
             
-            <div class="small-card-container">
+            <div class="small-card-container" aria-hidden="false">
                 <div class="small-card">
-                    <h4 data-target="12">0+</h4>
+                    <h4 data-target="12" data-suffix="+">0+</h4>
                     <p>Kasb yo'nalishlari</p>
                 </div>
                 <div class="small-card">
-                    <h4 data-target="30">0+</h4>
+                    <h4 data-target="30" data-suffix="+">0+</h4>
                     <p>Savol testlari</p>
                 </div>
                 <div class="small-card">
-                    <h4 data-target="100">0%</h4>
+                    <h4 data-target="100" data-suffix="%">0%</h4>
                     <p>Tushunish oson</p>
                 </div>
             </div>
@@ -286,7 +153,7 @@
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/12.2.1/firebase-app.js";
         import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/12.2.1/firebase-auth.js";
-        import { getFirestore } from "https://www.gstatic.com/firebasejs/12.2.1/firebase-firestore.js";
+        import { getFirestore, doc, getDoc } from "https://www.gstatic.com/firebasejs/12.2.1/firebase-firestore.js";
 
         const firebaseConfig = {
             apiKey: "AIzaSyA86zhSVi4FSw-GvFBdOZsCPaHMS67XA78",
@@ -299,75 +166,108 @@
 
         const app = initializeApp(firebaseConfig);
         const auth = getAuth(app);
-        
-        onAuthStateChanged(auth, (user) => {
-            if (user) {
-                document.getElementById('user-email-display').textContent = user.email;
-            } else {
+        const db = getFirestore(app);
+
+        // UI elements
+        const jobsLink = document.getElementById('jobs-link');
+        const jobsCtaLink = document.getElementById('jobs-cta-link');
+        const userEmailDisplay = document.getElementById('user-email-display');
+
+        // Auth state + role check
+        onAuthStateChanged(auth, async (user) => {
+            if (!user) {
+                // Not logged in -> redirect to login
                 window.location.href = "login.html";
+                return;
+            }
+
+            userEmailDisplay.textContent = user.email || 'Foydalanuvchi';
+
+            // Try to read user profile doc and check role (support both 'role' and legacy 'userType')
+            try {
+                const userRef = doc(db, "users", user.uid);
+                const userSnap = await getDoc(userRef);
+
+                let role = 'user'; // default
+                if (userSnap.exists()) {
+                    const data = userSnap.data();
+                    // support both field names
+                    role = data.role || data.userType || 'user';
+                } else {
+                    // If no doc exists yet, keep default 'user'
+                    role = 'user';
+                }
+
+                // set links depending on role
+                if (role === 'employer') {
+                    jobsLink.setAttribute('href', 'ish-beruvchi-dashboard.html');
+                    jobsCtaLink.setAttribute('href', 'ish-beruvchi-dashboard.html');
+                } else {
+                    jobsLink.setAttribute('href', 'jobs.html');
+                    jobsCtaLink.setAttribute('href', 'jobs.html');
+                }
+
+            } catch (err) {
+                console.error("Role lookup error:", err);
+                // fallback: point to public jobs page
+                jobsLink.setAttribute('href', 'jobs.html');
+                jobsCtaLink.setAttribute('href', 'jobs.html');
             }
         });
 
+        // Profile dropdown toggle & logout
         const profileBtn = document.getElementById('profile-btn');
         const profileDropdown = document.getElementById('profile-dropdown');
-        profileBtn.addEventListener('click', () => {
-            profileDropdown.classList.toggle('active');
+
+        profileBtn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            profileDropdown.style.display = profileDropdown.style.display === 'block' ? 'none' : 'block';
+        });
+        document.addEventListener('click', (e) => {
+            if (!profileBtn.contains(e.target)) profileDropdown.style.display = 'none';
         });
 
         const logoutLink = document.getElementById('logout-link');
-        logoutLink.addEventListener('click', (e) => {
+        logoutLink.addEventListener('click', async (e) => {
             e.preventDefault();
-            signOut(auth).then(() => {
+            try {
+                await signOut(auth);
                 window.location.href = "login.html";
-            }).catch((error) => {
-                console.error("Logoutda xato:", error);
-                alert("Tizimdan chiqishda xato yuz berdi.");
-            });
+            } catch (err) {
+                console.error("Logout failed:", err);
+            }
         });
-        
+
+        // Menu toggle
         const menuToggle = document.getElementById('menu-toggle');
         const sideNav = document.getElementById('side-nav');
         const mainContent = document.getElementById('main-content-container');
-        
         menuToggle.addEventListener('click', () => {
             sideNav.classList.toggle('active');
             mainContent.classList.toggle('menu-open');
+            menuToggle.classList.toggle('active');
         });
-        
+
+        // Counters animation (safe & uses data-target + data-suffix)
         document.addEventListener('DOMContentLoaded', () => {
             const counters = document.querySelectorAll('.small-card h4');
-            const speed = 250;
-
+            const speed = 60; // higher -> slower
             counters.forEach(counter => {
-                const updateCount = () => {
-                    const target = +counter.getAttribute('data-target');
-                    let count = 0;
-                    const increment = target / speed;
-                    
-                    const update = () => {
-                        if (count < target) {
-                            count += increment;
-                            let formattedCount = Math.ceil(count);
-                            if (counter.innerText.includes('+')) {
-                                formattedCount += '+';
-                            } else if (counter.innerText.includes('%')) {
-                                formattedCount += '%';
-                            }
-                            counter.innerText = formattedCount;
-                            setTimeout(update, 1);
-                        } else {
-                             let formattedCount = target;
-                             if (counter.innerText.includes('+')) {
-                                formattedCount += '+';
-                            } else if (counter.innerText.includes('%')) {
-                                formattedCount += '%';
-                            }
-                            counter.innerText = formattedCount;
-                        }
-                    };
-                    update();
+                const target = parseInt(counter.getAttribute('data-target')) || 0;
+                const suffix = counter.getAttribute('data-suffix') || '';
+                let current = 0;
+                if (target <= 0) { counter.textContent = '0' + suffix; return; }
+                const step = Math.max(1, Math.floor(target / speed));
+                const run = () => {
+                    current += step;
+                    if (current < target) {
+                        counter.textContent = current + suffix;
+                        requestAnimationFrame(run);
+                    } else {
+                        counter.textContent = target + suffix;
+                    }
                 };
-                updateCount();
+                requestAnimationFrame(run);
             });
         });
     </script>
