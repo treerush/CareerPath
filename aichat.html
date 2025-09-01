@@ -19,6 +19,7 @@
             --menu-bg: #2d3436;
             --border-color: #ddd;
         }
+
         body {
             font-family: 'Poppins', sans-serif;
             margin: 0;
@@ -27,7 +28,10 @@
             min-height: 100vh;
             background: var(--background-color);
             color: var(--text-color);
+            overflow-x: hidden;
         }
+
+        /* Sidebar sozlamalari */
         .side-nav {
             position: fixed;
             top: 0;
@@ -41,9 +45,12 @@
             box-shadow: 2px 0 5px rgba(0, 0, 0, 0.3);
             z-index: 20;
         }
+
         .side-nav.active {
             left: 0;
         }
+        
+        /* Barcha menyu elementlari uchun umumiy sozlama */
         .side-nav a {
             display: flex;
             align-items: center;
@@ -52,36 +59,32 @@
             text-decoration: none;
             font-weight: 500;
             transition: background-color 0.3s ease;
+            gap: 15px; /* Ikonka va matn orasidagi bo'shliq */
         }
+
         .side-nav a:hover {
             background-color: #444;
         }
+
+        /* Barcha ikonalar uchun umumiy sozlama */
         .side-nav a .material-icons {
-            margin-right: 15px;
-        }
-        .side-nav a .material-icons.ai-icon {
-            display: inline-flex; 
-            align-items: center; 
-            justify-content: center;
-            width: 24px; 
+            font-size: 24px;
+            width: 24px;
             height: 24px;
-            font-size: 20px; 
-            line-height: 1; 
-            vertical-align: middle;
-            transform: none !important; 
-            padding: 0;
-            margin-left: -20px; 
-            margin-right: 34px; 
+            text-align: center;
         }
+
         .main-content-container {
             flex-grow: 1;
             padding: 20px;
             margin-left: 0;
             transition: margin-left 0.3s ease;
         }
+
         .main-content-container.menu-open {
             margin-left: 250px;
         }
+
         .header {
             background-color: var(--primary-color);
             color: var(--light-text-color);
@@ -91,16 +94,19 @@
             align-items: center;
             box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
         }
+
         .header h1 {
             margin: 0;
             font-size: 1.5em;
         }
+
         .menu-toggle {
             display: flex;
             flex-direction: column;
             gap: 5px;
             cursor: pointer;
         }
+
         .menu-toggle span {
             display: block;
             width: 25px;
@@ -108,15 +114,19 @@
             background-color: var(--light-text-color);
             transition: transform 0.3s ease;
         }
+
         .menu-toggle.active span:nth-child(1) {
             transform: rotate(45deg) translate(5px, 5px);
         }
+
         .menu-toggle.active span:nth-child(2) {
             opacity: 0;
         }
+
         .menu-toggle.active span:nth-child(3) {
             transform: rotate(-45deg) translate(5px, -5px);
         }
+
         .profile-dropdown {
             display:none;
             position:absolute;
@@ -142,6 +152,7 @@
         .profile-dropdown a:hover {
             background:#f6f6f6;
         }
+
         .container {
             max-width: 900px;
             margin: 20px auto;
@@ -150,6 +161,7 @@
             border-radius: 15px;
             box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
         }
+
         .chat-container {
             height: 60vh;
             display: flex;
@@ -159,22 +171,27 @@
             overflow: hidden;
             position: relative;
         }
+
         .chat-messages {
             flex-grow: 1;
             padding: 20px;
             overflow-y: auto;
             background-color: var(--background-color);
         }
+
         .message-row {
             display: flex;
             margin-bottom: 15px;
         }
+
         .message-row.user {
             justify-content: flex-end;
         }
+
         .message-row.ai {
             justify-content: flex-start;
         }
+
         .message-bubble {
             max-width: 70%;
             padding: 10px 15px;
@@ -182,21 +199,25 @@
             line-height: 1.4;
             font-size: 0.9em;
         }
+
         .message-row.user .message-bubble {
             background-color: var(--secondary-color);
             color: var(--light-text-color);
             border-bottom-right-radius: 2px;
         }
+
         .message-row.ai .message-bubble {
             background-color: var(--card-bg);
             border: 1px solid var(--border-color);
             border-bottom-left-radius: 2px;
         }
+
         .chat-input-bar {
             display: flex;
             padding: 10px;
             border-top: 1px solid var(--border-color);
         }
+
         .chat-input-bar input {
             flex-grow: 1;
             padding: 10px;
@@ -205,6 +226,7 @@
             outline: none;
             font-family: 'Poppins', sans-serif;
         }
+
         .chat-input-bar button {
             background-color: var(--primary-color);
             color: var(--light-text-color);
@@ -214,26 +236,32 @@
             margin-left: 10px;
             cursor: pointer;
         }
+
         .chat-input-bar button:hover {
             background-color: #45a049;
         }
+
         .loading-dots {
             display: none;
             text-align: center;
             font-size: 2em;
             color: var(--primary-color);
         }
+
         @keyframes loading-blink {
             0% { opacity: 0.2; }
             20% { opacity: 1; }
             100% { opacity: 0.2; }
         }
+
         .loading-dots span {
             animation: loading-blink 1.4s infinite;
         }
+
         .loading-dots span:nth-child(2) {
             animation-delay: 0.2s;
         }
+
         .loading-dots span:nth-child(3) {
             animation-delay: 0.4s;
         }
@@ -245,12 +273,16 @@
 <body>
     
     <div class="side-nav" id="side-nav">
+        <a href="./index.html"><span class="material-icons">info</span> Bosh sahifa</a>
         <a href="./careerpath.html"><span class="material-icons">home</span> Asosiy sahifa</a>
         <a href="./dashboard.html"><span class="material-icons">person</span> Mening profilim</a>
-        <a href="./tests.html"><span class="material-icons">menu_book</span> Shaxsiyat testi</a>
-        <a href="./aichat.html"><span class="material-icons ai-icon">gem_spark</span>AI Maslahatchi</a>
+        <a href="./tests.html"><span class="material-icons">menu_book</span> Testlar</a>
+        <a href="./aichat.html"><span class="material-icons">auto_awesome</span>AI Maslahatchi</a>
         <a href="./kasblar.html"><span class="material-icons">lightbulb</span> Kasblar</a>
         <a href="./jobs.html"><span class="material-icons">work</span> Ish topish</a>
+        <a href="./applications.html"><span class="material-icons">assignment</span> Arizalar</a>
+        <a href="./about.html"><span class="material-icons">group</span> Biz haqimizda</a>
+        <a href="./contact.html"><span class="material-icons">contact_mail</span> Bog'lanish</a>
     </div>
 
     <div class="main-content-container" id="main-content-container">
@@ -410,11 +442,6 @@
             sideNav.classList.toggle('active');
             mainContent.classList.toggle('menu-open');
         });
-
-        if (typeof injectSpeedInsights === 'function') {
-            injectSpeedInsights();
-        }
     </script>
-    <script type="module" src="/role-router.js"></script>
 </body>
 </html>

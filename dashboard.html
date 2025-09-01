@@ -27,8 +27,10 @@
             min-height: 100vh;
             background: var(--background-color);
             color: var(--text-color);
+            overflow-x: hidden;
         }
 
+        /* Sidebar */
         .side-nav {
             position: fixed;
             top: 0;
@@ -47,6 +49,7 @@
             left: 0;
         }
         
+        /* Menyudagi barcha havolalar uchun umumiy uslublar */
         .side-nav a {
             display: flex;
             align-items: center;
@@ -55,29 +58,19 @@
             text-decoration: none;
             font-weight: 500;
             transition: background-color 0.3s ease;
+            gap: 15px; /* Ikonka va matn orasidagi bo'shliq */
         }
         
         .side-nav a:hover {
             background-color: #444;
         }
         
+        /* Barcha ikonlar uchun umumiy sozlama */
         .side-nav a .material-icons {
-            margin-right: 15px;
-        }
-
-        .side-nav a .material-icons.ai-icon {
-            display: inline-flex; 
-            align-items: center; 
-            justify-content: center;
-            width: 24px; 
+            font-size: 24px;
+            width: 24px;
             height: 24px;
-            font-size: 20px; 
-            line-height: 1; 
-            vertical-align: middle;
-            transform: none !important; 
-            padding: 0;
-            margin-left: -20px; 
-            margin-right: 34px; 
+            text-align: center;
         }
 
         .main-content-container {
@@ -133,6 +126,47 @@
             transform: rotate(-45deg) translate(5px, -5px);
         }
         
+        .profile-menu {
+            position: relative;
+        }
+        .profile-menu.active .profile-dropdown {
+            display: block;
+        }
+
+        .profile-btn {
+            background: transparent;
+            border: 0;
+            color: var(--light-text-color);
+            cursor: pointer;
+            font-weight: 600;
+        }
+
+        .profile-dropdown {
+            display: none;
+            position: absolute;
+            right: 0;
+            top: 40px;
+            background: #fff;
+            color: #111;
+            border-radius: 8px;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+            overflow: hidden;
+            min-width: 160px;
+            z-index: 30;
+        }
+
+        .profile-dropdown a {
+            display: block;
+            padding: 10px 14px;
+            color: #111;
+            text-decoration: none;
+            border-bottom: 1px solid #eee;
+        }
+
+        .profile-dropdown a:hover {
+            background: #f6f6f6;
+        }
+
         .container {
             max-width: 900px;
             margin: 20px auto;
@@ -350,12 +384,16 @@
 </head>
 <body>
     <div class="side-nav" id="side-nav">
+        <a href="./index.html"><span class="material-icons">info</span> Bosh sahifa</a>
         <a href="./careerpath.html"><span class="material-icons">home</span> Asosiy sahifa</a>
         <a href="./dashboard.html"><span class="material-icons">person</span> Mening profilim</a>
         <a href="./tests.html"><span class="material-icons">menu_book</span> Testlar</a>
-        <a href="./aichat.html"><span class="material-icons ai-icon">gem_spark</span>AI Maslahatchi</a>
+        <a href="./aichat.html"><span class="material-icons">auto_awesome</span>AI Maslahatchi</a>
         <a href="./kasblar.html"><span class="material-icons">lightbulb</span> Kasblar</a>
         <a href="./jobs.html"><span class="material-icons">work</span> Ish topish</a>
+        <a href="./applications.html"><span class="material-icons">assignment</span> Arizalar</a>
+        <a href="./about.html"><span class="material-icons">group</span> Biz haqimizda</a>
+        <a href="./contact.html"><span class="material-icons">contact_mail</span> Bog'lanish</a>
     </div>
 
     <div class="main-content-container" id="main-content-container">

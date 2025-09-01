@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Bron qilish</title>
+  <style>
+    body { font-family: Arial, sans-serif; margin: 20px; background:#f0f2f5; color:#333; }
+    h2 { margin-bottom: 20px; }
+    .job-details { border: 1px solid #ddd; padding: 15px; border-radius: 8px; margin-bottom: 20px; background:#fff; }
+    .job-details p { margin: 5px 0; }
+    .btn { padding: 10px 20px; border: none; border-radius: 6px; cursor: pointer; font-weight:600; }
+    .btn-confirm { background: #4CAF50; color: #fff; }
+    .btn-cancel { background: #ccc; color:#111; }
+  </style>
+</head>
+<body>
+  <h2>Bron qilish</h2>
+  <div id="job-details" class="job-details">
+    <p>Yuklanmoqda...</p>
+  </div>
+  <button id="confirm-btn" class="btn btn-confirm">✅ Tasdiqlash</button>
+  <button id="cancel-btn" class="btn btn-cancel">❌ Bekor qilish</button>
+
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/12.2.1/firebase-app.js";
+    import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/12.2.1/firebase-auth.js";
+    import { getFirestore, collection, addDoc, doc, getDoc } from "https://www.gstatic.com/firebasejs/12.2.1/firebase-firestore.js";
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyA86zhSVi4FSw-GvFBdOZsCPaHMS67XA78",
+      authDomain: "carrer-path-a5810.firebaseapp.com",
+      projectId: "carrer-path-a5810",
+      storageBucket: "carrer-path-a5810.firebasestorage.app",
+      messagingSenderId: "693831778129",
+      appId: "1:693831778129:web:911293c5c284eefe295d70"
+    };
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+    const db = getFirestore(app);
+
+    let currentUser = null;
+    let selectedJob = null;
+
+    function showJob(job) {
+      const container = document.getElementById('job-details');
+      container.innerHTML = `
+        <h3>${job.title}</h3>
+        <p><strong>Kompaniya:</strong> ${job.company}</p>
+        <p><strong>Joylashuv:</strong> ${job.location || '-'}</p>
+        <p><strong>Tavsif:</strong> ${job.description || '-'}</p>
+        ${job.employerEmail ? `<p><strong>📧 Email:</strong> ${job.employerEmail}</p>` : ''}
+      `;
+    }
+
+    const storedJob = localStorage.getItem('selectedJob');
+    if (storedJob) {
+      selectedJob = JSON.parse(storedJob);
+      showJob(selectedJob);
+    } else {
+      document.getElementById('job-details').innerHTML = "<p>Xatolik: Ish tanlanmadi!</p>";
+      document.getElementById('confirm-btn').disabled = true;
+    }
+
+    onAuthStateChanged(auth, (user) => {
+      if (user) {
+        currentUser = user;
+      } else {
+        alert("Bron qilish uchun tizimga kiring!");
+        window.location.href = "login.html";
+      }
+    });
+
+    document.getElementById('confirm-btn').addEventListener('click', async () => {
+      if (!currentUser || !selectedJob) return;
+
+      try {
+        const userRef = doc(db, 'users', currentUser.uid);
+        const userSnap = await getDoc(userRef);
+
+        let fullName = currentUser.email;
+        let phoneNumber = "";
+        let location = "";
+
+        if (userSnap.exists()) {
+          const u = userSnap.data();
+          fullName = u.fullName || fullName;
+          phoneNumber = u.phoneNumber || "";
+          location = u.location || "";
+        }
+
+        await addDoc(collection(db, "applications"), {
+          userId: currentUser.uid,
+          jobId: selectedJob.id,
+          jobTitle: selectedJob.title,
+          company: selectedJob.company,
+          employerEmail: selectedJob.employerEmail || '',
+          status: "pending",
+          appliedAt: new Date(),
+          fullName,
+          phoneNumber,
+          location,
+          email: currentUser.email
+        });
+
+        alert("✅ Arizangiz yuborildi!");
+        window.location.href = "jobs.html";
+
+      } catch (err) {
+        console.error("Ariza yuborishda xato:", err);
+        alert("Xatolik yuz berdi, qayta urinib ko‘ring!");
+      }
+    });
+
+    document.getElementById('cancel-btn').addEventListener('click', () => {
+      window.location.href = "jobs.html";
+    });
+  </script>
+</body>
+</html>

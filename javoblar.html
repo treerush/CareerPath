@@ -29,6 +29,7 @@
             color: var(--text-color);
         }
         
+        /* Sidebar */
         .side-nav {
             position: fixed;
             top: 0;
@@ -47,6 +48,7 @@
             left: 0;
         }
         
+        /* Barcha menyu havolalari uchun umumiy uslublar */
         .side-nav a {
             display: flex;
             align-items: center;
@@ -55,29 +57,19 @@
             text-decoration: none;
             font-weight: 500;
             transition: background-color 0.3s ease;
+            gap: 15px; /* Ikonka va matn orasidagi bo'shliq */
         }
         
         .side-nav a:hover {
             background-color: #444;
         }
         
+        /* Barcha ikonlar uchun umumiy sozlama */
         .side-nav a .material-icons {
-            margin-right: 15px;
-        }
-
-        .side-nav a .material-icons.ai-icon {
-            display: inline-flex; 
-            align-items: center; 
-            justify-content: center;
-            width: 24px; 
+            font-size: 24px;
+            width: 24px;
             height: 24px;
-            font-size: 20px; 
-            line-height: 1; 
-            vertical-align: middle;
-            transform: none !important; 
-            padding: 0;
-            margin-left: -20px; 
-            margin-right: 34px; 
+            text-align: center;
         }
 
         .main-content-container {
@@ -255,7 +247,7 @@
             padding: 20px;
             color: #555;
         }
-
+        
     </style>
 
     <script defer src="https://cdn.jsdelivr.net/npm/@vercel/speed-insights/dist/inject.min.js"></script>
@@ -264,12 +256,16 @@
 <body>
     
     <div class="side-nav" id="side-nav">
+        <a href="./index.html"><span class="material-icons">info</span> Bosh sahifa</a>
         <a href="./careerpath.html"><span class="material-icons">home</span> Asosiy sahifa</a>
         <a href="./dashboard.html"><span class="material-icons">person</span> Mening profilim</a>
-        <a href="./tests.html"><span class="material-icons">menu_book</span> Shaxsiyat testi</a>
-        <a href="./aichat.html"><span class="material-icons ai-icon">gem_spark</span>AI Maslahatchi</a>
+        <a href="./tests.html"><span class="material-icons">menu_book</span> Testlar</a>
+        <a href="./aichat.html"><span class="material-icons">auto_awesome</span>AI Maslahatchi</a>
         <a href="./kasblar.html"><span class="material-icons">lightbulb</span> Kasblar</a>
         <a href="./jobs.html"><span class="material-icons">work</span> Ish topish</a>
+        <a href="./applications.html"><span class="material-icons">assignment</span> Arizalar</a>
+        <a href="./about.html"><span class="material-icons">group</span> Biz haqimizda</a>
+        <a href="./contact.html"><span class="material-icons">contact_mail</span> Bog'lanish</a>
     </div>
 
     <div class="main-content-container" id="main-content-container">
@@ -284,8 +280,9 @@
                 <button class="profile-btn" id="profile-btn">
                     <span id="user-email-display">foydalanuvchi@gmail.com</span> ▼
                 </button>
-                <div class="profile-dropdown" id="profile-dropdown" style="display:none; position:absolute; right:20px; background:#fff; color:#333; border-radius:6px; box-shadow:0 4px 12px rgba(0,0,0,0.12);">
-                    <a href="#" id="logout-link" class="logout-link" style="display:block; padding:10px 15px; text-decoration:none; color:inherit;">Tizimdan chiqish</a>
+                <div class="profile-dropdown" id="profile-dropdown">
+                    <a href="dashboard.html">Mening profilim</a>
+                    <a href="#" id="logout-link">Tizimdan chiqish</a>
                 </div>
             </div>
         </header>

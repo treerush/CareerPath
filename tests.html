@@ -28,7 +28,7 @@
             background: var(--background-color);
             color: var(--text-color);
             position: relative;
-            z-index: 1;
+            overflow-x: hidden;
         }
 
         body::before {
@@ -43,6 +43,7 @@
             z-index: -1;
         }
 
+        /* Sidebar */
         .side-nav {
             position: fixed;
             top: 0;
@@ -53,14 +54,15 @@
             color: var(--light-text-color);
             padding-top: 60px;
             transition: left 0.3s ease;
-            box-shadow: 2px 0 5px rgba(0, 0, 0, 0.3);
+            box-shadow: 2px 0 5px rgba(0,0,0,0.3);
             z-index: 20;
         }
 
         .side-nav.active {
             left: 0;
         }
-        
+
+        /* Menyudagi barcha havolalar uchun umumiy uslublar */
         .side-nav a {
             display: flex;
             align-items: center;
@@ -69,40 +71,31 @@
             text-decoration: none;
             font-weight: 500;
             transition: background-color 0.3s ease;
+            gap: 15px; /* Ikona va matn orasidagi bo'shliq */
         }
-        
+
         .side-nav a:hover {
             background-color: #444;
         }
-        
+
+        /* Barcha ikonlar uchun umumiy sozlama */
         .side-nav a .material-icons {
-            margin-right: 15px;
-        }
-
-        .side-nav a .material-icons.ai-icon {
-            display: inline-flex; 
-            align-items: center; 
-            justify-content: center;
-            width: 24px; 
+            font-size: 24px;
+            width: 24px;
             height: 24px;
-            font-size: 20px; 
-            line-height: 1; 
-            vertical-align: middle;
-            transform: none !important; 
-            padding: 0;
-            margin-left: -20px; 
-            margin-right: 34px; 
+            text-align: center;
         }
 
+        /* Header */
         .main-content-container {
             flex-grow: 1;
             padding: 20px;
-            margin-left: 0;
-            transition: margin-left 0.3s ease;
+            margin-left:0;
+            transition:margin-left .3s ease;
         }
 
         .main-content-container.menu-open {
-            margin-left: 250px;
+            margin-left:250px;
         }
 
         .header {
@@ -112,79 +105,67 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
         }
 
         .header h1 {
-            margin: 0;
-            font-size: 1.5em;
+            margin:0;
+            font-size:1.5em;
         }
-        
+
         .menu-toggle {
-            display: flex;
-            flex-direction: column;
-            gap: 5px;
-            cursor: pointer;
+            display:flex;
+            flex-direction:column;
+            gap:5px;
+            cursor:pointer;
         }
 
         .menu-toggle span {
-            display: block;
-            width: 25px;
-            height: 3px;
-            background-color: var(--light-text-color);
-            transition: transform 0.3s ease;
+            display:block;
+            width:25px;
+            height:3px;
+            background-color:var(--light-text-color);
+            transition:transform .3s;
+        }
+        .menu-toggle.active span:nth-child(1) {
+            transform:rotate(45deg) translate(5px,5px);
         }
 
-        .menu-toggle.active span:nth-child(1) {
-            transform: rotate(45deg) translate(5px, 5px);
-        }
         .menu-toggle.active span:nth-child(2) {
-            opacity: 0;
+            opacity:0;
         }
+
         .menu-toggle.active span:nth-child(3) {
-            transform: rotate(-45deg) translate(5px, -5px);
+            transform:rotate(-45deg) translate(5px,-5px);
         }
-        
+
+        /* Containers */
         .container {
-            max-width: 900px;
-            margin: 20px auto;
-            padding: 20px;
-            background-color: var(--card-bg);
-            border-radius: 15px;
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
-            line-height: 1.6;
+            max-width:900px;
+            margin:20px auto;
+            padding:20px;
+            background-color:var(--card-bg);
+            border-radius:15px;
+            box-shadow:0 4px 20px rgba(0,0,0,0.05);
+            line-height:1.6;
         }
 
         .test-header {
-            text-align: center;
-            margin-bottom: 30px;
+            text-align:center;
+            margin-bottom:30px;
         }
 
         .test-header h1 {
-            color: var(--secondary-color);
-            font-size: 2.5em;
-            margin: 0;
+            color:var(--secondary-color);
+            font-size:2.5em; margin:0;
         }
-        
+
         .test-header p {
-            font-size: 1.2em;
-            color: #555;
+            font-size:1.2em;
+            color:#555;
         }
 
-        .test-content-top {
-            display: flex;
-            gap: 30px;
-            align-items: center;
-            margin-bottom: 40px;
-        }
-        
-        .test-content-top img {
-            max-width: 400px;
-            height: auto;
-            border-radius: 10px;
-            animation: rotate360 10s linear infinite;
-        }
-
+        /* Animatsiyalar */
         @keyframes rotate360 {
             from {
                 transform: rotate(0deg);
@@ -192,20 +173,6 @@
             to {
                 transform: rotate(360deg);
             }
-        }
-
-        .test-content-bottom {
-            display: flex;
-            gap: 30px;
-            align-items: center;
-            margin-bottom: 40px;
-        }
-        
-        .test-content-bottom img {
-            max-width: 400px;
-            height: auto;
-            border-radius: 10px;
-            animation: slideLeftRight 1.5s ease-in-out infinite alternate;
         }
 
         @keyframes slideLeftRight {
@@ -217,200 +184,213 @@
             }
         }
 
-        .text-section {
-            flex-grow: 1;
+        .test-content-top, .test-content-bottom {
+            display:flex;
+            gap:30px;
+            align-items:center;
+            margin-bottom:40px;
         }
 
+        .test-content-top img.rotate-img {
+            max-width:400px;
+            height:auto;
+            border-radius:10px;
+            animation:rotate360 10s linear infinite;
+        }
+
+        .test-content-bottom img.slide-img {
+            max-width:400px;
+            height:auto;
+            border-radius:10px;
+            animation:slideLeftRight 1.5s ease-in-out infinite alternate;
+        }
+
+        .text-section {
+            flex-grow:1;
+        }
+
+        /* CTA buttons */
         .cta-section {
-            text-align: center;
-            margin-top: 40px;
+            text-align:center;
+            margin-top:40px;
         }
 
         .test-btn {
-            background-color: var(--primary-color);
-            color: var(--light-text-color);
-            border: none;
-            padding: 15px 30px;
-            font-size: 1.1em;
-            font-weight: 600;
-            border-radius: 8px;
-            cursor: pointer;
-            text-decoration: none;
-            transition: background-color 0.3s ease;
-        }
-        
-        .test-btn:hover {
-            background-color: #45a049;
-        }
-        
-        .results-info {
-            background-color: var(--background-color);
-            padding: 20px;
-            border-radius: 10px;
-            margin-top: 30px;
-        }
-        
-        .results-info h3 {
-            color: var(--secondary-color);
-        }
-        
-        .test-features {
-            list-style: none;
-            padding: 0;
-        }
-        
-        .test-features li {
-            background-color: var(--background-color);
-            margin-bottom: 10px;
-            padding: 10px 15px;
-            border-left: 3px solid var(--primary-color);
-            border-radius: 5px;
-            font-weight: 500;
-        }
-        
-        .test-warning {
-            color: #f44336;
-            background-color: #ffebee;
-            padding: 15px;
-            border-radius: 8px;
-            margin-top: 20px;
-            font-weight: 600;
+            background-color:var(--primary-color);
+            color:var(--light-text-color);
+            border:none;
+            padding:15px 30px;
+            font-size:1.1em;
+            font-weight:600;
+            border-radius:8px;
+            cursor:pointer;
+            text-decoration:none;
+            transition: background-color .3s ease;
         }
 
-        @media (max-width: 768px) {
+        .test-btn:hover {
+            background-color:#45a049; 
+        }
+
+        /* Test features */
+        .results-info {
+            background-color:var(--background-color);
+            padding:20px; border-radius:10px; margin-top:30px;
+        }
+
+        .results-info h3 {
+            color:var(--secondary-color);
+        }
+
+        .test-features {
+            list-style:none;
+            padding:0;
+        }
+
+        .test-features li {
+            background-color:var(--background-color);
+            margin-bottom:10px;
+            padding:10px 15px;
+            border-left:3px solid var(--primary-color);
+            border-radius:5px;
+            font-weight:500;
+        }
+
+        .test-warning {
+            color:#f44336;
+            background-color:#ffebee;
+            padding:15px;
+            border-radius:8px;
+            margin-top:20px;
+            font-weight:600;
+        }
+
+        /* Responsive */
+        @media(max-width:768px){
             .test-content-top, .test-content-bottom {
-                flex-direction: column;
-            }
+                flex-direction:column;
+                }
         }
     </style>
-
-    <script defer src="https://cdn.jsdelivr.net/npm/@vercel/speed-insights/dist/inject.min.js"></script>
-    
 </head>
 <body>
-    
-    <div class="side-nav" id="side-nav">
-        <a href="./careerpath.html"><span class="material-icons">home</span> Asosiy sahifa</a>
-        <a href="./dashboard.html"><span class="material-icons">person</span> Mening profilim</a>
-        <a href="./tests.html"><span class="material-icons">menu_book</span> Shaxsiyat testi</a>
-        <a href="./aichat.html"><span class="material-icons ai-icon">gem_spark</span>AI Maslahatchi</a>
-        <a href="./kasblar.html"><span class="material-icons">lightbulb</span> Kasblar</a>
-        <a href="./jobs.html"><span class="material-icons">work</span> Ish topish</a>
-    </div>
 
-    <div class="main-content-container" id="main-content-container">
-        <header class="header">
-            <div class="menu-toggle" id="menu-toggle">
-                <span></span>
-                <span></span>
-                <span></span>
-            </div>
-            <h1>CareerPath</h1>
-            <div class="profile-menu">
-                <button class="profile-btn" id="profile-btn">
-                    <span id="user-email-display">foydalanuvchi@gmail.com</span> ▼
-                </button>
-                <div class="profile-dropdown" id="profile-dropdown">
-                    <a href="#" id="logout-link" class="logout-link">Tizimdan chiqish</a>
-                </div>
-            </div>
-        </header>
+<div class="side-nav" id="side-nav">
+    <a href="./index.html"><span class="material-icons">info</span> Bosh sahifa</a>
+    <a href="./careerpath.html"><span class="material-icons">home</span> Asosiy sahifa</a>
+    <a href="./dashboard.html"><span class="material-icons">person</span> Mening profilim</a>
+    <a href="./tests.html"><span class="material-icons">menu_book</span> Testlar</a>
+    <a href="./aichat.html"><span class="material-icons">auto_awesome</span>AI Maslahatchi</a>
+    <a href="./kasblar.html"><span class="material-icons">lightbulb</span> Kasblar</a>
+    <a href="./jobs.html"><span class="material-icons">work</span> Ish topish</a>
+    <a href="./applications.html"><span class="material-icons">assignment</span> Arizalar</a>
+    <a href="./about.html"><span class="material-icons">group</span> Biz haqimizda</a>
+    <a href="./contact.html"><span class="material-icons">contact_mail</span> Bog'lanish</a>
+</div>
 
-        <div class="container">
-            <div class="test-header">
-                <h1>Qaysi martaba sizga eng mos kelishini bilib oling</h1>
-                <p>Sinovimizni topshiring va qaysi texnologiya ishi sizga mos kelishini bilib oling.</p>
+<div class="main-content-container" id="main-content-container">
+    <header class="header">
+        <div class="menu-toggle" id="menu-toggle"><span></span><span></span><span></span></div>
+        <h1>CareerPath</h1>
+        <div class="profile-menu">
+            <button class="profile-btn" id="profile-btn"><span id="user-email-display">foydalanuvchi@gmail.com</span> ▼</button>
+            <div class="profile-dropdown" id="profile-dropdown"><a href="#" id="logout-link" class="logout-link">Tizimdan chiqish</a></div>
+        </div>
+    </header>
+
+    <div class="container">
+        <div class="test-header">
+            <h1>Qaysi martaba sizga eng mos kelishini bilib oling</h1>
+            <p>Sinovimizni topshiring va qaysi texnologiya ishi sizga mos kelishini bilib oling.</p>
+        </div>
+        <div class="test-content-top">
+            <div class="text-section">
+                <p><strong>Sinov: Men uchun qaysi texnik ish to'g'ri?</strong></p>
+                <p>IT sohasida martaba o'zgarishiga tayyormisiz, lekin qaerdan boshlashni bilmayapsizmi? Qiziq, texnika sohasidagi qaysi kasb sizning ko'nikmalaringiz va qiziqishlaringizga ko'proq mos keladi? O'zingizning tajribangiz va tabiiy iste'dodlaringizdan foydalanib, IT sohasida muvaffaqiyatga erishmoqchimisiz?</p>
+                <p>Potensialingizni maksimal darajada oshirish uchun kuchli va qobiliyatingizni kashf qilish uchun ushbu 15 daqiqalik texnologik martaba testini topshiring.</p>
             </div>
-            
-            <div class="test-content-top">
+            <img src="./images/testlogo.svg" alt="Test rasm" class="rotate-img">
+        </div>
+        <div class="cta-section"><a href="./shaxsiyat-testi.html" class="test-btn">Sinovdan o'ting</a></div>
+        <div class="results-info">
+            <div class="test-content-bottom">
                 <div class="text-section">
-                    <p><strong>Sinov: Men uchun qaysi texnik ish to'g'ri?</strong></p>
-                    <p>IT sohasida martaba o'zgarishiga tayyormisiz, lekin qaerdan boshlashni bilmayapsizmi? Qiziq, texnika sohasidagi qaysi kasb sizning ko'nikmalaringiz va qiziqishlaringizga ko'proq mos keladi? O'zingizning tajribangiz va tabiiy iste'dodlaringizdan foydalanib, IT sohasida muvaffaqiyatga erishmoqchimisiz?</p>
-                    <p>Potensialingizni maksimal darajada oshirish uchun kuchli va qobiliyatingizni kashf qilish uchun ushbu 15 daqiqalik texnologik martaba testini topshiring.</p>
+                    <h3>Bizning IT kareramiz test afzalliklari</h3>
+                    <ul class="test-features">
+                        <li>Ilmiy yondashuv asosida</li>
+                        <li>Sinov davomiyligi - 15 daqiqa</li>
+                        <li>Natijalar shifrlangan</li>
+                        <li>To'g'ri yoki noto'g'ri javoblar yo'q</li>
+                        <li>Bepul</li>
+                        <li>Rasmiy testlar</li>
+                    </ul>
                 </div>
-                <img src="./images/testlogo.svg" alt="Test haqida rasm">
-            </div>
-
-            <div class="cta-section">
-                <a href="./shaxsiyat-testi.html" class="test-btn">Sinovdan o'ting</a>
-            </div>
-
-            <div class="results-info">
-                <div class="test-content-bottom">
-                    <div class="text-section">
-                        <h3>Bizning IT kareramiz test afzalliklari</h3>
-                        <ul class="test-features">
-                            <li>Ilmiy yondashuv asosida</li>
-                            <li>Sinov davomiyligi - 15 daqiqa</li>
-                            <li>Natijalar shifrlangan</li>
-                            <li>To'g'ri yoki noto'g'ri javoblar yo'q</li>
-                            <li>Bepul</li>
-                            <li>Rasmiy testlar</li>
-                        </ul>
-                    </div>
-                    <img src="./images/testsavollogo.svg" alt="Test afzalliklari haqida rasm">
-                </div>
-            </div>
-            
-            <p class="test-warning"><strong>E'tibor bering:</strong> test natijalaringiz shifrlangan va tarqatilmaydi.</p>
-            
-            <div class="cta-section">
-                <a href="./shaxsiyat-testi.html" class="test-btn">Sinovdan o'ting</a>
+                <img src="./images/testsavollogo.svg" alt="Test afzalligi" class="slide-img">
             </div>
         </div>
+        <div class="cta-section"><a href="./shaxsiyat-testi.html" class="test-btn">Testga kirish</a></div>
     </div>
 
-    <script type="module">
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/12.2.1/firebase-app.js";
-        import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/12.2.1/firebase-auth.js";
-        
-        const firebaseConfig = {
-            apiKey: "AIzaSyA86zhSVi4FSw-GvFBdOZsCPaHMS67XA78",
-            authDomain: "carrer-path-a5810.firebaseapp.com",
-            projectId: "carrer-path-a5810",
-            storageBucket: "carrer-path-a5810.firebasestorage.app",
-            messagingSenderId: "693831778129",
-            appId: "1:693831778129:web:911293c5c284eefe295d70"
-        };
-        const app = initializeApp(firebaseConfig);
-        const auth = getAuth(app);
-        
-        onAuthStateChanged(auth, (user) => {
-            if (user) {
-                document.getElementById('user-email-display').textContent = user.email;
-            } else {
-                window.location.href = "login.html";
-            }
-        });
+    <div class="container" style="margin-top: 40px;">
+        <div class="test-header">
+            <h1>🧠 IQ Test</h1>
+            <p>Bu test orqali mantiqiy fikrlash va tezkor qaror qabul qilish qobiliyatingizni baholang.</p>
+        </div>
+        <div class="test-content-top">
+            <div class="text-section">
+                <p><strong>IQ Testga kirish:</strong></p>
+                <p>Quyidagi test sizning mantiqiy va matematik qobiliyatingizni baholaydi. Test davomiyligi 10 daqiqa.</p>
+            </div>
+            <img src="./images/IQ-logo.jpg" alt="IQ Test rasm" class="rotate-img">
+        </div>
+        <div class="cta-section"><a href="./iq-test.html" class="test-btn">IQ Testni boshlash</a></div>
+        <div class="results-info">
+            <h3>IQ Test afzalliklari</h3>
+            <ul class="test-features">
+                <li>10 daqiqa davom etadi</li>
+                <li>Natijalar shifrlangan va maxfiy</li>
+                <li>Bepul va tezkor</li>
+                <li>Har qanday yosh uchun mos</li>
+            </ul>
+        </div>
+        <p class="test-warning"><strong>E'tibor bering:</strong> test natijalari shifrlangan va tarqatilmaydi.</p>
+    </div>
+</div>
 
-        const profileBtn = document.getElementById('profile-btn');
-        const profileDropdown = document.getElementById('profile-dropdown');
-        profileBtn.addEventListener('click', () => {
-            profileDropdown.classList.toggle('active');
-        });
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/12.2.1/firebase-app.js";
+import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/12.2.1/firebase-auth.js";
 
-        const logoutLink = document.getElementById('logout-link');
-        logoutLink.addEventListener('click', (e) => {
-            e.preventDefault();
-            signOut(auth).then(() => {
-                window.location.href = "login.html";
-            });
-        });
-        
-        const menuToggle = document.getElementById('menu-toggle');
-        const sideNav = document.getElementById('side-nav');
-        const mainContent = document.getElementById('main-content-container');
-        
-        menuToggle.addEventListener('click', () => {
-            sideNav.classList.toggle('active');
-            mainContent.classList.toggle('menu-open');
-        });
+const firebaseConfig = {
+    apiKey: "AIzaSyA86zhSVi4FSw-GvFBdOZsCPaHMS67XA78",
+    authDomain: "carrer-path-a5810.firebaseapp.com",
+    projectId: "carrer-path-a5810",
+    storageBucket: "carrer-path-a5810.firebasestorage.app",
+    messagingSenderId: "693831778129",
+    appId: "1:693831778129:web:911293c5c284eefe295d70"
+};
+const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
 
-        if (typeof injectSpeedInsights === 'function') {
-            injectSpeedInsights();
-        }
-    </script>
+onAuthStateChanged(auth, (user) => {
+    if (user) { document.getElementById('user-email-display').textContent = user.email; }
+    else { window.location.href = "login.html"; }
+});
 
-    <script type="module" src="/role-router.js"></script>
+const profileBtn = document.getElementById('profile-btn');
+const profileDropdown = document.getElementById('profile-dropdown');
+profileBtn.addEventListener('click', () => { profileDropdown.classList.toggle('active'); });
+const logoutLink = document.getElementById('logout-link');
+logoutLink.addEventListener('click', (e) => { e.preventDefault(); signOut(auth).then(()=>{ window.location.href="login.html"; }); });
+
+const menuToggle = document.getElementById('menu-toggle');
+const sideNav = document.getElementById('side-nav');
+const mainContent = document.getElementById('main-content-container');
+menuToggle.addEventListener('click', ()=>{
+    sideNav.classList.toggle('active');
+    mainContent.classList.toggle('menu-open');
+});
+</script>
+
 </body>
 </html>

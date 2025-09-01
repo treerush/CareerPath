@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    <title>CareerPath - Asosiy sahifa</title>
+    <title>Asosiy sahifa - CareerPath</title>
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link rel="icon" type="image/jpeg" href="./images/careerpathlogo.jpg">
     <style>
@@ -51,9 +51,11 @@
             left: 0;
         }
 
+        /* Menyudagi barcha havolalar uchun umumiy uslublar */
         .side-nav a {
-            display: flex;
-            align-items: center;
+            display: flex; /* Elementlarni bir qatorga teradi */
+            align-items: center; /* Ikonka va matnni vertikal markazga joylashtiradi */
+            gap: 15px; /* Ikonka va matn orasidagi bo'shliq */
             padding: 15px 20px;
             color: var(--light-text-color);
             text-decoration: none;
@@ -65,23 +67,12 @@
             background:#444;
         }
 
+        /* Barcha ikonlar uchun umumiy uslublar */
         .side-nav a .material-icons {
-            margin-right: 15px;
-        }
-
-        .side-nav a .material-icons.ai-icon {
-            display: inline-flex; 
-            align-items: center; 
-            justify-content: center;
+            font-size: 24px; 
             width: 24px; 
             height: 24px;
-            font-size: 20px; 
-            line-height: 1; 
-            vertical-align: middle;
-            transform: none !important; 
-            padding: 0;
-            margin-left: -20px; 
-            margin-right: 34px; 
+            text-align: center;
         }
 
         .main-content-container {
@@ -263,16 +254,19 @@
     </style>
 
     <script defer src="https://cdn.jsdelivr.net/npm/@vercel/speed-insights/dist/inject.min.js"></script>
-    
 </head>
 <body>
     <div class="side-nav" id="side-nav">
+        <a href="./index.html"><span class="material-icons">info</span> Bosh sahifa</a>
         <a href="./careerpath.html"><span class="material-icons">home</span> Asosiy sahifa</a>
         <a href="./dashboard.html"><span class="material-icons">person</span> Mening profilim</a>
-        <a href="./tests.html"><span class="material-icons">menu_book</span> Shaxsiyat testi</a>
-        <a href="./aichat.html"><span class="material-icons ai-icon">gem_spark</span>AI Maslahatchi</a>
+        <a href="./tests.html"><span class="material-icons">menu_book</span> Testlar</a>
+        <a href="./aichat.html"><span class="material-icons">auto_awesome</span>AI Maslahatchi</a>
         <a href="./kasblar.html"><span class="material-icons">lightbulb</span> Kasblar</a>
         <a href="./jobs.html"><span class="material-icons">work</span> Ish topish</a>
+        <a href="./applications.html"><span class="material-icons">assignment</span> Arizalar</a>
+        <a href="./about.html"><span class="material-icons">group</span> Biz haqimizda</a>
+        <a href="./contact.html"><span class="material-icons">contact_mail</span> Bog'lanish</a>
     </div>
 
     <div class="main-content-container" id="main-content-container">
@@ -383,8 +377,8 @@
 
             } catch (err) {
                 console.error("Role lookup error:", err);
-                jobsLink.setAttribute('href', 'jobs.html');
-                jobsCtaLink.setAttribute('href', 'jobs.html');
+                if (jobsLink) jobsLink.setAttribute('href', 'jobs.html');
+                if (jobsCtaLink) jobsCtaLink.setAttribute('href', 'jobs.html');
             }
         });
 
@@ -441,9 +435,6 @@
             });
         });
 
-        if (typeof injectSpeedInsights === 'function') {
-            injectSpeedInsights();
-        }    
     </script>
 
     <script type="module" src="/role-router.js"></script>

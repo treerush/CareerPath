@@ -28,6 +28,7 @@
             background: var(--background-color);
             color: var(--text-color);
             position: relative;
+            overflow-x: hidden;
         }
 
         .side-nav {
@@ -48,6 +49,7 @@
             left: 0;
         }
         
+        /* Menyudagi barcha havolalar uchun umumiy uslublar */
         .side-nav a {
             display: flex;
             align-items: center;
@@ -56,29 +58,19 @@
             text-decoration: none;
             font-weight: 500;
             transition: background-color 0.3s ease;
+            gap: 15px; /* Ikonka va matn orasidagi bo'shliq */
         }
         
         .side-nav a:hover {
             background-color: #444;
         }
         
+        /* Barcha ikonlar uchun umumiy sozlama */
         .side-nav a .material-icons {
-            margin-right: 15px;
-        }
-
-        .side-nav a .material-icons.ai-icon {
-            display: inline-flex; 
-            align-items: center; 
-            justify-content: center;
-            width: 24px; 
+            font-size: 24px;
+            width: 24px;
             height: 24px;
-            font-size: 20px; 
-            line-height: 1; 
-            vertical-align: middle;
-            transform: none !important; 
-            padding: 0;
-            margin-left: -20px; 
-            margin-right: 34px; 
+            text-align: center;
         }
 
         .main-content-container {
@@ -235,11 +227,16 @@
 </head>
 <body>
     <div class="side-nav" id="side-nav">
+        <a href="./index.html"><span class="material-icons">info</span> Bosh sahifa</a>
         <a href="./careerpath.html"><span class="material-icons">home</span> Asosiy sahifa</a>
         <a href="./dashboard.html"><span class="material-icons">person</span> Mening profilim</a>
-        <a href="./tests.html"><span class="material-icons">menu_book</span> Shaxsiyat testi</a>
-        <a href="./aichat.html"><span class="material-icons ai-icon">gem_spark</span>AI Maslahatchi</a>
+        <a href="./tests.html"><span class="material-icons">menu_book</span> Testlar</a>
+        <a href="./aichat.html"><span class="material-icons">auto_awesome</span>AI Maslahatchi</a>
+        <a href="./kasblar.html"><span class="material-icons">lightbulb</span> Kasblar</a>
         <a href="./jobs.html"><span class="material-icons">work</span> Ish topish</a>
+        <a href="./applications.html"><span class="material-icons">assignment</span> Arizalar</a>
+        <a href="./about.html"><span class="material-icons">group</span> Biz haqimizda</a>
+        <a href="./contact.html"><span class="material-icons">contact_mail</span> Bog'lanish</a>
     </div>
 
     <div class="main-content-container" id="main-content-container">
@@ -263,7 +260,7 @@
             <h2>Kasblar</h2>
             <p>IT sohasidagi kasblar haqida qisqacha ma'lumotlar.</p>
             <div id="job-post-container" class="job-card-container">
-                </div>
+            </div>
         </div>
     </div>
     
@@ -318,23 +315,28 @@
         // Profile dropdown menyu uchun JavaScript kodi
         const profileBtn = document.getElementById('profile-btn');
         const profileDropdown = document.getElementById('profile-dropdown');
-        profileBtn.addEventListener('click', (e) => {
-            e.stopPropagation();
-            profileDropdown.style.display = profileDropdown.style.display === 'block' ? 'none' : 'block';
-        });
-        document.addEventListener('click', (e) => {
-            if (!profileBtn.contains(e.target)) profileDropdown.style.display = 'none';
-        });
+        if (profileBtn && profileDropdown) {
+            profileBtn.addEventListener('click', (e) => {
+                e.stopPropagation();
+                profileDropdown.style.display = profileDropdown.style.display === 'block' ? 'none' : 'block';
+            });
+            document.addEventListener('click', (e) => {
+                if (!profileBtn.contains(e.target)) profileDropdown.style.display = 'none';
+            });
+        }
+        
 
         // Logout uchun JavaScript kodi
         const logoutLink = document.getElementById('logout-link');
-        logoutLink.addEventListener('click', (e) => {
-            e.preventDefault();
-            // Tizimdan chiqish logikasi (Firebase yoki boshqa autentifikatsiya tizimi)
-            // signOut(auth).then(() => {
-            //     window.location.href = "login.html";
-            // });
-        });
+        if (logoutLink) {
+             logoutLink.addEventListener('click', (e) => {
+                e.preventDefault();
+                // Tizimdan chiqish logikasi (Firebase yoki boshqa autentifikatsiya tizimi)
+                // signOut(auth).then(() => {
+                //     window.location.href = "login.html";
+                // });
+            });
+        }
     </script>
 </body>
 </html>

@@ -27,8 +27,10 @@
             min-height: 100vh;
             background: var(--background-color);
             color: var(--text-color);
+            overflow-x: hidden;
         }
 
+        /* Sidebar */
         .side-nav {
             position: fixed;
             top: 0;
@@ -47,6 +49,7 @@
             left: 0;
         }
         
+        /* Barcha menyu havolalari uchun umumiy uslublar */
         .side-nav a {
             display: flex;
             align-items: center;
@@ -55,29 +58,19 @@
             text-decoration: none;
             font-weight: 500;
             transition: background-color 0.3s ease;
+            gap: 15px; /* Ikona va matn orasidagi bo'shliq */
         }
         
         .side-nav a:hover {
             background-color: #444;
         }
         
+        /* Barcha ikonlar uchun umumiy sozlama */
         .side-nav a .material-icons {
-            margin-right: 15px;
-        }
-
-        .side-nav a .material-icons.ai-icon {
-            display: inline-flex; 
-            align-items: center; 
-            justify-content: center;
-            width: 24px; 
+            font-size: 24px;
+            width: 24px;
             height: 24px;
-            font-size: 20px; 
-            line-height: 1; 
-            vertical-align: middle;
-            transform: none !important; 
-            padding: 0;
-            margin-left: -20px; 
-            margin-right: 34px; 
+            text-align: center;
         }
 
         .main-content-container {
@@ -265,12 +258,16 @@
 <body>
     
     <div class="side-nav" id="side-nav">
+        <a href="./index.html"><span class="material-icons">info</span> Bosh sahifa</a>
         <a href="./careerpath.html"><span class="material-icons">home</span> Asosiy sahifa</a>
         <a href="./dashboard.html"><span class="material-icons">person</span> Mening profilim</a>
-        <a href="./tests.html"><span class="material-icons">menu_book</span> Shaxsiyat testi</a>
-        <a href="./aichat.html"><span class="material-icons ai-icon">gem_spark</span>AI Maslahatchi</a>
+        <a href="./tests.html"><span class="material-icons">menu_book</span> Testlar</a>
+        <a href="./aichat.html"><span class="material-icons">auto_awesome</span>AI Maslahatchi</a>
         <a href="./kasblar.html"><span class="material-icons">lightbulb</span> Kasblar</a>
         <a href="./jobs.html"><span class="material-icons">work</span> Ish topish</a>
+        <a href="./applications.html"><span class="material-icons">assignment</span> Arizalar</a>
+        <a href="./about.html"><span class="material-icons">group</span> Biz haqimizda</a>
+        <a href="./contact.html"><span class="material-icons">contact_mail</span> Bog'lanish</a>
     </div>
 
     <div class="main-content-container" id="main-content-container">
@@ -286,7 +283,8 @@
                     <span id="user-email-display">foydalanuvchi@gmail.com</span> ▼
                 </button>
                 <div class="profile-dropdown" id="profile-dropdown">
-                    <a href="#" id="logout-link" class="logout-link">Tizimdan chiqish</a>
+                    <a href="dashboard.html">Mening profilim</a>
+                    <a href="#" id="logout-link">Tizimdan chiqish</a>
                 </div>
             </div>
         </header>
@@ -303,7 +301,7 @@
             <div class="nav-buttons">
                 <button id="prev-btn" disabled>Orqaga</button>
                 <button id="next-btn">Keyingi</button>
-                <button id="finish-btn" style="display:none;" disabled>Natijalarni ko'rish</button>
+                <button id="finish-btn" style="display:none;">Natijalarni ko'rish</button>
             </div>
             
         </div>
@@ -459,28 +457,59 @@
         };
 
         const handleFinishTest = async () => {
-  if (Object.keys(userAnswers).length < questions.length) {
-    alert("Iltimos, barcha savollarga javob bering!");
-    return;
-  }
+            if (Object.keys(userAnswers).length < questions.length) {
+                alert("Iltimos, barcha savollarga javob bering!");
+                return;
+            }
 
-  if (auth.currentUser) {
-    try {
-      const resultsRef = doc(db, "test_results", auth.currentUser.uid);
-      await setDoc(resultsRef, {
-        answers: userAnswers,
-        completedAt: new Date()
-      });
+            if (auth.currentUser) {
+                try {
+                    const answersMap = Object.keys(userAnswers).map(key => ({
+                        questionId: parseInt(key),
+                        answer: userAnswers[key]
+                    }));
 
-      window.location.href = "javoblar.html";
+                    const score = {
+                        Extroversion: 0,
+                        Introversion: 0,
+                        'Intuitiv (yangi g\'oyalar)': 0,
+                        'Analitik (detallarga e\'tibor)': 0,
+                        'Mantiqiy (sistemali fikrlash)': 0,
+                        'Emotsional (hissiyotlarga ta\'sirchan)': 0
+                    };
 
-    } catch (err) {
-      console.error('Saqlashda xato:', err);
-      alert("Natijalarni saqlashda xatolik yuz berdi. Internetga ulanilganini tekshiring.");
-      return;
-    }
-  }
-};
+                    answersMap.forEach(item => {
+                        switch (item.questionId) {
+                            case 1: item.answer === '<<' ? score.Extroversion++ : score.Introversion++; break;
+                            case 2: item.answer === '<<' ? score['Emotsional (hissiyotlarga ta\'sirchan)']++ : score['Mantiqiy (sistemali fikrlash)']++; break;
+                            case 3: item.answer === '<<' ? score['Analitik (detallarga e\'tibor)']++ : score['Intuitiv (yangi g\'oyalar)']++; break;
+                            case 4: item.answer === '<<' ? score.Extroversion++ : score.Introversion++; break;
+                            case 5: item.answer === '<<' ? score.Extroversion++ : score.Introversion++; break;
+                            case 6: item.answer === '<<' ? score.Extroversion++ : score.Introversion++; break;
+                            case 7: item.answer === '<<' ? score['Emotsional (hissiyotlarga ta\'sirchan)']++ : score['Mantiqiy (sistemali fikrlash)']++; break;
+                            case 8: item.answer === '<<' ? score['Analitik (detallarga e\'tibor)']++ : score['Intuitiv (yangi g\'oyalar)']++; break;
+                            case 9: item.answer === '<<' ? score.Extroversion++ : score.Introversion++; break;
+                            case 10: item.answer === '<<' ? score['Intuitiv (yangi g\'oyalar)']++ : score['Analitik (detallarga e\'tibor)']++; break;
+                            case 11: item.answer === '<<' ? score.Extroversion++ : score.Introversion++; break;
+                            case 12: item.answer === '<<' ? score['Emotsional (hissiyotlarga ta\'sirchan)']++ : score['Mantiqiy (sistemali fikrlash)']++; break;
+                            case 13: item.answer === '<<' ? score['Analitik (detallarga e\'tibor)']++ : score['Intuitiv (yangi g\'oyalar)']++; break;
+                            case 14: item.answer === '<<' ? score.Extroversion++ : score.Introversion++; break;
+                            case 15: item.answer === '<<' ? score['Intuitiv (yangi g\'oyalar)']++ : score['Analitik (detallarga e\'tibor)']++; break;
+                        }
+                    });
+
+                    await setDoc(doc(db, "test_results", auth.currentUser.uid), {
+                        answers: score,
+                        completedAt: new Date()
+                    });
+
+                    window.location.href = "test-natijalari.html";
+                } catch (err) {
+                    console.error('Saqlashda xato:', err);
+                    alert("Natijalarni saqlashda xatolik yuz berdi. Internetga ulanilganini tekshiring.");
+                }
+            }
+        };
 
         prevBtn.addEventListener('click', () => {
             if (currentQuestionIndex > 0) {
@@ -491,7 +520,7 @@
 
         nextBtn.addEventListener('click', () => {
             if (!userAnswers[questions[currentQuestionIndex].id]) {
-                alert("Iltimos, avval bu savollarga javob bering!");
+                alert("Iltimos, avval bu savolga javob bering!");
                 return;
             }
             if (currentQuestionIndex < questions.length - 1) {
@@ -515,17 +544,21 @@
         
         const profileBtn = document.getElementById('profile-btn');
         const profileDropdown = document.getElementById('profile-dropdown');
-        profileBtn.addEventListener('click', () => {
-            profileDropdown.classList.toggle('active');
-        });
+        if (profileBtn && profileDropdown) {
+             profileBtn.addEventListener('click', () => {
+                 profileDropdown.classList.toggle('active');
+             });
+        }
 
         const logoutLink = document.getElementById('logout-link');
-        logoutLink.addEventListener('click', (e) => {
-            e.preventDefault();
-            signOut(auth).then(() => {
-                window.location.href = "login.html";
-            });
-        });
+        if (logoutLink) {
+             logoutLink.addEventListener('click', (e) => {
+                 e.preventDefault();
+                 signOut(auth).then(() => {
+                     window.location.href = "login.html";
+                 });
+             });
+        }
         
         const menuToggle = document.getElementById('menu-toggle');
         const sideNav = document.getElementById('side-nav');
@@ -536,7 +569,7 @@
             mainContent.classList.toggle('menu-open');
             menuToggle.classList.toggle('active');
         });
-
+        
         if (typeof injectSpeedInsights === 'function') {
             injectSpeedInsights();
         }
