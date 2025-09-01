@@ -179,7 +179,7 @@
             gap: 10px;
             margin-top: 15px;
         }
-        .job-card .job-actions button, .job-card .job-actions a {
+        .job-card .job-actions button {
             background-color: var(--primary-color);
             color: var(--light-text-color);
             text-decoration: none;
@@ -188,9 +188,16 @@
             display: inline-block;
             border: none;
             cursor: pointer;
+            transition: background-color 0.3s ease;
         }
-        .job-card .job-actions button:hover, .job-card .job-actions a:hover {
+        .job-card .job-actions button.chat-btn {
+            background-color: var(--secondary-color);
+        }
+        .job-card .job-actions button:hover {
             background-color: #45a049;
+        }
+        .job-card .job-actions button.chat-btn:hover {
+            background-color: #1a7bb9;
         }
     </style>
 
@@ -234,14 +241,13 @@
             
             <div class="job-list" id="job-list">
             </div>
-            
         </div>
     </div>
 
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/12.2.1/firebase-app.js";
         import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/12.2.1/firebase-auth.js";
-        import { getFirestore, collection, getDocs } from "https://www.gstatic.com/firebasejs/12.2.1/firebase-firestore.js";
+        import { getFirestore, collection, getDocs, addDoc } from "https://www.gstatic.com/firebasejs/12.2.1/firebase-firestore.js";
         
         const firebaseConfig = {
             apiKey: "AIzaSyA86zhSVi4FSw-GvFBdOZsCPaHMS67XA78",
@@ -280,6 +286,8 @@
             jobs.forEach(job => {
                 const jobCard = document.createElement('div');
                 jobCard.className = 'job-card';
+                // employerId ma'lumoti Firestore'dagi har bir job hujjatiga qo'shilgan deb faraz qilamiz
+                const employerId = job.employerId || 'default-employer-id';
                 jobCard.innerHTML = `
                     <h3>${job.title}</h3>
                     <p><strong>Kompaniya:</strong> ${job.company}</p>
@@ -287,35 +295,39 @@
                     <p><strong>Joylashuv:</strong> ${job.location}</p>
                     <p>${job.description}</p>
                     <div class="job-actions">
-                        <button onclick="bookJob('${job.id}')">Bron qilish</button>
+                        <button class="book-and-chat-btn"
+                                data-employer-id="${employerId}"
+                                data-job-title="${job.title}"
+                                data-job-description="${job.description}">
+                            Bron qilish
+                        </button>
                     </div>
                 `;
                 jobListContainer.appendChild(jobCard);
             });
+            setupButtons();
         };
         
-        window.bookJob = async (jobId) => {
-            const userId = auth.currentUser ? auth.currentUser.uid : null;
-            if (!userId) {
-                alert("Bron qilish uchun tizimga kirishingiz kerak.");
-                return;
-            }
-            
-            const applicationData = {
-                userId: userId,
-                jobId: jobId,
-                appliedAt: new Date(),
-                status: 'pending'
-            };
-            
-            try {
-                const applicationsCol = collection(db, "applications");
-                await addDoc(applicationsCol, applicationData);
-                alert(`Siz ${jobId} ID raqamli ishga bron qildingiz. Arizangiz ish beruvchiga yuborildi.`);
-            } catch (e) {
-                console.error("Ariza yuborishda xato:", e);
-                alert("Arizani yuborishda xato yuz berdi.");
-            }
+        const setupButtons = () => {
+            document.querySelectorAll('.book-and-chat-btn').forEach(button => {
+                button.addEventListener('click', () => {
+                    const employerId = button.getAttribute('data-employer-id');
+                    const jobTitle = button.getAttribute('data-job-title');
+                    const jobDescription = button.getAttribute('data-job-description');
+
+                    if (auth.currentUser) {
+                        // Ma'lumotlarni URL orqali kodlab uzatamiz
+                        const encodedTitle = encodeURIComponent(jobTitle);
+                        const encodedDescription = encodeURIComponent(jobDescription);
+                        
+                        // Foydalanuvchini chat.html sahifasiga yo'naltiramiz
+                        window.location.href = `chat.html?recipientId=${employerId}&jobTitle=${encodedTitle}&jobDescription=${encodedDescription}`;
+                    } else {
+                        alert("Bron qilish va chatni boshlash uchun tizimga kirishingiz kerak.");
+                        window.location.href = "login.html";
+                    }
+                });
+            });
         };
 
         onAuthStateChanged(auth, async (user) => {
