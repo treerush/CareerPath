@@ -418,6 +418,7 @@
         <a href="./dashboard.html"><span class="material-icons">person</span> Mening profilim</a>
         <a href="./tests.html"><span class="material-icons">menu_book</span> Shaxsiyat testi</a>
         <a href="./aichat.html"><span class="material-icons ai-icon">gem_spark</span>AI Maslahatchi</a>
+        <a href="./kasblar.html"><span class="material-icons">lightbulb</span> Kasblar</a>
         <a href="./jobs.html"><span class="material-icons">work</span> Ish topish</a>
     </div>
 
@@ -434,7 +435,7 @@
                     <span id="user-email-display">foydalanuvchi@gmail.com</span> ▼
                 </button>
                 <div class="profile-dropdown" id="profile-dropdown">
-                    <a href="#" id="logout-link" class="logout-link">Tizimdan chiqish</a>
+                    <a href="#" id="logout-link">Tizimdan chiqish</a>
                 </div>
             </div>
         </header>
@@ -595,16 +596,13 @@
         calculateCompleteness(userData);
     };
 
-    // ---------- NEW: stats updater ----------
     async function updateStatsForUser(uid) {
         try {
-            // 1) Topshirilgan testlar
             let testsCount = 0;
             try {
                 const testsQ = query(collection(db, "test_results"), where("userId", "==", uid));
                 const testsSnap = await getDocs(testsQ);
                 testsCount = testsSnap.size;
-                // fallback: maybe document stored under id == uid (single result)
                 if (testsCount === 0) {
                     const maybeDoc = await getDoc(doc(db, "test_results", uid));
                     if (maybeDoc.exists()) testsCount = 1;
@@ -614,7 +612,6 @@
             }
             document.getElementById('tests-completed').textContent = testsCount;
 
-            // 2) Kasb tavsiyalari
             let recCount = 0;
             try {
                 const recQ = query(collection(db, "recommendations"), where("userId", "==", uid));
@@ -625,7 +622,6 @@
             }
             document.getElementById('career-recommendations').textContent = recCount;
 
-            // 3) Ish o'rinlari (arizalar)
             let jobsCount = 0;
             try {
                 const jobsQ = query(collection(db, "jobApplications"), where("userId", "==", uid));
@@ -636,14 +632,10 @@
             }
             document.getElementById('jobs-applied').textContent = jobsCount;
 
-            // (Optional) update profile completeness again if you want it to consider stats:
-            // calculateCompleteness(currentUserData)  // already called in updateUI
-
         } catch (err) {
             console.error("updateStatsForUser error:", err);
         }
     }
-    // ---------- END stats updater ----------
 
     onAuthStateChanged(auth, async (user) => {
         if (user) {
@@ -672,7 +664,6 @@
                 updateUI(defaultUserData);
             }
 
-            // call stats updater (important)
             updateStatsForUser(userId);
 
         } else {

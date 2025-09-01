@@ -117,6 +117,31 @@
         .menu-toggle.active span:nth-child(3) {
             transform: rotate(-45deg) translate(5px, -5px);
         }
+        .profile-dropdown {
+            display:none;
+            position:absolute;
+            right:0;
+            top:40px;
+            background:#fff;
+            color:#111;
+            border-radius:8px;
+            box-shadow:0 8px 24px rgba(0,0,0,0.08);
+            overflow:hidden;
+            min-width:160px;
+            z-index:30;
+        }
+
+        .profile-dropdown a {
+            display:block;
+            padding:10px 14px;
+            color:#111;
+            text-decoration:none;
+            border-bottom:1px solid #eee;
+        }
+
+        .profile-dropdown a:hover {
+            background:#f6f6f6;
+        }
         .container {
             max-width: 900px;
             margin: 20px auto;
@@ -224,6 +249,7 @@
         <a href="./dashboard.html"><span class="material-icons">person</span> Mening profilim</a>
         <a href="./tests.html"><span class="material-icons">menu_book</span> Shaxsiyat testi</a>
         <a href="./aichat.html"><span class="material-icons ai-icon">gem_spark</span>AI Maslahatchi</a>
+        <a href="./kasblar.html"><span class="material-icons">lightbulb</span> Kasblar</a>
         <a href="./jobs.html"><span class="material-icons">work</span> Ish topish</a>
     </div>
 
@@ -240,7 +266,8 @@
                     <span id="user-email-display">foydalanuvchi@gmail.com</span> ▼
                 </button>
                 <div class="profile-dropdown" id="profile-dropdown">
-                    <a href="#" id="logout-link" class="logout-link">Tizimdan chiqish</a>
+                    <a href="dashboard.html">Mening profilim</a>
+                    <a href="#" id="logout-link">Tizimdan chiqish</a>
                 </div>
             </div>
         </header>
@@ -314,7 +341,6 @@
             sendBtn.disabled = true;
 
             try {
-                // Front-end serverless funksiyaga so'rov yuborish
                 const response = await fetch('/api/chat', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },

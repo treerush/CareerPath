@@ -1,0 +1,818 @@
+[
+  {
+    "id": "software-developer",
+    "title": "Dasturchi",
+    "description": "Dasturiy ta'minot yaratish, testlash va qo'llab-quvvatlash bilan shug'ullanadi. Turli dasturlash tillarida ishlaydi va muammolarni hal qilishda ijodiy yondashuvlarni qo'llaydi.",
+    "required_skills": ["dasturlash tillari", "muammo hal qilish", "mantiqiy fikrlash", "algoritm tuzish", "debugging"],
+    "education": "Oliy ta'lim (Kompyuter fanlari, IT)",
+    "salary_range": {
+      "min": 500,
+      "max": 3000,
+      "currency": "USD"
+    },
+    "growth_rate": "22%",
+    "category": "IT",
+    "personality_match": ["openness", "conscientiousness"],
+    "min_iq": 110,
+    "rasm_url": "./images/software-developer.jpg"
+  },
+  {
+    "id": "data-scientist",
+    "title": "Ma'lumotlar tahlilchisi",
+    "description": "Katta hajmdagi ma'lumotlarni tahlil qilish, statistik modellar yaratish va biznes qarorlarini qo'llab-quvvatlash uchun insaytlar beradi.",
+    "required_skills": ["Python/R", "statistika", "SQL", "machine learning", "vizualizatsiya"],
+    "education": "Oliy ta'lim (Matematika, Statistika, IT)",
+    "salary_range": {
+      "min": 800,
+      "max": 3500,
+      "currency": "USD"
+    },
+    "growth_rate": "25%",
+    "category": "IT",
+    "personality_match": ["openness", "conscientiousness"],
+    "min_iq": 115,
+    "rasm_url": "./images/data-scientist.jpg"
+  },
+  {
+    "id": "doctor",
+    "title": "Shifokor",
+    "description": "Bemorlarni davolash, kasalliklarni tashxislash va sog'liqni saqlash bo'yicha maslahatlar beradi. Turli mutaxassislik yo'nalishlari mavjud.",
+    "required_skills": ["tibbiy bilim", "diagnostika", "empatiya", "stress boshqaruvi", "qaror qabul qilish"],
+    "education": "Oliy tibbiy ta'lim (6-7 yil)",
+    "salary_range": {
+      "min": 600,
+      "max": 2500,
+      "currency": "USD"
+    },
+    "growth_rate": "15%",
+    "category": "Tibbiyot",
+    "personality_match": ["conscientiousness", "agreeableness"],
+    "min_iq": 115,
+    "rasm_url": "./images/doctor.jpg"
+  },
+  {
+    "id": "teacher",
+    "title": "O'qituvchi",
+    "description": "Bolalar va yoshlarga ta'lim berish, bilim va ko'nikmalarni o'rgatish, shaxsiyat shakllanishiga yordam berish.",
+    "required_skills": ["pedagogika", "sabr", "kommunikatsiya", "tashkilotchilik", "kreativlik"],
+    "education": "Oliy pedagogik ta'lim",
+    "salary_range": {
+      "min": 300,
+      "max": 800,
+      "currency": "USD"
+    },
+    "growth_rate": "8%",
+    "category": "Ta'lim",
+    "personality_match": ["agreeableness", "conscientiousness", "extraversion"],
+    "min_iq": 105,
+    "rasm_url": "./images/teacher.jpg"
+  },
+  {
+    "id": "lawyer",
+    "title": "Advokat",
+    "description": "Huquqiy maslahat berish, sud jarayonlarida mijozlarni himoya qilish, shartnomalar tuzish va huquqiy hujjatlar tayyorlash.",
+    "required_skills": ["huquqiy bilim", "tahlil qilish", "og'zaki nutq", "yozma nutq", "muzokaralar"],
+    "education": "Oliy huquqshunoslik ta'limi",
+    "salary_range": {
+      "min": 500,
+      "max": 2000,
+      "currency": "USD"
+    },
+    "growth_rate": "10%",
+    "category": "Huquq",
+    "personality_match": ["conscientiousness", "extraversion"],
+    "min_iq": 115,
+    "rasm_url": "./images/lawyer.jpg"
+  },
+  {
+    "id": "accountant",
+    "title": "Buxgalter",
+    "description": "Moliyaviy hisobotlarni yuritish, soliq deklaratsiyalarini tayyorlash, byudjet rejalashtirish va moliyaviy tahlil.",
+    "required_skills": ["buxgalteriya", "Excel", "1C", "soliq qonunchiligi", "e'tiborlilik"],
+    "education": "Oliy iqtisodiy ta'lim",
+    "salary_range": {
+      "min": 400,
+      "max": 1200,
+      "currency": "USD"
+    },
+    "growth_rate": "7%",
+    "category": "Moliya",
+    "personality_match": ["conscientiousness"],
+    "min_iq": 105,
+    "rasm_url": "./images/accountant.jpg"
+  },
+  {
+    "id": "graphic-designer",
+    "title": "Grafik dizayner",
+    "description": "Vizual kontent yaratish, brendlar uchun dizayn ishlab chiqish, reklama materiallari va veb-dizayn.",
+    "required_skills": ["Photoshop", "Illustrator", "kreativlik", "rang nazariyasi", "kompozitsiya"],
+    "education": "Oliy yoki o'rta maxsus (Dizayn, San'at)",
+    "salary_range": {
+      "min": 300,
+      "max": 1500,
+      "currency": "USD"
+    },
+    "growth_rate": "13%",
+    "category": "Dizayn",
+    "personality_match": ["openness", "extraversion"],
+    "min_iq": 100,
+    "rasm_url": "./images/graphic-designer.jpg"
+  },
+  {
+    "id": "marketing-manager",
+    "title": "Marketing menejeri",
+    "description": "Marketing strategiyalarini ishlab chiqish, reklama kampaniyalarini boshqarish, bozor tadqiqotlari va mijozlar bilan ishlash.",
+    "required_skills": ["marketing strategiya", "tahlil", "ijodkorlik", "kommunikatsiya", "raqamli marketing"],
+    "education": "Oliy ta'lim (Marketing, Biznes)",
+    "salary_range": {
+      "min": 500,
+      "max": 2000,
+      "currency": "USD"
+    },
+    "growth_rate": "18%",
+    "category": "Marketing",
+    "personality_match": ["extraversion", "openness", "conscientiousness"],
+    "min_iq": 110,
+    "rasm_url": "./images/marketing-manager.jpg"
+  },
+  {
+    "id": "chef",
+    "title": "Oshpaz",
+    "description": "Ovqat tayyorlash, yangi retseptlar yaratish, oshxona jamoasini boshqarish va oziq-ovqat xavfsizligini ta'minlash.",
+    "required_skills": ["pazandachilik", "kreativlik", "vaqt boshqaruvi", "jamoada ishlash", "gigiyena"],
+    "education": "Maxsus pazandachilik kurslari",
+    "salary_range": {
+      "min": 300,
+      "max": 1500,
+      "currency": "USD"
+    },
+    "growth_rate": "11%",
+    "category": "Oshpazlik",
+    "personality_match": ["openness", "conscientiousness"],
+    "min_iq": 95,
+    "rasm_url": "./images/chef.jpg"
+  },
+  {
+    "id": "civil-engineer",
+    "title": "Qurilish muhandisi",
+    "description": "Binolar, ko'priklar va infratuzilmalarni loyihalash, qurilish jarayonlarini nazorat qilish va texnik hisob-kitoblar.",
+    "required_skills": ["AutoCAD", "konstruksiya hisoblari", "loyiha boshqaruvi", "qurilish materiallari", "xavfsizlik"],
+    "education": "Oliy muhandislik ta'limi",
+    "salary_range": {
+      "min": 500,
+      "max": 1800,
+      "currency": "USD"
+    },
+    "growth_rate": "11%",
+    "category": "Muhandislik",
+    "personality_match": ["conscientiousness", "openness"],
+    "min_iq": 110,
+    "rasm_url": "./images/civil-engineer.jpg"
+  },
+  {
+    "id": "nurse",
+    "title": "Hamshira",
+    "description": "Bemorlarga tibbiy yordam ko'rsatish, dori-darmonlar berish, shifokorlarga yordam berish va bemorlar holatini kuzatish.",
+    "required_skills": ["tibbiy ko'nikmalar", "empatiya", "stress boshqaruvi", "kuzatuvchanlik", "kommunikatsiya"],
+    "education": "O'rta yoki oliy tibbiy ta'lim",
+    "salary_range": {
+      "min": 250,
+      "max": 800,
+      "currency": "USD"
+    },
+    "growth_rate": "12%",
+    "category": "Tibbiyot",
+    "personality_match": ["agreeableness", "conscientiousness"],
+    "min_iq": 100,
+    "rasm_url": "./images/nurse.jpg"
+  },
+  {
+    "id": "sales-manager",
+    "title": "Savdo menejeri",
+    "description": "Mahsulot va xizmatlarni sotish, mijozlar bazasini kengaytirish, savdo rejalarini bajarish va mijozlar bilan munosabatlar.",
+    "required_skills": ["savdo texnikalari", "muzokaralar", "ishontirish", "CRM", "maqsadga intilish"],
+    "education": "Oliy yoki o'rta maxsus ta'lim",
+    "salary_range": {
+      "min": 400,
+      "max": 1500,
+      "currency": "USD"
+    },
+    "growth_rate": "9%",
+    "category": "Savdo",
+    "personality_match": ["extraversion", "conscientiousness"],
+    "min_iq": 100,
+    "rasm_url": "./images/sales-manager.jpg"
+  },
+  {
+    "id": "photographer",
+    "title": "Fotograf",
+    "description": "Professional suratga olish, foto tahrirlash, mijozlar bilan ishlash va ijodiy loyihalar ustida ishlash.",
+    "required_skills": ["fotografiya", "Photoshop", "Lightroom", "kompozitsiya", "yorug'lik bilan ishlash"],
+    "education": "Maxsus kurslar yoki amaliyot",
+    "salary_range": {
+      "min": 200,
+      "max": 1200,
+      "currency": "USD"
+    },
+    "growth_rate": "10%",
+    "category": "San'at",
+    "personality_match": ["openness", "extraversion"],
+    "min_iq": 95,
+    "rasm_url": "./images/photographer.jpg"
+  },
+  {
+    "id": "hr-manager",
+    "title": "HR menejer",
+    "description": "Xodimlarni yollash, kadrlar siyosatini yuritish, treninglar tashkil etish va xodimlar motivatsiyasi.",
+    "required_skills": ["kadrlar boshqaruvi", "psixologiya", "qonunchilik", "intervyu", "mojaro hal qilish"],
+    "education": "Oliy ta'lim (HR, Psixologiya, Biznes)",
+    "salary_range": {
+      "min": 400,
+      "max": 1500,
+      "currency": "USD"
+    },
+    "growth_rate": "12%",
+    "category": "HR",
+    "personality_match": ["agreeableness", "extraversion", "conscientiousness"],
+    "min_iq": 105,
+    "rasm_url": "./images/hr-manager.jpg"
+  },
+  {
+    "id": "electrician",
+    "title": "Elektrchi",
+    "description": "Elektr tizimlarini o'rnatish, ta'mirlash va texnik xizmat ko'rsatish, xavfsizlik qoidalariga rioya qilish.",
+    "required_skills": ["elektrotexnika", "sxemalar o'qish", "asboblar bilan ishlash", "xavfsizlik", "muammo aniqlash"],
+    "education": "O'rta maxsus texnik ta'lim",
+    "salary_range": {
+      "min": 300,
+      "max": 1000,
+      "currency": "USD"
+    },
+    "growth_rate": "9%",
+    "category": "Texnik",
+    "personality_match": ["conscientiousness"],
+    "min_iq": 95,
+    "rasm_url": "./images/electrician.jpg"
+  },
+  {
+    "id": "architect",
+    "title": "Me'mor",
+    "description": "Binolar va inshootlarni loyihalash, 3D modellashtirish, mijozlar bilan ishlash va qurilish me'yorlariga rioya qilish.",
+    "required_skills": ["ArchiCAD", "3D Max", "loyihalash", "kreativlik", "texnik bilim"],
+    "education": "Oliy me'morchilik ta'limi",
+    "salary_range": {
+      "min": 500,
+      "max": 2000,
+      "currency": "USD"
+    },
+    "growth_rate": "8%",
+    "category": "Arxitektura",
+    "personality_match": ["openness", "conscientiousness"],
+    "min_iq": 110,
+    "rasm_url": "./images/architect.jpg"
+  },
+  {
+    "id": "journalist",
+    "title": "Jurnalist",
+    "description": "Yangiliklar yig'ish, maqolalar yozish, intervyu olish va ijtimoiy muhim mavzularni yoritish.",
+    "required_skills": ["yozish", "tadqiqot", "intervyu", "tanqidiy fikrlash", "muddatga rioya"],
+    "education": "Oliy ta'lim (Jurnalistika, Filologiya)",
+    "salary_range": {
+      "min": 300,
+      "max": 1200,
+      "currency": "USD"
+    },
+    "growth_rate": "6%",
+    "category": "Media",
+    "personality_match": ["openness", "extraversion"],
+    "min_iq": 105,
+    "rasm_url": "./images/journalist.jpg"
+  },
+  {
+    "id": "psychologist",
+    "title": "Psixolog",
+    "description": "Ruhiy salomatlik bo'yicha maslahat berish, psixologik testlar o'tkazish va terapiya sessiyalarini olib borish.",
+    "required_skills": ["empatiya", "tinglash", "tahlil", "konfidensiallik", "sabr"],
+    "education": "Oliy psixologik ta'lim",
+    "salary_range": {
+      "min": 400,
+      "max": 1500,
+      "currency": "USD"
+    },
+    "growth_rate": "14%",
+    "category": "Psixologiya",
+    "personality_match": ["agreeableness", "openness", "emotional_stability"],
+    "min_iq": 110,
+    "rasm_url": "./images/psychologist.jpg"
+  },
+  {
+    "id": "fitness-trainer",
+    "title": "Fitnes trener",
+    "description": "Sport mashg'ulotlarini o'tkazish, individual dasturlar tuzish, ovqatlanish bo'yicha maslahat berish.",
+    "required_skills": ["sport bilimlari", "motivatsiya", "anatomiya", "ovqatlanish", "kommunikatsiya"],
+    "education": "Sport ta'limi yoki sertifikatlar",
+    "salary_range": {
+      "min": 200,
+      "max": 1000,
+      "currency": "USD"
+    },
+    "growth_rate": "15%",
+    "category": "Sport",
+    "personality_match": ["extraversion", "conscientiousness"],
+    "min_iq": 95,
+    "rasm_url": "./images/fitness-trainer.jpg"
+  },
+  {
+    "id": "translator",
+    "title": "Tarjimon",
+    "description": "Yozma va og'zaki tarjima qilish, hujjatlar tarjimasi, sinxron tarjima va madaniyatlararo kommunikatsiya.",
+    "required_skills": ["tillarni bilish", "madaniyat", "tez fikrlash", "yozish", "aniqlik"],
+    "education": "Oliy filologik ta'lim",
+    "salary_range": {
+      "min": 300,
+      "max": 1500,
+      "currency": "USD"
+    },
+    "growth_rate": "20%",
+    "category": "Tillar",
+    "personality_match": ["openness", "conscientiousness"],
+    "min_iq": 110,
+    "rasm_url": "./images/translator.jpg"
+  },
+  {
+    "id": "veterinarian",
+    "title": "Veterinar",
+    "description": "Hayvonlarni davolash, profilaktika choralari, operatsiyalar o'tkazish va hayvon egalariga maslahat berish.",
+    "required_skills": ["veterinariya", "hayvonlar bilan ishlash", "diagnostika", "jarrohlik", "sabr"],
+    "education": "Oliy veterinariya ta'limi",
+    "salary_range": {
+      "min": 350,
+      "max": 1300,
+      "currency": "USD"
+    },
+    "growth_rate": "16%",
+    "category": "Veterinariya",
+    "personality_match": ["agreeableness", "conscientiousness"],
+    "min_iq": 105,
+    "rasm_url": "./images/veterinarian.jpg"
+  },
+  {
+    "id": "interior-designer",
+    "title": "Interyer dizayner",
+    "description": "Ichki makonlarni loyihalash, rang va material tanlash, 3D vizualizatsiya va mijozlar bilan ishlash.",
+    "required_skills": ["3D dizayn", "rang nazariyasi", "AutoCAD", "kreativlik", "byudjet boshqaruvi"],
+    "education": "Oliy yoki o'rta maxsus (Dizayn)",
+    "salary_range": {
+      "min": 400,
+      "max": 1800,
+      "currency": "USD"
+    },
+    "growth_rate": "13%",
+    "category": "Dizayn",
+    "personality_match": ["openness", "conscientiousness"],
+    "min_iq": 105,
+    "rasm_url": "./images/interior-designer.jpg"
+  },
+  {
+    "id": "social-media-manager",
+    "title": "SMM mutaxassis",
+    "description": "Ijtimoiy tarmoqlarda kontent yaratish va joylashtirish, auditoriya bilan muloqot, reklama kampaniyalari.",
+    "required_skills": ["SMM", "kontent yaratish", "tahlilika", "kreativlik", "trendlarni bilish"],
+    "education": "Marketing yoki aloqa sohasi",
+    "salary_range": {
+      "min": 300,
+      "max": 1200,
+      "currency": "USD"
+    },
+    "growth_rate": "25%",
+    "category": "Marketing",
+    "personality_match": ["extraversion", "openness"],
+    "min_iq": 100,
+    "rasm_url": "./images/smm-manager.jpg"
+  },
+  {
+    "id": "mechanic",
+    "title": "Avtomexanik",
+    "description": "Avtomobillarni ta'mirlash va texnik xizmat ko'rsatish, nosozliklarni aniqlash va qismlarni almashtirish.",
+    "required_skills": ["mexanika", "diagnostika", "asboblar", "muammo hal qilish", "jismoniy kuch"],
+    "education": "O'rta maxsus texnik ta'lim",
+    "salary_range": {
+      "min": 250,
+      "max": 1000,
+      "currency": "USD"
+    },
+    "growth_rate": "7%",
+    "category": "Texnik",
+    "personality_match": ["conscientiousness"],
+    "min_iq": 95,
+    "rasm_url": "./images/mechanic.jpg"
+  },
+  {
+    "id": "event-manager",
+    "title": "Tadbir tashkilotchisi",
+    "description": "Tadbirlarni rejalashtirish va o'tkazish, byudjet boshqaruvi, pudratchilar bilan ishlash va logistika.",
+    "required_skills": ["tashkilotchilik", "vaqt boshqaruvi", "muloqot", "stress boshqaruvi", "kreativlik"],
+    "education": "Oliy ta'lim (har qanday)",
+    "salary_range": {
+      "min": 400,
+      "max": 1500,
+      "currency": "USD"
+    },
+    "growth_rate": "18%",
+    "category": "Tadbir",
+    "personality_match": ["extraversion", "conscientiousness", "openness"],
+    "min_iq": 105,
+    "rasm_url": "./images/event-manager.jpg"
+  },
+  {
+    "id": "dentist",
+    "title": "Stomatolog",
+    "description": "Tishlarni davolash, profilaktika, protezlash va og'iz bo'shlig'i salomatligini saqlash.",
+    "required_skills": ["stomatologiya", "aniq motorika", "sabr", "kommunikatsiya", "gigiyena"],
+    "education": "Oliy tibbiy ta'lim (Stomatologiya)",
+    "salary_range": {
+      "min": 500,
+      "max": 2500,
+      "currency": "USD"
+    },
+    "growth_rate": "11%",
+    "category": "Tibbiyot",
+    "personality_match": ["conscientiousness", "agreeableness"],
+    "min_iq": 110,
+    "rasm_url": "./images/dentist.jpg"
+  },
+  {
+    "id": "real-estate-agent",
+    "title": "Rieltor",
+    "description": "Ko'chmas mulk sotish va ijaraga berish, mijozlarga maslahat berish, shartnomalar tuzish.",
+    "required_skills": ["savdo", "muzokaralar", "bozor bilimi", "huquqiy bilim", "tarmoq"],
+    "education": "O'rta maxsus yoki oliy",
+    "salary_range": {
+      "min": 300,
+      "max": 2000,
+      "currency": "USD"
+    },
+    "growth_rate": "10%",
+    "category": "Ko'chmas mulk",
+    "personality_match": ["extraversion", "conscientiousness"],
+    "min_iq": 100,
+    "rasm_url": "./images/real-estate-agent.jpg"
+  },
+  {
+    "id": "financial-analyst",
+    "title": "Moliyaviy tahlilchi",
+    "description": "Moliyaviy hisobotlarni tahlil qilish, investitsiya tavsiyalari, risk baholash va prognozlash.",
+    "required_skills": ["moliyaviy tahlil", "Excel", "modellashtirish", "statistika", "hisobot"],
+    "education": "Oliy iqtisodiy ta'lim",
+    "salary_range": {
+      "min": 600,
+      "max": 2000,
+      "currency": "USD"
+    },
+    "growth_rate": "16%",
+    "category": "Moliya",
+    "personality_match": ["conscientiousness", "openness"],
+    "min_iq": 115,
+    "rasm_url": "./images/financial-analyst.jpg"
+  },
+  {
+    "id": "makeup-artist",
+    "title": "Vizajist",
+    "description": "Makiyaj qilish, soch turmagi, to'y va maxsus tadbirlar uchun grimer xizmatlari.",
+    "required_skills": ["makiyaj", "rang uyg'unligi", "gigiyena", "trend bilimi", "mijoz xizmati"],
+    "education": "Maxsus kurslar",
+    "salary_range": {
+      "min": 200,
+      "max": 1000,
+      "currency": "USD"
+    },
+    "growth_rate": "14%",
+    "category": "Go'zallik",
+    "personality_match": ["openness", "agreeableness"],
+    "min_iq": 90,
+    "rasm_url": "./images/makeup-artist.jpg"
+  },
+  {
+    "id": "security-guard",
+    "title": "Qo'riqchi",
+    "description": "Ob'ektlarni qo'riqlash, xavfsizlikni ta'minlash, nazorat va kuzatuv, favqulodda vaziyatlarda harakat.",
+    "required_skills": ["kuzatuvchanlik", "jismoniy tayyorgarlik", "stress boshqaruvi", "mas'uliyat", "reaktsiya"],
+    "education": "O'rta ta'lim + maxsus tayyorgarlik",
+    "salary_range": {
+      "min": 200,
+      "max": 600,
+      "currency": "USD"
+    },
+    "growth_rate": "6%",
+    "category": "Xavfsizlik",
+    "personality_match": ["conscientiousness"],
+    "min_iq": 90,
+    "rasm_url": "./images/security-guard.jpg"
+  },
+  {
+    "id": "tour-guide",
+    "title": "Turistik gid",
+    "description": "Turistlarga ekskursiya o'tkazish, tarixiy va madaniy ma'lumot berish, guruhlarni boshqarish.",
+    "required_skills": ["tillar", "tarix bilimi", "kommunikatsiya", "hikoya qilish", "tashkilotchilik"],
+    "education": "Oliy yoki maxsus turizm ta'limi",
+    "salary_range": {
+      "min": 200,
+      "max": 800,
+      "currency": "USD"
+    },
+    "growth_rate": "21%",
+    "category": "Turizm",
+    "personality_match": ["extraversion", "openness", "agreeableness"],
+    "min_iq": 100,
+    "rasm_url": "./images/tour-guide.jpg"
+  },
+  {
+    "id": "pilot",
+    "title": "Uchuvchi",
+    "description": "Samolyotlarni boshqarish, xavfsizlik qoidalariga rioya qilish, yo'lovchilar yoki yuklarni tashish.",
+    "required_skills": ["aviatsiya", "ingliz tili", "stress boshqaruvi", "qaror qabul qilish", "texnik bilim"],
+    "education": "Aviatsiya akademiyasi",
+    "salary_range": {
+      "min": 1000,
+      "max": 5000,
+      "currency": "USD"
+    },
+    "growth_rate": "13%",
+    "category": "Aviatsiya",
+    "personality_match": ["conscientiousness", "emotional_stability"],
+    "min_iq": 115,
+    "rasm_url": "./images/pilot.jpg"
+  },
+  {
+    "id": "baker",
+    "title": "Novvoy",
+    "description": "Non va qandolatchilik mahsulotlarini tayyorlash, yangi retseptlar yaratish, sifat nazorati.",
+    "required_skills": ["novvoylik", "retseptlar", "vaqt boshqaruvi", "gigiyena", "jismoniy chidamlilik"],
+    "education": "Maxsus o'rta ta'lim yoki kurslar",
+    "salary_range": {
+      "min": 200,
+      "max": 800,
+      "currency": "USD"
+    },
+    "growth_rate": "8%",
+    "category": "Oshpazlik",
+    "personality_match": ["conscientiousness"],
+    "min_iq": 90,
+    "rasm_url": "./images/baker.jpg"
+  },
+  {
+    "id": "librarian",
+    "title": "Kutubxonachi",
+    "description": "Kitoblar va ma'lumotlarni tartibga solish, o'quvchilarga xizmat ko'rsatish, tadbirlar tashkil etish.",
+    "required_skills": ["tashkilotchilik", "kompyuter savodxonligi", "adabiyot bilimi", "sabr", "aniqlik"],
+    "education": "Oliy ta'lim (Kutubxonashunoslik)",
+    "salary_range": {
+      "min": 200,
+      "max": 600,
+      "currency": "USD"
+    },
+    "growth_rate": "5%",
+    "category": "Ta'lim",
+    "personality_match": ["conscientiousness", "agreeableness"],
+    "min_iq": 100,
+    "rasm_url": "./images/librarian.jpg"
+  },
+  {
+    "id": "fashion-designer",
+    "title": "Moda dizayneri",
+    "description": "Kiyim kolleksiyalarini yaratish, trendlarni kuzatish, eskizlar chizish va matolar tanlash.",
+    "required_skills": ["dizayn", "chizish", "moda bilimi", "kreativlik", "tikuvchilik asoslari"],
+    "education": "Moda va dizayn ta'limi",
+    "salary_range": {
+      "min": 300,
+      "max": 2000,
+      "currency": "USD"
+    },
+    "growth_rate": "11%",
+    "category": "Moda",
+    "personality_match": ["openness", "extraversion"],
+    "min_iq": 100,
+    "rasm_url": "./images/fashion-designer.jpg"
+  },
+  {
+    "id": "data-entry",
+    "title": "Ma'lumot kirituvchi operator",
+    "description": "Ma'lumotlarni kompyuterga kiritish, bazalarni yangilash, hujjatlarni raqamlashtirish.",
+    "required_skills": ["tez yozish", "aniqlik", "kompyuter savodxonligi", "diqqat", "sabr"],
+    "education": "O'rta ta'lim",
+    "salary_range": {
+      "min": 150,
+      "max": 500,
+      "currency": "USD"
+    },
+    "growth_rate": "3%",
+    "category": "Administrativ",
+    "personality_match": ["conscientiousness"],
+    "min_iq": 90,
+    "rasm_url": "./images/data-entry.jpg"
+  },
+  {
+    "id": "taxi-driver",
+    "title": "Taksi haydovchisi",
+    "description": "Yo'lovchilarni tashish, yo'nalishlarni bilish, avtomobilga texnik xizmat ko'rsatish.",
+    "required_skills": ["haydash", "yo'l bilimi", "muloqot", "sabr", "vaqtni boshqarish"],
+    "education": "Haydovchilik guvohnomasi",
+    "salary_range": {
+      "min": 200,
+      "max": 800,
+      "currency": "USD"
+    },
+    "growth_rate": "12%",
+    "category": "Transport",
+    "personality_match": ["conscientiousness", "agreeableness"],
+    "min_iq": 85,
+    "rasm_url": "./images/taxi-driver.jpg"
+  },
+  {
+    "id": "social-worker",
+    "title": "Ijtimoiy ishchi",
+    "description": "Muhtoj oilalarga yordam berish, ijtimoiy dasturlarni amalga oshirish, maslahat berish.",
+    "required_skills": ["empatiya", "muloqot", "muammo hal qilish", "hujjatlar", "stress boshqaruvi"],
+    "education": "Oliy ta'lim (Ijtimoiy ish)",
+    "salary_range": {
+      "min": 250,
+      "max": 800,
+      "currency": "USD"
+    },
+    "growth_rate": "13%",
+    "category": "Ijtimoiy",
+    "personality_match": ["agreeableness", "conscientiousness"],
+    "min_iq": 100,
+    "rasm_url": "./images/social-worker.jpg"
+  },
+  {
+    "id": "web-designer",
+    "title": "Veb dizayner",
+    "description": "Veb-saytlar dizaynini yaratish, foydalanuvchi interfeysini loyihalash, responsive dizayn.",
+    "required_skills": ["HTML/CSS", "Figma", "Photoshop", "UX/UI", "JavaScript asoslari"],
+    "education": "IT yoki dizayn ta'limi",
+    "salary_range": {
+      "min": 400,
+      "max": 1800,
+      "currency": "USD"
+    },
+    "growth_rate": "23%",
+    "category": "IT",
+    "personality_match": ["openness", "conscientiousness"],
+    "min_iq": 105,
+    "rasm_url": "./images/web-designer.jpg"
+  },
+  {
+    "id": "pharmacist",
+    "title": "Farmatsevt",
+    "description": "Dori-darmonlarni sotish, retseptlar bo'yicha maslahat berish, dorilar saqlash va hisoboti.",
+    "required_skills": ["farmakologiya", "kimyo", "aniqlik", "mas'uliyat", "muloqot"],
+    "education": "Oliy farmatsevtik ta'lim",
+    "salary_range": {
+      "min": 300,
+      "max": 1000,
+      "currency": "USD"
+    },
+    "growth_rate": "9%",
+    "category": "Tibbiyot",
+    "personality_match": ["conscientiousness", "agreeableness"],
+    "min_iq": 105,
+    "rasm_url": "./images/pharmacist.jpg"
+  },
+  {
+    "id": "content-writer",
+    "title": "Kontent yozuvchi",
+    "description": "Maqolalar, blog postlar va marketing kontenti yozish, SEO optimizatsiya, tadqiqot.",
+    "required_skills": ["yozish", "tadqiqot", "SEO", "kreativlik", "grammatika"],
+    "education": "Filologiya yoki jurnalistika",
+    "salary_range": {
+      "min": 250,
+      "max": 1200,
+      "currency": "USD"
+    },
+    "growth_rate": "16%",
+    "category": "Yozuvchilik",
+    "personality_match": ["openness", "conscientiousness"],
+    "min_iq": 105,
+    "rasm_url": "./images/content-writer.jpg"
+  },
+  {
+    "id": "logistics-manager",
+    "title": "Logistika menejeri",
+    "description": "Yuk tashish zanjirini boshqarish, marshrutlar optimallashtirish, omborlar bilan ishlash.",
+    "required_skills": ["logistika", "Excel", "muzokaralar", "planlash", "muammo hal qilish"],
+    "education": "Oliy ta'lim (Logistika, Biznes)",
+    "salary_range": {
+      "min": 500,
+      "max": 1600,
+      "currency": "USD"
+    },
+    "growth_rate": "14%",
+    "category": "Logistika",
+    "personality_match": ["conscientiousness", "openness"],
+    "min_iq": 105,
+    "rasm_url": "./images/logistics-manager.jpg"
+  },
+  {
+    "id": "bank-teller",
+    "title": "Bank kassiri",
+    "description": "Mijozlarga bank xizmatlarini ko'rsatish, naqd pul operatsiyalari, hujjatlar bilan ishlash.",
+    "required_skills": ["matematika", "aniqlik", "mijoz xizmati", "kompyuter", "ishonchlilik"],
+    "education": "O'rta maxsus yoki oliy",
+    "salary_range": {
+      "min": 250,
+      "max": 700,
+      "currency": "USD"
+    },
+    "growth_rate": "4%",
+    "category": "Bank",
+    "personality_match": ["conscientiousness", "agreeableness"],
+    "min_iq": 95,
+    "rasm_url": "./images/bank-teller.jpg"
+  },
+  {
+    "id": "musician",
+    "title": "Musiqachi",
+    "description": "Musiqa ijro etish, kompozitsiyalar yaratish, konsertlarda chiqish, o'quvchilarga dars berish.",
+    "required_skills": ["musiqa nazariyasi", "cholg'u chalinishi", "ijodkorlik", "sahnada chiqish", "sabr"],
+    "education": "Musiqa ta'limi",
+    "salary_range": {
+      "min": 200,
+      "max": 2000,
+      "currency": "USD"
+    },
+    "growth_rate": "12%",
+    "category": "San'at",
+    "personality_match": ["openness", "extraversion"],
+    "min_iq": 100,
+    "rasm_url": "./images/musician.jpg"
+  },
+  {
+    "id": "project-manager",
+    "title": "Loyiha menejeri",
+    "description": "Loyihalarni boshqarish, jamoani muvofiqlashtirish, muddatlar va byudjetni nazorat qilish.",
+    "required_skills": ["loyiha boshqaruvi", "liderlik", "kommunikatsiya", "planlash", "risk boshqaruvi"],
+    "education": "Oliy ta'lim + PMP sertifikat",
+    "salary_range": {
+      "min": 700,
+      "max": 2500,
+      "currency": "USD"
+    },
+    "growth_rate": "17%",
+    "category": "Boshqaruv",
+    "personality_match": ["conscientiousness", "extraversion", "openness"],
+    "min_iq": 110,
+    "rasm_url": "./images/project-manager.jpg"
+  },
+  {
+    "id": "barista",
+    "title": "Barista",
+    "description": "Kofe tayyorlash, mijozlarga xizmat ko'rsatish, kofe turlari haqida maslahat berish.",
+    "required_skills": ["kofe tayyorlash", "mijoz xizmati", "tezkorlik", "gigiyena", "kreativlik"],
+    "education": "Maxsus kurslar",
+    "salary_range": {
+      "min": 150,
+      "max": 600,
+      "currency": "USD"
+    },
+    "growth_rate": "11%",
+    "category": "Oshpazlik",
+    "personality_match": ["agreeableness", "conscientiousness"],
+    "min_iq": 90,
+    "rasm_url": "./images/barista.jpg"
+  },
+  {
+    "id": "quality-assurance",
+    "title": "Sifat nazorati mutaxassisi",
+    "description": "Mahsulot sifatini tekshirish, standartlarga muvofiqlik, test o'tkazish va hisobotlar tayyorlash.",
+    "required_skills": ["e'tiborlilik", "standartlar bilimi", "test metodlari", "hisobot", "tahlil"],
+    "education": "Texnik yoki muhandislik ta'limi",
+    "salary_range": {
+      "min": 400,
+      "max": 1300,
+      "currency": "USD"
+    },
+    "growth_rate": "10%",
+    "category": "Sifat nazorati",
+    "personality_match": ["conscientiousness"],
+    "min_iq": 100,
+    "rasm_url": "./images/quality-assurance.jpg"
+  },
+  {
+    "id": "ui-ux-designer",
+    "title": "UI/UX dizayner",
+    "description": "Foydalanuvchi tajribasini loyihalash, prototiplar yaratish, foydalanuvchi tadqiqotlari.",
+    "required_skills": ["Figma", "user research", "prototyping", "dizayn tamoyillari", "HTML/CSS asoslari"],
+    "education": "Dizayn yoki IT ta'limi",
+    "salary_range": {
+      "min": 500,
+      "max": 2200,
+      "currency": "USD"
+    },
+    "growth_rate": "27%",
+    "category": "IT",
+    "personality_match": ["openness", "conscientiousness", "agreeableness"],
+    "min_iq": 110,
+    "rasm_url": "./images/ui-ux-designer.jpg"
+  }
+]
