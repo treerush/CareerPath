@@ -45,11 +45,7 @@
             z-index: 20;
         }
 
-        .side-nav.active {
-            left: 0;
-        }
-        
-        /* Menyudagi barcha havolalar uchun umumiy uslublar */
+        .side-nav.active { left: 0; }
         .side-nav a {
             display: flex;
             align-items: center;
@@ -58,14 +54,9 @@
             text-decoration: none;
             font-weight: 500;
             transition: background-color 0.3s ease;
-            gap: 15px; /* Ikonka va matn orasidagi bo'shliq */
+            gap: 15px;
         }
-        
-        .side-nav a:hover {
-            background-color: #444;
-        }
-        
-        /* Barcha ikonlar uchun umumiy sozlama */
+        .side-nav a:hover { background-color: #444; }
         .side-nav a .material-icons {
             font-size: 24px;
             width: 24px;
@@ -79,10 +70,7 @@
             margin-left: 0;
             transition: margin-left 0.3s ease;
         }
-
-        .main-content-container.menu-open {
-            margin-left: 250px;
-        }
+        .main-content-container.menu-open { margin-left: 250px; }
         
         .header {
             background-color: var(--primary-color);
@@ -93,11 +81,7 @@
             align-items: center;
             box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
         }
-
-        .header h1 {
-            margin: 0;
-            font-size: 1.5em;
-        }
+        .header h1 { margin: 0; font-size: 1.5em; }
         
         .menu-toggle {
             display: flex;
@@ -105,7 +89,6 @@
             gap: 5px;
             cursor: pointer;
         }
-
         .menu-toggle span {
             display: block;
             width: 25px;
@@ -113,16 +96,9 @@
             background-color: var(--light-text-color);
             transition: transform 0.3s ease;
         }
-
-        .menu-toggle.active span:nth-child(1) {
-            transform: rotate(45deg) translate(5px, 5px);
-        }
-        .menu-toggle.active span:nth-child(2) {
-            opacity: 0;
-        }
-        .menu-toggle.active span:nth-child(3) {
-            transform: rotate(-45deg) translate(5px, -5px);
-        }
+        .menu-toggle.active span:nth-child(1) { transform: rotate(45deg) translate(5px, 5px); }
+        .menu-toggle.active span:nth-child(2) { opacity: 0; }
+        .menu-toggle.active span:nth-child(3) { transform: rotate(-45deg) translate(5px, -5px); }
 
         .profile-dropdown {
             display:none;
@@ -137,18 +113,8 @@
             min-width:160px;
             z-index:30;
         }
-
-        .profile-dropdown a {
-            display:block;
-            padding:10px 14px;
-            color:#111;
-            text-decoration:none;
-            border-bottom:1px solid #eee;
-        }
-
-        .profile-dropdown a:hover {
-            background:#f6f6f6;
-        }
+        .profile-dropdown a { display:block; padding:10px 14px; color:#111; text-decoration:none; border-bottom:1px solid #eee; }
+        .profile-dropdown a:hover { background:#f6f6f6; }
         
         .container {
             max-width: 1200px;
@@ -159,7 +125,6 @@
             box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
             line-height: 1.6;
         }
-
         .job-card-container {
             display: flex;
             flex-direction: column;
@@ -175,23 +140,15 @@
             border-radius: 15px;
             box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
         }
-        .job-card .content {
-            flex-grow: 1;
-        }
+        .job-card .content { flex-grow: 1; }
         .job-card img {
             width: 200px;
             height: auto;
             border-radius: 10px;
             object-fit: cover;
         }
-        .job-card h3 {
-            margin: 0 0 10px 0;
-            color: var(--primary-color);
-        }
-        .job-card p {
-            margin: 0;
-            line-height: 1.6;
-        }
+        .job-card h3 { margin: 0 0 10px 0; color: var(--primary-color); }
+        .job-card p { margin: 0; line-height: 1.6; }
         .job-card a {
             display: inline-block;
             margin-top: 15px;
@@ -202,26 +159,16 @@
             border-radius: 8px;
             transition: background-color 0.3s ease;
         }
-        .job-card a:hover {
-            background-color: #1a7bb9;
-        }
-        
-        .job-card.right-image {
-            flex-direction: row-reverse;
-        }
+        .job-card a:hover { background-color: #1a7bb9; }
+        .job-card.right-image { flex-direction: row-reverse; }
         
         @media (max-width: 768px) {
             .job-card {
                 flex-direction: column;
                 text-align: center;
             }
-            .job-card.right-image {
-                flex-direction: column;
-            }
-            .job-card img {
-                width: 100%;
-                max-width: 300px;
-            }
+            .job-card.right-image { flex-direction: column; }
+            .job-card img { width: 100%; max-width: 300px; }
         }
     </style>
 </head>
@@ -264,7 +211,21 @@
         </div>
     </div>
     
-    <script>
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/12.2.1/firebase-app.js";
+        import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/12.2.1/firebase-auth.js";
+        
+        const firebaseConfig = {
+            apiKey: "AIzaSyA86zhSVi4FSw-GvFBdOZsCPaHMS67XA78",
+            authDomain: "carrer-path-a5810.firebaseapp.com",
+            projectId: "carrer-path-a5810",
+            storageBucket: "carrer-path-a5810.firebasestorage.app",
+            messagingSenderId: "693831778129",
+            appId: "1:693831778129:web:911293c5c284eefe295d70"
+        };
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+
         document.addEventListener('DOMContentLoaded', () => {
             const jobsContainer = document.getElementById('job-post-container');
 
@@ -301,18 +262,18 @@
             fetchJobs();
         });
 
-        // Hamburger menyu uchun JavaScript kodi
         const menuToggle = document.getElementById('menu-toggle');
         const sideNav = document.getElementById('side-nav');
         const mainContent = document.getElementById('main-content-container');
         
-        menuToggle.addEventListener('click', () => {
-            sideNav.classList.toggle('active');
-            mainContent.classList.toggle('menu-open');
-            menuToggle.classList.toggle('active');
-        });
-
-        // Profile dropdown menyu uchun JavaScript kodi
+        if (menuToggle && sideNav && mainContent) {
+            menuToggle.addEventListener('click', () => {
+                sideNav.classList.toggle('active');
+                mainContent.classList.toggle('menu-open');
+                menuToggle.classList.toggle('active');
+            });
+        }
+        
         const profileBtn = document.getElementById('profile-btn');
         const profileDropdown = document.getElementById('profile-dropdown');
         if (profileBtn && profileDropdown) {
@@ -326,17 +287,24 @@
         }
         
 
-        // Logout uchun JavaScript kodi
         const logoutLink = document.getElementById('logout-link');
         if (logoutLink) {
              logoutLink.addEventListener('click', (e) => {
                 e.preventDefault();
-                // Tizimdan chiqish logikasi (Firebase yoki boshqa autentifikatsiya tizimi)
-                // signOut(auth).then(() => {
-                //     window.location.href = "login.html";
-                // });
+                signOut(auth).then(() => {
+                    window.location.href = "login.html";
+                });
             });
         }
+
+        onAuthStateChanged(auth, (user) => {
+            const userEmailDisplay = document.getElementById('user-email-display');
+            if (user) {
+                userEmailDisplay.textContent = user.email || 'Foydalanuvchi';
+            } else {
+                userEmailDisplay.textContent = '...';
+            }
+        });
     </script>
 </body>
 </html>

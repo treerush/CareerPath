@@ -19,9 +19,7 @@
             --border-color: #ddd;
         }
 
-        * {
-            box-sizing: border-box;
-        }
+        * { box-sizing: border-box; }
         body {
             font-family: 'Poppins', sans-serif;
             margin: 0;
@@ -46,12 +44,7 @@
             box-shadow: 2px 0 5px rgba(0, 0, 0, 0.3);
             z-index: 20;
         }
-
-        .side-nav.active {
-            left: 0;
-        }
-        
-        /* Menyudagi barcha havolalar uchun umumiy uslublar */
+        .side-nav.active { left: 0; }
         .side-nav a {
             display: flex;
             align-items: center;
@@ -60,14 +53,9 @@
             text-decoration: none;
             font-weight: 500;
             transition: background-color 0.3s ease;
-            gap: 15px; /* Ikona va matn orasidagi bo'shliq */
+            gap: 15px;
         }
-        
-        .side-nav a:hover {
-            background-color: #444;
-        }
-        
-        /* Barcha ikonlar uchun umumiy sozlama */
+        .side-nav a:hover { background-color: #444; }
         .side-nav a .material-icons {
             font-size: 24px;
             width: 24px;
@@ -81,9 +69,7 @@
             margin-left: 0;
             transition: margin-left 0.3s ease;
         }
-        .main-content-container.menu-open {
-            margin-left: 250px;
-        }
+        .main-content-container.menu-open { margin-left: 250px; }
         .header {
             background-color: var(--primary-color);
             color: var(--light-text-color);
@@ -93,10 +79,7 @@
             align-items: center;
             box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
         }
-        .header h1 {
-            margin: 0;
-            font-size: 1.5em;
-        }
+        .header h1 { margin: 0; font-size: 1.5em; }
         .menu-toggle {
             display: flex;
             flex-direction: column;
@@ -110,15 +93,9 @@
             background-color: var(--light-text-color);
             transition: transform 0.3s ease;
         }
-        .menu-toggle.active span:nth-child(1) {
-            transform: rotate(45deg) translate(5px, 5px);
-        }
-        .menu-toggle.active span:nth-child(2) {
-            opacity: 0;
-        }
-        .menu-toggle.active span:nth-child(3) {
-            transform: rotate(-45deg) translate(5px, -5px);
-        }
+        .menu-toggle.active span:nth-child(1) { transform: rotate(45deg) translate(5px, 5px); }
+        .menu-toggle.active span:nth-child(2) { opacity: 0; }
+        .menu-toggle.active span:nth-child(3) { transform: rotate(-45deg) translate(5px, -5px); }
         .container {
             max-width: 1200px;
             margin: 20px auto;
@@ -141,14 +118,8 @@
             object-fit: cover;
             margin-bottom: 20px;
         }
-        .job-detail-card h2 {
-            color: var(--primary-color);
-            margin: 0 0 10px 0;
-        }
-        .job-detail-card p {
-            margin: 0 0 15px 0;
-            line-height: 1.6;
-        }
+        .job-detail-card h2 { color: var(--primary-color); margin: 0 0 10px 0; }
+        .job-detail-card p { margin: 0 0 15px 0; line-height: 1.6; }
         .details-grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
@@ -160,22 +131,27 @@
             padding: 15px;
             border-radius: 10px;
         }
-        .details-item h4 {
-            color: var(--secondary-color);
-            margin: 0 0 5px 0;
+        .details-item h4 { color: var(--secondary-color); margin: 0 0 5px 0; }
+        .details-item p, .details-item ul { margin: 0; font-size: 0.9em; }
+        .details-item ul { padding-left: 20px; }
+        .select-job-btn {
+            background-color: var(--primary-color);
+            color: var(--light-text-color);
+            border: none;
+            padding: 12px 25px;
+            font-size: 1em;
+            font-weight: 600;
+            border-radius: 8px;
+            cursor: pointer;
+            margin-top: 20px;
+            transition: background-color 0.3s ease;
         }
-        .details-item p, .details-item ul {
-            margin: 0;
-            font-size: 0.9em;
-        }
-        .details-item ul {
-            padding-left: 20px;
-        }
-        /* Responsive dizayn */
+        .select-job-btn.delete-btn { background-color: #f44336; }
+        .select-job-btn:hover { background-color: #45a049; }
+        .select-job-btn.delete-btn:hover { background-color: #d32f2f; }
+        
         @media (max-width: 768px) {
-            .details-grid {
-                grid-template-columns: 1fr;
-            }
+            .details-grid { grid-template-columns: 1fr; }
         }
     </style>
 </head>
@@ -219,7 +195,8 @@
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/12.2.1/firebase-app.js";
         import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/12.2.1/firebase-auth.js";
-        import { getFirestore } from "https://www.gstatic.com/firebasejs/12.2.1/firebase-firestore.js";
+        import { getFirestore, doc, updateDoc, getDoc } from "https://www.gstatic.com/firebasejs/12.2.1/firebase-firestore.js";
+        import { arrayUnion, arrayRemove } from "https://www.gstatic.com/firebasejs/12.2.1/firebase-firestore.js";
 
         // Firebase konfiguratsiyasi
         const firebaseConfig = {
@@ -234,65 +211,50 @@
         const auth = getAuth(app);
         const db = getFirestore(app);
 
-        // Sidebar va menyu toggle funksiyasi
         const menuToggle = document.getElementById('menu-toggle');
         const sideNav = document.getElementById('side-nav');
         const mainContent = document.getElementById('main-content-container');
-        
-        menuToggle.addEventListener('click', () => {
-            sideNav.classList.toggle('active');
-            mainContent.classList.toggle('menu-open');
-            menuToggle.classList.toggle('active');
-        });
+        const jobDetailsContainer = document.getElementById('job-details');
 
-        // Profile dropdown menyu
-        const profileBtn = document.getElementById('profile-btn');
-        const profileDropdown = document.getElementById('profile-dropdown');
-        profileBtn.addEventListener('click', (e) => {
-            e.stopPropagation();
-            if (profileDropdown) {
-                profileDropdown.style.display = profileDropdown.style.display === 'block' ? 'none' : 'block';
-            }
-        });
-        document.addEventListener('click', (e) => {
-            if (profileBtn && !profileBtn.contains(e.target) && profileDropdown) {
-                profileDropdown.style.display = 'none';
-            }
-        });
-
-        // Logout
-        const logoutLink = document.getElementById('logout-link');
-        if (logoutLink) {
-            logoutLink.addEventListener('click', async (e) => {
-                e.preventDefault();
-                try {
-                    await signOut(auth);
-                    window.location.href = "login.html";
-                } catch (err) {
-                    console.error("Logout failed:", err);
-                }
+        if (menuToggle && sideNav && mainContent) {
+            menuToggle.addEventListener('click', () => {
+                sideNav.classList.toggle('active');
+                mainContent.classList.toggle('menu-open');
+                menuToggle.classList.toggle('active');
             });
         }
-
-        // Kasb ma'lumotlarini yuklash
-        document.addEventListener('DOMContentLoaded', async () => {
-            const jobDetailsContainer = document.getElementById('job-details');
-            const urlParams = new URLSearchParams(window.location.search);
-            const jobId = urlParams.get('id');
-
-            if (!jobId) {
-                jobDetailsContainer.innerHTML = '<p>Kasb ma\'lumoti topilmadi.</p>';
-                return;
-            }
-
+        
+        const profileBtn = document.getElementById('profile-btn');
+        const profileDropdown = document.getElementById('profile-dropdown');
+        if (profileBtn && profileDropdown) {
+            profileBtn.addEventListener('click', (e) => {
+                e.stopPropagation();
+                profileDropdown.style.display = profileDropdown.style.display === 'block' ? 'none' : 'block';
+            });
+            document.addEventListener('click', (e) => {
+                if (!profileBtn.contains(e.target)) profileDropdown.style.display = 'none';
+            });
+        }
+        
+        const logoutLink = document.getElementById('logout-link');
+        if (logoutLink) {
+             logoutLink.addEventListener('click', async (e) => {
+                e.preventDefault();
+                await signOut(auth);
+                window.location.href = "login.html";
+            });
+        }
+        
+        const fetchAndRenderJob = async (jobId, userSelectedCareers) => {
             try {
                 const response = await fetch('./kasblar.json');
                 const jobs = await response.json();
-
                 const job = jobs.find(j => j.id === jobId);
 
                 if (job) {
                     document.getElementById('page-title').textContent = `${job.title} - CareerPath`;
+                    const isSelected = userSelectedCareers.includes(jobId);
+                    
                     jobDetailsContainer.innerHTML = `
                         <h2>${job.title}</h2>
                         <img src="${job.rasm_url || 'https://placehold.co/400x200/4CAF50/fff?text=Rasm%20yoq'}" alt="${job.title}">
@@ -318,7 +280,52 @@
                                 <p>${job.growth_rate}</p>
                             </div>
                         </div>
+                        <button class="select-job-btn ${isSelected ? 'delete-btn' : ''}" id="career-action-btn" data-job-id="${job.id}">
+                            ${isSelected ? 'Tanlanganlardan oʻchirish' : 'Bu kasbni tanlash'}
+                        </button>
                     `;
+
+                    document.getElementById('career-action-btn').addEventListener('click', async (e) => {
+                        const currentJobId = e.target.dataset.jobId;
+                        const user = auth.currentUser;
+                        if (!user) {
+                            alert("Bu kasbni tanlash uchun avval tizimga kiring.");
+                            window.location.href = 'login.html';
+                            return;
+                        }
+                        
+                        const buttonText = e.target.textContent.trim();
+                        const userRef = doc(db, 'users', user.uid);
+                        const docSnap = await getDoc(userRef);
+                        const currentSelectedCareers = docSnap.exists() ? (docSnap.data().selectedCareers || []) : [];
+
+                        if (buttonText === 'Bu kasbni tanlash') {
+                            try {
+                                await updateDoc(userRef, {
+                                    selectedCareers: arrayUnion(currentJobId)
+                                });
+                                alert(`Siz ${job.title} kasbini muvaffaqiyatli tanladingiz!`);
+                                fetchAndRenderJob(currentJobId, [...currentSelectedCareers, currentJobId]);
+                            } catch (error) {
+                                console.error("Kasb tanlovini saqlashda xato:", error);
+                                alert("Kasb tanlovini saqlashda xatolik yuz berdi. Iltimos, qayta urinib ko'ring.");
+                            }
+                        } else if (buttonText.includes('Tanlanganlardan oʻchirish')) {
+                            if (confirm("Haqiqatan ham bu kasbni tanlanganlar roʻyxatidan oʻchirmoqchimisiz?")) {
+                                try {
+                                    await updateDoc(userRef, {
+                                        selectedCareers: arrayRemove(currentJobId)
+                                    });
+                                    alert(`Siz ${job.title} kasbini tanlanganlar roʻyxatidan muvaffaqiyatli oʻchirdingiz!`);
+                                    fetchAndRenderJob(currentJobId, currentSelectedCareers.filter(id => id !== currentJobId));
+                                } catch (error) {
+                                    console.error("Kasbni oʻchirishda xato:", error);
+                                    alert("Kasbni oʻchirishda xatolik yuz berdi. Iltimos, qayta urinib ko'ring.");
+                                }
+                            }
+                        }
+                    });
+
                 } else {
                     jobDetailsContainer.innerHTML = '<p>Kasb ma\'lumoti topilmadi.</p>';
                 }
@@ -327,15 +334,24 @@
                 console.error("Ma'lumotlarni yuklashda xato:", error);
                 jobDetailsContainer.innerHTML = '<p>Ma\'lumotlarni yuklashda xatolik yuz berdi.</p>';
             }
-        });
+        };
 
-        // Firebase autentifikatsiya holatini kuzatish
-        onAuthStateChanged(auth, (user) => {
+        onAuthStateChanged(auth, async (user) => {
             const userEmailDisplay = document.getElementById('user-email-display');
             if (user) {
                 userEmailDisplay.textContent = user.email || 'Foydalanuvchi';
+                const userRef = doc(db, 'users', user.uid);
+                const docSnap = await getDoc(userRef);
+                const userSelectedCareers = (docSnap.exists() && docSnap.data().selectedCareers) ? docSnap.data().selectedCareers : [];
+                const urlParams = new URLSearchParams(window.location.search);
+                const jobId = urlParams.get('id');
+                
+                fetchAndRenderJob(jobId, userSelectedCareers);
             } else {
                 userEmailDisplay.textContent = '...';
+                const urlParams = new URLSearchParams(window.location.search);
+                const jobId = urlParams.get('id');
+                fetchAndRenderJob(jobId, []);
             }
         });
     </script>
