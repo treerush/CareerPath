@@ -1,787 +1,426 @@
 <!DOCTYPE html>
 <html lang="uz">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dashboard - CareerPath</title>
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-    <link rel="icon" type="image/jpeg" href="./images/careerpathlogo.jpg">
-    <style>
-        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap');
-
-        :root {
-            --primary-color: #4CAF50;
-            --secondary-color: #2196F3;
-            --background-color: #f0f2f5;
-            --text-color: #333;
-            --light-text-color: #fff;
-            --card-bg: #fff;
-            --menu-bg: #2d3436;
-        }
-
-        body {
-            font-family: 'Poppins', sans-serif;
-            margin: 0;
-            padding: 0;
-            display: flex;
-            min-height: 100vh;
-            background: var(--background-color);
-            color: var(--text-color);
-            overflow-x: hidden;
-        }
-
-        /* Sidebar */
-        .side-nav {
-            position: fixed;
-            top: 0;
-            left: -250px;
-            width: 250px;
-            height: 100%;
-            background-color: var(--menu-bg);
-            color: var(--light-text-color);
-            padding-top: 60px;
-            transition: left 0.3s ease;
-            box-shadow: 2px 0 5px rgba(0, 0, 0, 0.3);
-            z-index: 20;
-        }
-
-        .side-nav.active {
-            left: 0;
-        }
-        
-        /* Menyudagi barcha havolalar uchun umumiy uslublar */
-        .side-nav a {
-            display: flex;
-            align-items: center;
-            padding: 15px 20px;
-            color: var(--light-text-color);
-            text-decoration: none;
-            font-weight: 500;
-            transition: background-color 0.3s ease;
-            gap: 15px; /* Ikonka va matn orasidagi bo'shliq */
-        }
-        
-        .side-nav a:hover {
-            background-color: #444;
-        }
-        
-        /* Barcha ikonlar uchun umumiy sozlama */
-        .side-nav a .material-icons {
-            font-size: 24px;
-            width: 24px;
-            height: 24px;
-            text-align: center;
-        }
-
-        .main-content-container {
-            flex-grow: 1;
-            padding: 20px;
-            margin-left: 0;
-            transition: margin-left 0.3s ease;
-        }
-
-        .main-content-container.menu-open {
-            margin-left: 250px;
-        }
-
-        .header {
-            background-color: var(--primary-color);
-            color: var(--light-text-color);
-            padding: 15px 20px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-        }
-
-        .header h1 {
-            margin: 0;
-            font-size: 1.5em;
-        }
-        
-        .menu-toggle {
-            display: flex;
-            flex-direction: column;
-            gap: 5px;
-            cursor: pointer;
-        }
-
-        .menu-toggle span {
-            display: block;
-            width: 25px;
-            height: 3px;
-            background-color: var(--light-text-color);
-            transition: transform 0.3s ease;
-        }
-
-        .menu-toggle.active span:nth-child(1) {
-            transform: rotate(45deg) translate(5px, 5px);
-        }
-
-        .menu-toggle.active span:nth-child(2) {
-            opacity: 0;
-        }
-
-        .menu-toggle.active span:nth-child(3) {
-            transform: rotate(-45deg) translate(5px, -5px);
-        }
-        
-        .profile-menu {
-            position: relative;
-        }
-        .profile-menu.active .profile-dropdown {
-            display: block;
-        }
-
-        .profile-btn {
-            background: transparent;
-            border: 0;
-            color: var(--light-text-color);
-            cursor: pointer;
-            font-weight: 600;
-        }
-
-        .profile-dropdown {
-            display: none;
-            position: absolute;
-            right: 0;
-            top: 40px;
-            background: #fff;
-            color: #111;
-            border-radius: 8px;
-            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
-            overflow: hidden;
-            min-width: 160px;
-            z-index: 30;
-        }
-
-        .profile-dropdown a {
-            display: block;
-            padding: 10px 14px;
-            color: #111;
-            text-decoration: none;
-            border-bottom: 1px solid #eee;
-        }
-
-        .profile-dropdown a:hover {
-            background: #f6f6f6;
-        }
-
-        .container {
-            max-width: 900px;
-            margin: 20px auto;
-            padding: 20px;
-            background-color: var(--card-bg);
-            border-radius: 15px;
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
-        }
-
-        .dashboard-header {
-            text-align: center;
-            margin-bottom: 30px;
-        }
-        
-        .dashboard-header h2 {
-            color: var(--primary-color);
-            margin-bottom: 5px;
-        }
-        
-        .profile-section {
-            display: flex;
-            align-items: flex-start;
-            gap: 40px;
-        }
-        
-        .profile-avatar {
-            text-align: center;
-        }
-        
-        .avatar-img {
-            width: 150px;
-            height: 150px;
-            border-radius: 50%;
-            object-fit: cover;
-            border: 3px solid var(--primary-color);
-            margin-bottom: 10px;
-        }
-        
-        .avatar-actions button {
-            background: none;
-            border: none;
-            cursor: pointer;
-            color: var(--secondary-color);
-            font-size: 0.9em;
-            margin: 0 5px;
-        }
-        
-        .info-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 20px;
-            flex-grow: 1;
-        }
-        
-        .info-card {
-            background-color: var(--background-color);
-            padding: 20px;
-            border-radius: 10px;
-        }
-
-        .info-card h4 {
-            color: var(--secondary-color);
-            margin-top: 0;
-            margin-bottom: 15px;
-        }
-        
-        .info-item {
-            margin-bottom: 10px;
-        }
-        
-        .info-item label {
-            font-weight: 600;
-            display: block;
-            margin-bottom: 5px;
-        }
-        
-        .info-item span, .info-item p {
-            color: #555;
-            font-size: 0.9em;
-        }
-        
-        .filled-data {
-            color: var(--text-color);
-        }
-
-        .empty-data {
-            color: #d32f2f;
-            font-style: italic;
-            font-weight: 600;
-            display: inline-flex;
-            align-items: center;
-            gap: 5px;
-        }
-
-        .empty-data .material-icons {
-            font-size: 18px;
-        }
-
-        .editable-input {
-            width: 100%;
-            padding: 8px;
-            box-sizing: border-box;
-            border: 1px solid var(--border-color);
-            border-radius: 4px;
-        }
-        
-        textarea.editable-input {
-            resize: vertical;
-        }
-
-        .stat-card {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 15px;
-            background-color: var(--background-color);
-            border-radius: 10px;
-            margin-bottom: 20px;
-            gap: 12px;
-            box-sizing: border-box;
-        }
-
-        .stat-card > span:first-child {
-            flex: 1 1 auto;
-            min-width: 0;
-            overflow: hidden;
-            text-overflow: ellipsis;
-            white-space: nowrap;
-            margin-right: 8px;
-        }
-
-        .stat-card .value {
-            font-size: 1.5em;
-            font-weight: 700;
-            color: var(--primary-color);
-            letter-spacing: 0.6px;
-            line-height: 1.2;
-            white-space: nowrap;
-            font-variant-numeric: tabular-nums;
-            -moz-font-feature-settings: "tnum" 1;
-            -webkit-font-feature-settings: "tnum" 1;
-            font-feature-settings: "tnum" 1;
-            padding-left: 6px;
-        }
-
-        .edit-btn {
-            background-color: var(--secondary-color);
-            color: var(--light-text-color);
-            border: none;
-            padding: 10px 20px;
-            border-radius: 8px;
-            cursor: pointer;
-            margin-top: 20px;
-            display: block;
-            width: 100%;
-        }
-
-        .edit-btn:hover {
-            background-color: #1a7bb9;
-        }
-        
-        .logout-btn {
-            display: block;
-            width: 100%;
-            padding: 12px;
-            margin-top: 30px;
-            background-color: #f44336;
-            color: var(--light-text-color);
-            border: none;
-            border-radius: 8px;
-            font-size: 1.1em;
-            font-weight: 600;
-            cursor: pointer;
-            transition: background-color 0.3s ease;
-        }
-        
-        .logout-btn:hover {
-            background-color: #d32f2f;
-        }
-
-        /* Media queries */
-        @media (max-width: 360px) {
-            .main-content-container { padding: 10px; }
-            .container { padding: 15px; margin: 10px; }
-            .info-grid { display: block; }
-            .info-card { margin-bottom: 20px; }
-            .profile-section { flex-direction: column; gap: 20px; }
-            .avatar-img { width: 120px; height: 120px; }
-        }
-        @media (min-width: 361px) and (max-width: 600px) {
-            .info-grid { grid-template-columns: 1fr; gap: 20px; }
-            .avatar-img { width: 130px; height: 130px; }
-        }
-        @media (min-width: 601px) and (max-width: 900px) {
-            .info-grid { grid-template-columns: 1fr 1fr; gap: 25px; }
-            .profile-section { flex-direction: row; gap: 30px; }
-            .avatar-img { width: 140px; height: 140px; }
-        }
-        @media (min-width: 901px) and (max-width: 1200px) {
-            .info-grid { grid-template-columns: 1fr 1fr; }
-            .avatar-img { width: 150px; height: 150px; }
-        }
-        @media (min-width: 1201px) and (max-width: 1920px) {
-            .info-grid { grid-template-columns: repeat(3, 1fr); gap: 30px; }
-            .avatar-img { width: 160px; height: 160px; }
-        }
-        @media (min-width: 1921px) {
-            .info-grid { grid-template-columns: repeat(3, 1fr); gap: 40px; }
-            .avatar-img { width: 180px; height: 180px; }
-        }
-    </style>
-    
-    <script defer src="https://cdn.jsdelivr.net/npm/@vercel/speed-insights/dist/inject.min.js"></script>
-
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Dashboard - CareerPath</title>
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <link rel="icon" type="image/jpeg" href="./images/careerpathlogo.jpg">
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap');
+    :root {
+      --primary-color: #4CAF50;
+      --secondary-color: #2196F3;
+      --background-color: #f0f2f5;
+      --text-color: #333;
+      --light-text-color: #fff;
+      --card-bg: #fff;
+      --menu-bg: #2d3436;
+      --danger: #f44336;
+    }
+    body { font-family: 'Poppins', sans-serif; margin: 0; padding: 0; display: flex; min-height: 100vh; background: var(--background-color); color: var(--text-color); overflow-x: hidden;}
+    .side-nav { position: fixed; top: 0; left: -250px; width: 250px; height: 100%; background-color: var(--menu-bg); color: var(--light-text-color); padding-top: 60px; transition: left 0.3s ease; box-shadow: 2px 0 5px rgba(0, 0, 0, 0.3); z-index: 20;}
+    .side-nav.active { left: 0; }
+    .side-nav a { display: flex; align-items: center; padding: 15px 20px; color: var(--light-text-color); text-decoration: none; font-weight: 500; transition: background-color 0.3s ease; gap: 15px;}
+    .side-nav a:hover { background-color: #444; }
+    .main-content-container { flex-grow: 1; padding: 20px; margin-left: 0; transition: margin-left 0.3s ease;}
+    .main-content-container.menu-open { margin-left: 250px; }
+    .header { background-color: var(--primary-color); color: var(--light-text-color); padding: 15px 20px; display:flex; justify-content:space-between; align-items:center; box-shadow: 0 2px 5px rgba(0,0,0,0.1);}
+    .header h1 { margin: 0; font-size: 1.5em; }
+    .menu-toggle { display:flex; flex-direction:column; gap:5px; cursor:pointer;}
+    .menu-toggle span { display:block; width:25px; height:3px; background-color:var(--light-text-color); transition: transform .3s ease;}
+    .menu-toggle.active span:nth-child(1) { transform: rotate(45deg) translate(5px,5px);}
+    .menu-toggle.active span:nth-child(2) { opacity: 0;}
+    .menu-toggle.active span:nth-child(3) { transform: rotate(-45deg) translate(5px,-5px);}
+    .profile-menu { position: relative; }
+    .profile-menu.active .profile-dropdown { display:block; }
+    .profile-btn { background: transparent; border: 0; color: var(--light-text-color); cursor: pointer; font-weight: 600;}
+    .profile-dropdown { display:none; position:absolute; right:0; top:40px; background:#fff; color:#111; border-radius:8px; box-shadow:0 8px 24px rgba(0,0,0,.08); overflow:hidden; min-width:160px; z-index:30;}
+    .profile-dropdown a { display:block; padding:10px 14px; color:#111; text-decoration:none; border-bottom:1px solid #eee; }
+    .profile-dropdown a:hover { background:#f6f6f6; }
+    .container { max-width:900px; margin:20px auto; padding:20px; background-color:var(--card-bg); border-radius:15px; box-shadow:0 4px 20px rgba(0,0,0,.05);}
+    .dashboard-header { text-align:center; margin-bottom:30px;}
+    .dashboard-header h2 { color:var(--primary-color); margin-bottom:5px;}
+    .profile-section { display:flex; align-items:flex-start; gap:40px;}
+    .info-grid { display:grid; grid-template-columns:1fr 1fr; gap:20px; flex-grow:1;}
+    .info-card { background-color:var(--background-color); padding:20px; border-radius:10px;}
+    .info-card h4 { color:var(--secondary-color); margin-top:0; margin-bottom:15px;}
+    .info-item { margin-bottom:10px;}
+    .info-item label { font-weight:600; display:block; margin-bottom:5px;}
+    .info-item span, .info-item p { color:#555; font-size:.9em;}
+    .filled-data { color:var(--text-color);}
+    .empty-data { color:#d32f2f; font-style:italic; font-weight:600; display:inline-flex; align-items:center; gap:5px;}
+    .empty-data .material-icons { font-size: 18px;}
+    .editable-input { width:100%; padding:8px; box-sizing:border-box; border:1px solid var(--border-color, #ccc); border-radius:4px;}
+    textarea.editable-input { resize:vertical;}
+    .stat-card { display:flex; justify-content:space-between; align-items:center; padding:15px; background-color:var(--background-color); border-radius:10px; margin-bottom:20px; gap:12px; box-sizing:border-box;}
+    .stat-card > span:first-child { flex:1 1 auto; min-width:0; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; margin-right:8px;}
+    .stat-card .value { font-size:1.5em; font-weight:700; color:var(--primary-color); padding-left:6px;}
+    .job-analytics-list { margin: 0; padding: 0 0 0 20px; }
+    .job-analytics-list li { margin-bottom: 7px; font-size: 1em; }
+    .job-analytics-list .status-applied { color: var(--secondary-color); }
+    .job-analytics-list .status-rejected { color: var(--danger); }
+    .job-analytics-list .status-hired { color: var(--primary-color); }
+    .edit-btn { background-color:var(--secondary-color); color:var(--light-text-color); border:none; padding:10px 20px; border-radius:8px; cursor:pointer; margin-top:20px; display:block; width:100%;}
+    .edit-btn:hover { background-color: #1a7bb9;}
+    .logout-btn { display:block; width:100%; padding:12px; margin-top:30px; background-color:#f44336; color:var(--light-text-color); border:none; border-radius:8px; font-size:1.1em; font-weight:600; cursor:pointer; transition: background-color 0.3s ease;}
+    .logout-btn:hover { background-color: #d32f2f;}
+    @media (max-width:600px) {
+      .profile-section { flex-direction:column; gap:20px;}
+      .info-grid { grid-template-columns:1fr; gap:20px;}
+      .main-content-container { padding:10px;}
+      .container { padding:15px; margin:10px;}
+    }
+    @media (min-width:601px) {
+      .profile-section { flex-direction:row; gap:30px;}
+      .info-grid { grid-template-columns:1fr 1fr; gap:25px;}
+    }
+  </style>
 </head>
 <body>
-    <div class="side-nav" id="side-nav">
-        <a href="./index.html"><span class="material-icons">info</span> Bosh sahifa</a>
-        <a href="./careerpath.html"><span class="material-icons">home</span> Asosiy sahifa</a>
-        <a href="./dashboard.html"><span class="material-icons">person</span> Mening profilim</a>
-        <a href="./tests.html"><span class="material-icons">menu_book</span> Testlar</a>
-        <a href="./aichat.html"><span class="material-icons">auto_awesome</span>AI Maslahatchi</a>
-        <a href="./kasblar.html"><span class="material-icons">lightbulb</span> Kasblar</a>
-        <a href="./jobs.html"><span class="material-icons">work</span> Ish topish</a>
-        <a href="./applications.html"><span class="material-icons">assignment</span> Arizalar</a>
-        <a href="./about.html"><span class="material-icons">group</span> Biz haqimizda</a>
-        <a href="./contact.html"><span class="material-icons">contact_mail</span> Bog'lanish</a>
-    </div>
-
-    <div class="main-content-container" id="main-content-container">
-        <header class="header">
-            <div class="menu-toggle" id="menu-toggle">
-                <span></span>
-                <span></span>
-                <span></span>
-            </div>
-            <h1>CareerPath</h1>
-            <div class="profile-menu">
-                <button class="profile-btn" id="profile-btn">
-                    <span id="user-email-display">foydalanuvchi@gmail.com</span> ▼
-                </button>
-                <div class="profile-dropdown" id="profile-dropdown">
-                    <a href="#" id="logout-link">Tizimdan chiqish</a>
-                </div>
-            </div>
-        </header>
-
-        <div class="container">
-            <div class="dashboard-header">
-                <h2>Xush kelibsiz, <span id="user-display-name">Yuklanmoqda...</span>!</h2>
-                <p>Shaxsiy ma'lumotlaringizni boshqaring</p>
-            </div>
-            
-            <div class="profile-section">
-                <div class="profile-avatar">
-                    <img src="https://placehold.co/150x150/4CAF50/fff?text=DU" class="avatar-img" id="profile-image">
-                    <div class="avatar-actions">
-                        <input type="file" id="upload-input" accept="image/*" style="display: none;">
-                        <button onclick="document.getElementById('upload-input').click()">Yuklash</button>|<button id="delete-image-btn">O'chirish</button>
-                    </div>
-                </div>
-
-                <div class="info-grid">
-                    <div class="info-card">
-                        <h4>Shaxsiy ma'lumotlar</h4>
-                        <div class="info-item">
-                            <label>Ism va familiya:</label>
-                            <span id="full-name-span" class="empty-data">
-                                <span class="material-icons">error_outline</span>Ism va familiya kiritilmagan
-                            </span>
-                            <input type="text" id="full-name-input" class="editable-input" placeholder="Ism va familiyangizni kiriting" style="display:none;">
-                        </div>
-                        <div class="info-item">
-                            <label>Telefon raqami:</label>
-                            <span id="phone-number-span" class="empty-data">
-                                <span class="material-icons">error_outline</span>Telefon raqami kiritilmagan
-                            </span>
-                            <input type="tel" id="phone-number-input" class="editable-input" placeholder="+998 ** *** ** **" style="display:none;">
-                        </div>
-                        <div class="info-item">
-                            <label>Joylashuv:</label>
-                            <span id="location-span" class="empty-data">
-                                <span class="material-icons">error_outline</span>Joylashuv kiritilmagan
-                            </span>
-                            <input type="text" id="location-input" class="editable-input" placeholder="Masalan: Toshkent, O'zbekiston" style="display:none;">
-                        </div>
-                        <div class="info-item">
-                            <label>Email:</label>
-                            <span id="user-email-full">email@manzil.com</span>
-                        </div>
-                        <div class="info-item">
-                            <label>Tug'ilgan sana:</label>
-                            <span id="birth-date-span" class="empty-data">
-                                <span class="material-icons">error_outline</span>Tug'ilgan sana kiritilmagan
-                            </span>
-                            <input type="date" id="birth-date-input" class="editable-input" style="display:none;">
-                        </div>
-                        <div class="info-item">
-                            <label>Biografiya:</label>
-                            <p id="biography-span" class="empty-data">
-                                <span class="material-icons">error_outline</span>Biografiya kiritilmagan
-                            </p>
-                            <textarea id="biography-input" class="editable-input" placeholder="O'zingiz haqida qisqacha ma'lumot bering..." style="display:none;"></textarea>
-                        </div>
-                        <button class="edit-btn" id="edit-profile-btn">Tahrirlash</button>
-                    </div>
-
-                    <div class="info-card">
-                        <h4>Statistika</h4>
-                        <div class="stat-card">
-                            <span>Topshirilgan testlar</span>
-                            <span class="value" id="tests-completed">0</span>
-                        </div>
-                        <div class="stat-card">
-                            <span>Tanlangan kasblar</span>
-                            <span class="value" id="selected-careers">0</span>
-                        </div>
-                        <div class="stat-card">
-                            <span>Ish o'rinlari</span>
-                            <span class="value" id="jobs-applied">0</span>
-                        </div>
-                        <div class="stat-card">
-                            <span>Profil to'liqligi</span>
-                            <span class="value" id="profile-completeness">0%</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <button id="logout-btn" class="logout-btn">Tizimdan chiqish</button>
+  <div class="side-nav" id="side-nav">
+    <a href="./index.html"><span class="material-icons">info</span> Bosh sahifa</a>
+    <a href="./careerpath.html"><span class="material-icons">home</span> Asosiy sahifa</a>
+    <a href="./dashboard.html"><span class="material-icons">person</span> Mening profilim</a>
+    <a href="./tests.html"><span class="material-icons">menu_book</span> Testlar</a>
+    <a href="./aichat.html"><span class="material-icons">auto_awesome</span>AI Maslahatchi</a>
+    <a href="./cvgenerator.html"><span class="material-icons">description</span> CV Generator</a>
+    <a href="./kasblar.html"><span class="material-icons">lightbulb</span> Kasblar</a>
+    <a href="./jobs.html"><span class="material-icons">work</span> Ish topish</a>
+    <a href="./applications.html"><span class="material-icons">assignment</span> Arizalar</a>
+    <a href="./about.html"><span class="material-icons">group</span> Biz haqimizda</a>
+    <a href="./contact.html"><span class="material-icons">contact_mail</span> Bog'lanish</a>
+  </div>
+  <div class="main-content-container" id="main-content-container">
+    <header class="header">
+      <div class="menu-toggle" id="menu-toggle">
+        <span></span><span></span><span></span>
+      </div>
+      <h1>CareerPath</h1>
+      <div class="profile-menu" id="profile-menu">
+        <button class="profile-btn" id="profile-btn" type="button">
+          <span id="user-email-display">foydalanuvchi@gmail.com</span> ▼
+        </button>
+        <div class="profile-dropdown" id="profile-dropdown">
+          <a href="#" id="logout-link">Tizimdan chiqish</a>
         </div>
+      </div>
+    </header>
+    <div class="container">
+      <div class="dashboard-header">
+        <h2>Xush kelibsiz, <span id="user-display-name">Yuklanmoqda...</span>!</h2>
+        <p>Shaxsiy ma'lumotlaringizni boshqaring</p>
+      </div>
+      <div class="profile-section">
+        <div class="info-grid">
+          <div class="info-card">
+            <h4>Shaxsiy ma'lumotlar</h4>
+            <div class="info-item">
+              <label>Ism va familiya:</label>
+              <span id="full-name-span" class="empty-data"><span class="material-icons">error_outline</span>Ism va familiya kiritilmagan</span>
+              <input type="text" id="full-name-input" class="editable-input" placeholder="Ism va familiyangizni kiriting" style="display:none;">
+            </div>
+            <div class="info-item">
+              <label>Telefon raqami:</label>
+              <span id="phone-number-span" class="empty-data"><span class="material-icons">error_outline</span>Telefon raqami kiritilmagan</span>
+              <input type="tel" id="phone-number-input" class="editable-input" placeholder="+998 ** *** ** **" style="display:none;">
+            </div>
+            <div class="info-item">
+              <label>Joylashuv:</label>
+              <span id="location-span" class="empty-data"><span class="material-icons">error_outline</span>Joylashuv kiritilmagan</span>
+              <input type="text" id="location-input" class="editable-input" placeholder="Masalan: Toshkent, O'zbekiston" style="display:none;">
+            </div>
+            <div class="info-item">
+              <label>Email:</label>
+              <span id="user-email-full">email@manzil.com</span>
+            </div>
+            <div class="info-item">
+              <label>Tug'ilgan sana:</label>
+              <span id="birth-date-span" class="empty-data"><span class="material-icons">error_outline</span>Tug'ilgan sana kiritilmagan</span>
+              <input type="date" id="birth-date-input" class="editable-input" style="display:none;">
+            </div>
+            <div class="info-item">
+              <label>Biografiya:</label>
+              <p id="biography-span" class="empty-data"><span class="material-icons">error_outline</span>Biografiya kiritilmagan</p>
+              <textarea id="biography-input" class="editable-input" placeholder="O'zingiz haqida qisqacha ma'lumot bering..." style="display:none;"></textarea>
+            </div>
+            <button class="edit-btn" id="edit-profile-btn" type="button">Tahrirlash</button>
+          </div>
+          <div class="info-card">
+            <h4>Statistika</h4>
+            <div class="stat-card">
+              <span>Topshirilgan testlar</span>
+              <span class="value" id="tests-completed">0</span>
+            </div>
+            <div class="stat-card">
+              <span>Tanlangan kasblar</span>
+              <span class="value" id="selected-careers">0</span>
+            </div>
+            <div class="stat-card">
+              <span>Ish o'rinlari</span>
+              <span class="value" id="jobs-applied">0</span>
+            </div>
+            <div class="stat-card">
+              <span>Profil to'liqligi</span>
+              <span class="value" id="profile-completeness">0%</span>
+            </div>
+            <div class="stat-card">
+              <span>Ish o‘rinlari analitikasi</span>
+            </div>
+            <ul class="job-analytics-list" id="job-analytics-list">
+              <!-- Dinamik ish o‘rinlari statistikasi shu yerda ko‘rsatiladi -->
+            </ul>
+          </div>
+        </div>
+      </div>
+      <button id="logout-btn" class="logout-btn" type="button">Tizimdan chiqish</button>
     </div>
+  </div>
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/12.2.1/firebase-app.js";
+    import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/12.2.1/firebase-auth.js";
+    import { getFirestore, doc, getDoc, setDoc, updateDoc, collection, query, where, getDocs } from "https://www.gstatic.com/firebasejs/12.2.1/firebase-firestore.js";
 
-    <script type="module">
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/12.2.1/firebase-app.js";
-        import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/12.2.1/firebase-auth.js";
-        import { getFirestore, doc, getDoc, setDoc, collection, query, where, getDocs, updateDoc, arrayUnion, arrayRemove } from "https://www.gstatic.com/firebasejs/12.2.1/firebase-firestore.js";
-        import { getStorage, ref, uploadBytes, getDownloadURL, deleteObject } from "https://www.gstatic.com/firebasejs/12.2.1/firebase-storage.js";
+    const firebaseConfig = {
+      apiKey: "AIzaSyA86zhSVi4FSw-GvFBdOZsCPaHMS67XA78",
+      authDomain: "carrer-path-a5810.firebaseapp.com",
+      projectId: "carrer-path-a5810",
+      storageBucket: "carrer-path-a5810.appspot.com",
+      messagingSenderId: "693831778129",
+      appId: "1:693831778129:web:911293c5c284eefe295d70"
+    };
 
-        const firebaseConfig = {
-            apiKey: "AIzaSyA86zhSVi4FSw-GvFBdOZsCPaHMS67XA78",
-            authDomain: "carrer-path-a5810.firebaseapp.com",
-            projectId: "carrer-path-a5810",
-            storageBucket: "carrer-path-a5810.firebasestorage.app",
-            messagingSenderId: "693831778129",
-            appId: "1:693831778129:web:911293c5c284eefe295d70"
-        };
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+    const db = getFirestore(app);
 
-        const app = initializeApp(firebaseConfig);
-        const auth = getAuth(app);
-        const db = getFirestore(app);
-        const storage = getStorage(app);
-        
-        let userId = null;
-        let isEditMode = false;
+    let userId = null;
+    let isEditMode = false;
 
-        const calculateCompleteness = (userData) => {
-            const fields = [
-                userData?.fullName,
-                userData?.phoneNumber,
-                userData?.location,
-                userData?.birthDate,
-                userData?.biography,
-                userData?.photoURL
-            ];
-            
-            const filledFields = fields.filter(field => field !== null && field !== undefined && String(field).trim() !== "").length;
-            const percentage = Math.round((filledFields / fields.length) * 100);
-            document.getElementById('profile-completeness').textContent = percentage + "%";
-        };
+    function updateUI(userData = {}) {
+      const userName = userData.fullName ? userData.fullName.split(" ")[0] : (auth.currentUser ? auth.currentUser.email.split('@')[0] : 'Foydalanuvchi');
+      document.getElementById('user-display-name').textContent = userName;
+      document.getElementById('user-email-full').textContent = auth.currentUser ? auth.currentUser.email : 'Noma\'lum';
+      document.getElementById('user-email-display').textContent = auth.currentUser ? auth.currentUser.email : 'foydalanuvchi@gmail.com';
 
-        const updateUI = (userData) => {
-            const userName = userData && userData.fullName ? userData.fullName.split(" ")[0] : (auth.currentUser ? auth.currentUser.email.split('@')[0] : 'Foydalanuvchi');
-            document.getElementById('user-display-name').textContent = userName;
-            document.getElementById('user-email-full').textContent = auth.currentUser ? auth.currentUser.email : 'Noma\'lum';
-            
-            const updateField = (id, value, emptyMessage) => {
-                const span = document.getElementById(id);
-                const input = document.getElementById(id.replace('-span', '-input'));
-                
-                if (value) {
-                    span.textContent = value;
-                    span.classList.remove('empty-data');
-                    span.classList.add('filled-data');
-                    input.value = value;
-                } else {
-                    span.innerHTML = `<span class="material-icons">error_outline</span> ${emptyMessage}`;
-                    span.classList.remove('filled-data');
-                    span.classList.add('empty-data');
-                    input.value = '';
-                }
-            };
-            
-            updateField('full-name-span', userData.fullName, 'Ism va familiya kiritilmagan');
-            updateField('phone-number-span', userData.phoneNumber, 'Telefon raqami kiritilmagan');
-            updateField('location-span', userData.location, 'Joylashuv kiritilmagan');
-            updateField('birth-date-span', userData.birthDate, 'Tug\'ilgan sana kiritilmagan');
-            updateField('biography-span', userData.biography, 'Biografiya kiritilmagan');
+      const fields = [
+        {span: 'full-name-span', input: 'full-name-input', val: userData.fullName, empty: 'Ism va familiya kiritilmagan'},
+        {span: 'phone-number-span', input: 'phone-number-input', val: userData.phoneNumber, empty: 'Telefon raqami kiritilmagan'},
+        {span: 'location-span', input: 'location-input', val: userData.location, empty: 'Joylashuv kiritilmagan'},
+        {span: 'birth-date-span', input: 'birth-date-input', val: userData.birthDate, empty: 'Tug\'ilgan sana kiritilmagan'},
+        {span: 'biography-span', input: 'biography-input', val: userData.biography, empty: 'Biografiya kiritilmagan'},
+      ];
+      fields.forEach(cfg => {
+        const span = document.getElementById(cfg.span);
+        const input = document.getElementById(cfg.input);
+        if (span) {
+          if (cfg.val) {
+            span.textContent = cfg.val;
+            span.classList.remove('empty-data');
+            span.classList.add('filled-data');
+          } else {
+            span.innerHTML = `<span class="material-icons">error_outline</span> ${cfg.empty}`;
+            span.classList.remove('filled-data');
+            span.classList.add('empty-data');
+          }
+        }
+        if (input) input.value = cfg.val || "";
+      });
 
-            if (userData.photoURL) {
-                document.getElementById('profile-image').src = userData.photoURL;
-            } else {
-                const initial = (userName ? userName[0].toUpperCase() : 'DU');
-                document.getElementById('profile-image').src = `https://placehold.co/150x150/4CAF50/fff?text=${initial}`;
-            }
+      // Profil to'liqlik foizi
+      const completenessFields = [
+        userData.fullName,
+        userData.phoneNumber,
+        userData.location,
+        userData.birthDate,
+        userData.biography
+      ];
+      const filledFields = completenessFields.filter(field => field && String(field).trim() !== "").length;
+      document.getElementById('profile-completeness').textContent = Math.round((filledFields / completenessFields.length) * 100) + "%";
+    }
 
-            calculateCompleteness(userData);
-        };
+    async function updateTestCount(uId) {
+      let totalTestsCompleted = 0;
+      const tests = ["iq_test_results", "test_results"];
+      for (const test of tests) {
+        try {
+          const docRef = doc(db, test, uId);
+          const docSnap = await getDoc(docRef);
+          if (docSnap.exists()) totalTestsCompleted++;
+        } catch {}
+      }
+      document.getElementById('tests-completed').textContent = totalTestsCompleted;
+    }
+    async function updateCareerCount(uId) {
+      try {
+        const userRef = doc(db, "users", uId);
+        const userDoc = await getDoc(userRef);
+        const selectedCareerCount = userDoc.exists() && userDoc.data().selectedCareers ? userDoc.data().selectedCareers.length : 0;
+        document.getElementById('selected-careers').textContent = selectedCareerCount;
+      } catch {
+        document.getElementById('selected-careers').textContent = "0";
+      }
+    }
+    async function updateJobApplicationsCount(uId) {
+      try {
+        const applicationsRef = collection(db, "applications");
+        const q = query(applicationsRef, where("userId", "==", uId));
+        const querySnapshot = await getDocs(q);
+        document.getElementById('jobs-applied').textContent = querySnapshot.size;
+      } catch {
+        document.getElementById('jobs-applied').textContent = "0";
+      }
+    }
 
-        const updateTestCount = async (userId) => {
-            let totalTestsCompleted = 0;
-            const tests = ["iq_test_results", "test_results"];
+    // Analitika: Ish o‘rinlari statistikasi
+    async function updateJobAnalytics(uId) {
+      const analyticsList = document.getElementById('job-analytics-list');
+      analyticsList.innerHTML = '<li>Yuklanmoqda...</li>';
+      try {
+        const applicationsRef = collection(db, "applications");
+        const q = query(applicationsRef, where("userId", "==", uId));
+        const querySnapshot = await getDocs(q);
 
-            for (const test of tests) {
-                try {
-                    const docRef = doc(db, test, userId);
-                    const docSnap = await getDoc(docRef);
-                    if (docSnap.exists()) {
-                        totalTestsCompleted++;
-                    }
-                } catch (e) {
-                    console.error(`${test} ni tekshirishda xato:`, e);
-                }
-            }
-            
-            document.getElementById('tests-completed').textContent = totalTestsCompleted;
-        };
-        
-        const updateCareerCount = async (userId) => {
-            try {
-                const userRef = doc(db, "users", userId);
-                const userDoc = await getDoc(userRef);
-                
-                let selectedCareerCount = 0;
-                if (userDoc.exists()) {
-                    const userData = userDoc.data();
-                    if (userData.selectedCareers && Array.isArray(userData.selectedCareers)) {
-                        selectedCareerCount = userData.selectedCareers.length;
-                    }
-                }
-                document.getElementById('selected-careers').textContent = selectedCareerCount;
-            } catch (e) {
-                console.error("Kasblar sonini olishda xato:", e);
-                document.getElementById('selected-careers').textContent = "0";
-            }
-        };
+        let applied = 0, rejected = 0, hired = 0, other = 0;
+        let items = [];
 
-        const updateJobApplicationsCount = async (userId) => {
-            try {
-                const applicationsRef = collection(db, "applications");
-                const q = query(applicationsRef, where("userId", "==", userId));
-                const querySnapshot = await getDocs(q);
-                
-                document.getElementById('jobs-applied').textContent = querySnapshot.size;
-            } catch (e) {
-                console.error("Arizalar sonini olishda xato:", e);
-                document.getElementById('jobs-applied').textContent = "0";
-            }
-        };
-
-
-        onAuthStateChanged(auth, async (user) => {
-            if (user) {
-                userId = user.uid;
-                document.getElementById('user-email-display').textContent = user.email;
-                
-                const profileRef = doc(db, "users", userId);
-                const docSnap = await getDoc(profileRef);
-                
-                if (docSnap.exists()) {
-                    updateUI(docSnap.data());
-                } else {
-                    const defaultUserData = {
-                        fullName: null, phoneNumber: null, location: null,
-                        birthDate: null, biography: null, photoURL: null,
-                        selectedCareers: [],
-                        roadmapStatus: {}
-                    };
-                    await setDoc(profileRef, defaultUserData);
-                    updateUI(defaultUserData);
-                }
-
-                updateTestCount(userId);
-                updateCareerCount(userId);
-                updateJobApplicationsCount(userId);
-
-            } else {
-                window.location.href = "login.html";
-            }
+        querySnapshot.forEach(docSnap => {
+          const d = docSnap.data();
+          // Example status: "applied", "rejected", "hired"
+          let status = d.status || "applied";
+          let jobName = d.jobTitle || d.job || "nomalum";
+          if (status === "applied") applied++;
+          else if (status === "rejected") rejected++;
+          else if (status === "hired") hired++;
+          else other++;
+          items.push(`<li><b>${jobName}</b> - <span class="status-${status}">${status}</span></li>`);
         });
 
-        const toggleEditMode = () => {
-            isEditMode = !isEditMode;
-            const editBtn = document.getElementById('edit-profile-btn');
-            const spans = document.querySelectorAll('.info-item span, .info-item p');
-            const inputs = document.querySelectorAll('.info-item input, .info-item textarea');
-            
-            if (isEditMode) {
-                editBtn.textContent = "Saqlash";
-                spans.forEach(span => { span.style.display = 'none'; });
-                inputs.forEach(input => {
-                    input.style.display = 'block';
-                    const spanId = input.id.replace('-input', '-span');
-                    const spanElement = document.getElementById(spanId);
-                    if (spanElement) {
-                        const text = spanElement.textContent.trim();
-                        const value = (text.includes('kiritilmagan') || text.includes('Kiritilmagan')) ? '' : text;
-                        input.value = value;
-                    }
-                });
-            } else {
-                editBtn.textContent = "Tahrirlash";
-                spans.forEach(span => { span.style.display = 'block'; });
-                inputs.forEach(input => { input.style.display = 'none'; });
-            }
-        };
+        analyticsList.innerHTML = items.length
+          ? items.join('')
+          : '<li>Sizda ish arizasi yo‘q.</li>';
 
-        const saveChanges = async () => {
-            const fullName = document.getElementById('full-name-input').value.trim() || null;
-            const phoneNumber = document.getElementById('phone-number-input').value.trim() || null;
-            const location = document.getElementById('location-input').value.trim() || null;
-            const birthDate = document.getElementById('birth-date-input').value || null;
-            const biography = document.getElementById('biography-input').value.trim() || null;
-            
-            if (userId) {
-                try {
-                    const profileRef = doc(db, "users", userId);
-                    await setDoc(profileRef, {
-                        fullName: fullName, phoneNumber: phoneNumber, location: location,
-                        birthDate: birthDate, biography: biography
-                    }, { merge: true });
-                    alert("Ma'lumotlar saqlandi!");
-                    location.reload();
-                } catch (error) {
-                    console.error("Ma'lumotlarni saqlashda xato:", error);
-                    alert("Ma'lumotlarni saqlashda xato yuz berdi. Iltimos, qayta urinib ko'ring.");
-                }
-            }
-        };
+        // Qo‘shimcha umumiy statistika
+        let summaryHTML =
+          `<li><b>Jami ariza:</b> ${applied + rejected + hired + other}</li>
+           <li><span class="status-applied">Topshirilgan:</span> ${applied}</li>
+           <li><span class="status-hired">Qabul qilingan:</span> ${hired}</li>
+           <li><span class="status-rejected">Rad etilgan:</span> ${rejected}</li>
+           ${other ? `<li>Boshqa status: ${other}</li>` : ''}`;
+        analyticsList.innerHTML = summaryHTML + items.join('');
+      } catch (e) {
+        analyticsList.innerHTML = '<li>Xatolik, analitika olinmadi.</li>';
+      }
+    }
 
-        // Hodisa tinglovchilar
-        document.getElementById('edit-profile-btn').addEventListener('click', () => {
-            if (isEditMode) {
-                saveChanges();
-            } else {
-                toggleEditMode();
-            }
-        });
+    onAuthStateChanged(auth, async (user) => {
+      if (user) {
+        userId = user.uid;
+        const profileRef = doc(db, "users", userId);
+        const docSnap = await getDoc(profileRef);
+        if (docSnap.exists()) {
+          updateUI(docSnap.data());
+        } else {
+          const defaultUserData = { fullName: null, phoneNumber: null, location: null, birthDate: null, biography: null, selectedCareers: [], roadmapStatus: {} };
+          await setDoc(profileRef, defaultUserData);
+          updateUI(defaultUserData);
+        }
+        updateTestCount(userId);
+        updateCareerCount(userId);
+        updateJobApplicationsCount(userId);
+        updateJobAnalytics(userId);
+      } else {
+        userId = null;
+        updateUI({});
+        document.getElementById('job-analytics-list').innerHTML = '';
+      }
+    });
 
-        document.getElementById('upload-input').addEventListener('change', async (e) => {
-            const file = e.target.files[0];
-            if (!file || !userId) return;
+    function toggleEditMode() {
+      isEditMode = !isEditMode;
+      const editBtn = document.getElementById('edit-profile-btn');
+      const spans = document.querySelectorAll('.info-item > span, .info-item > p');
+      const inputs = document.querySelectorAll('.info-item input, .info-item textarea');
+      if (editBtn) editBtn.textContent = isEditMode ? "Saqlash" : "Tahrirlash";
+      spans.forEach(span => { span.style.display = isEditMode ? 'none' : 'block'; });
+      inputs.forEach(input => {
+        input.style.display = isEditMode ? 'block' : 'none';
+        if (isEditMode) {
+          const spanId = input.id.replace('-input', '-span');
+          const spanElement = document.getElementById(spanId);
+          if (spanElement) {
+            const text = spanElement.textContent.trim();
+            input.value = (text.includes('kiritilmagan') || text.includes('Kiritilmagan')) ? '' : text;
+          }
+        }
+      });
+    }
+    async function saveChanges() {
+      const fullName = document.getElementById('full-name-input').value.trim() || null;
+      const phoneNumber = document.getElementById('phone-number-input').value.trim() || null;
+      const location = document.getElementById('location-input').value.trim() || null;
+      const birthDate = document.getElementById('birth-date-input').value || null;
+      const biography = document.getElementById('biography-input').value.trim() || null;
+      if (!userId) { alert("Tizimga kiring."); return; }
+      try {
+        const profileRef = doc(db, "users", userId);
+        await updateDoc(profileRef, { fullName, phoneNumber, location, birthDate, biography });
+        const docSnap = await getDoc(profileRef);
+        if (docSnap.exists()) updateUI(docSnap.data());
+        alert("Ma'lumotlar saqlandi!");
+        isEditMode = false;
+        toggleEditMode();
+      } catch (error) {
+        alert("Ma'lumotlarni saqlashda xato.");
+      }
+    }
 
-            try {
-                const storageRef = ref(storage, `profile_images/${userId}/${file.name}`);
-                const snapshot = await uploadBytes(storageRef, file);
-                const photoURL = await getDownloadURL(snapshot.ref);
-                
-                const profileRef = doc(db, "users", userId);
-                await setDoc(profileRef, { photoURL: photoURL }, { merge: true });
-                
-                alert("Rasm muvaffaqiyatli yuklandi!");
-                location.reload();
-            } catch (error) {
-                console.error("Rasm yuklashda xato:", error);
-                alert("Rasm yuklashda xato yuz berdi. Iltimos, qayta urinib ko'ring.");
-            }
-        });
+    const editProfileBtn = document.getElementById('edit-profile-btn');
+    if (editProfileBtn) {
+      editProfileBtn.addEventListener('click', () => {
+        if (isEditMode) saveChanges(); else toggleEditMode();
+      });
+    }
 
-        document.getElementById('delete-image-btn').addEventListener('click', async () => {
-            if (userId) {
-                try {
-                    const profileRef = doc(db, "users", userId);
-                    const userDoc = await getDoc(profileRef);
-                    const photoURL = userDoc.exists() ? userDoc.data().photoURL : null;
-                    
-                    if (photoURL) {
-                        const imageRef = ref(storage, photoURL);
-                        await deleteObject(imageRef);
-                    }
-                    
-                    await setDoc(profileRef, { photoURL: null }, { merge: true });
-                    alert("Rasm o'chirildi!");
-                    location.reload();
-                } catch (error) {
-                    console.error("Rasm o'chirishda xato:", error);
-                    alert("Rasm o'chirishda xato yuz berdi. Iltimos, qayta urinib ko'ring.");
-                }
-            }
-        });
+    const profileMenu = document.getElementById('profile-menu');
+    if (profileMenu) {
+      profileMenu.addEventListener('click', (ev) => {
+        ev.stopPropagation();
+        profileMenu.classList.toggle('active');
+      });
+    }
+    document.addEventListener('click', (ev) => {
+      if (profileMenu && !profileMenu.contains(ev.target) && profileMenu.classList.contains('active')) {
+        profileMenu.classList.remove('active');
+      }
+    });
 
-        const profileBtn = document.getElementById('profile-btn');
-        const profileDropdown = document.getElementById('profile-dropdown');
-        profileBtn.addEventListener('click', () => {
-            profileDropdown.classList.toggle('active');
-        });
+    const logoutBtn = document.getElementById('logout-btn');
+    const logoutLink = document.getElementById('logout-link');
+    function handleLogout(e) {
+      e?.preventDefault();
+      signOut(auth).then(() => {
+        alert("Siz tizimdan chiqdingiz.");
+        userId = null;
+        updateUI({});
+        document.getElementById('job-analytics-list').innerHTML = '';
+      }).catch(() => {
+        alert("Tizimdan chiqishda xato yuz berdi.");
+      });
+    }
+    if (logoutBtn) logoutBtn.addEventListener('click', handleLogout);
+    if (logoutLink) logoutLink.addEventListener('click', handleLogout);
 
-        const logoutBtn = document.getElementById('logout-btn');
-        logoutBtn.addEventListener('click', (e) => {
-            e.preventDefault();
-            signOut(auth).then(() => {
-                window.location.href = "login.html";
-            }).catch((error) => {
-                console.error("Tizimdan chiqishda xato:", error);
-                alert("Tizimdan chiqishda xato yuz berdi.");
-            });
-        });
-        
-        const menuToggle = document.getElementById('menu-toggle');
-        const sideNav = document.getElementById('side-nav');
-        const mainContent = document.getElementById('main-content-container');
-        
-        menuToggle.addEventListener('click', () => {
-            sideNav.classList.toggle('active');
-            mainContent.classList.toggle('menu-open');
-        });
-    </script>
+    const menuToggle = document.getElementById('menu-toggle');
+    const sideNav = document.getElementById('side-nav');
+    const mainContent = document.getElementById('main-content-container');
+    if (menuToggle) {
+      menuToggle.addEventListener('click', () => {
+        sideNav?.classList.toggle('active');
+        mainContent?.classList.toggle('menu-open');
+        menuToggle.classList.toggle('active');
+      });
+    }
+  </script>
 </body>
 </html>

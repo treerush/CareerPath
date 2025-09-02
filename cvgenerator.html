@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>CV Generator - CareerPath</title>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="icon" type="image/jpeg" href="./images/careerpathlogo.jpg">
+    <link rel="stylesheet" href="./cvgenerator.css">
+    <!-- jsPDF for PDF export -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <!-- html-docx-js for DOCX export -->
+    <script src="https://cdn.jsdelivr.net/npm/html-docx-js@0.4.1/dist/html-docx.js"></script>
+</head>
+<body>
+    <div class="side-nav" id="side-nav">
+        <a href="./index.html"><span class="material-icons">info</span> Bosh sahifa</a>
+        <a href="./careerpath.html"><span class="material-icons">home</span> Asosiy sahifa</a>
+        <a href="./dashboard.html"><span class="material-icons">person</span> Mening profilim</a>
+        <a href="./tests.html"><span class="material-icons">menu_book</span> Testlar</a>
+        <a href="./aichat.html"><span class="material-icons">auto_awesome</span>AI Maslahatchi</a>
+        <a href="./cvgenerator.html"><span class="material-icons">description</span> CV Generator</a>
+        <a href="./kasblar.html"><span class="material-icons">lightbulb</span> Kasblar</a>
+        <a href="./jobs.html"><span class="material-icons">work</span> Ish topish</a>
+        <a href="./applications.html"><span class="material-icons">assignment</span> Arizalar</a>
+        <a href="./about.html"><span class="material-icons">group</span> Biz haqimizda</a>
+        <a href="./contact.html"><span class="material-icons">contact_mail</span> Bog'lanish</a>
+    </div>
+    <div class="main-content-container" id="main-content-container">
+        <header class="header">
+            <div style="display:flex;align-items:center;gap:12px">
+                <div class="menu-toggle" id="menu-toggle" aria-label="menu toggle" role="button" tabindex="0">
+                    <span></span><span></span><span></span>
+                </div>
+                <h1 style="margin:0">CareerPath</h1>
+            </div>
+            <div class="profile-menu">
+                <button class="profile-btn" id="profile-btn"><span id="user-email-display">Foydalanuvchi</span> ▼</button>
+                <div class="profile-dropdown" id="profile-dropdown">
+                    <a href="dashboard.html">Mening profilim</a>
+                    <a href="#" id="logout-link">Tizimdan chiqish</a>
+                </div>
+            </div>
+        </header>
+        <div class="cv-form-container" id="cv-form-section">
+            <form id="cv-form" autocomplete="off">
+                <div>
+                    <label for="photo">Profil rasmi:</label>
+                    <input type="file" id="photo" accept="image/*"><br>
+                    <label>Ism familya:</label>
+                    <input type="text" id="input-fullname" placeholder="Masalan: Murodbek Tuychiyev Baxronovich"><br>
+                    <label>Tug‘ilgan sana:</label>
+                    <input type="date" id="input-dob" placeholder="Masalan: 2009-08-05"><br>
+                    <label>Oilaviy holat:</label>
+                    <input type="text" id="input-marital" placeholder="Masalan: Single"><br>
+                    <label>Millati:</label>
+                    <input type="text" id="input-nationality" placeholder="Masalan: Uzbek"><br>
+                    <label>Kontakt email:</label>
+                    <input type="email" id="input-email" placeholder="Masalan: example@gmail.com"><br>
+                    <label>Telefon:</label>
+                    <input type="text" id="input-phone" placeholder="Masalan: +998901234567"><br>
+                    <label>Manzil:</label>
+                    <input type="text" id="input-location" placeholder="Masalan: Uzbekistan, Kashkadarya"><br>
+                    <label>LinkedIn:</label>
+                    <input type="text" id="input-linkedin" placeholder="Masalan: https://linkedin.com/in/username"><br>
+                </div>
+                <div>
+                    <label>Skills (masalan: HTML5/CSS3: 4):</label>
+                    <textarea id="input-skills" placeholder="Har birini yangi qatordan yozing"></textarea><br>
+                    <label>Maqsad (Objective):</label>
+                    <textarea id="input-objective" placeholder="Kasbiy maqsadlaringizni yozing"></textarea><br>
+                    <label>Talim (Education):</label>
+                    <textarea id="input-education" placeholder="Talim va baholari"></textarea><br>
+                    <label>Loyiha (Project):</label>
+                    <textarea id="input-project" placeholder="Asosiy loyihani tavsiflang"></textarea><br>
+                    <label>Yutuqlar (Achievement):</label>
+                    <textarea id="input-achievement" placeholder="Sertifikatlar, natijalar"></textarea><br>
+                    <label>Tillar (Languages):</label>
+                    <input type="text" id="input-languages" placeholder="Masalan: Uzbek (Native); English (Pre-Intermediate)"><br>
+                    <label>Qiziqishlar (Interests):</label>
+                    <textarea id="input-interests" placeholder="Qiziqishlaringiz"></textarea><br>
+                    <label>Faoliyat (Activities):</label>
+                    <textarea id="input-activities" placeholder="Darslar, mentorlik va boshqa"></textarea><br>
+                    <label>Imzo:</label>
+                    <input type="text" id="input-signature" placeholder="Masalan: Ism Familya">
+                </div>
+            </form>
+            <div class="cv-action-btns">
+                <button id="export-pdf-btn" type="button">PDF chiqarish</button>
+                <button id="export-docx-btn" type="button">DOCX chiqarish</button>
+            </div>
+        </div>
+        <div id="cv-preview" style="margin-bottom:50px;"></div>
+    </div>
+    <script type="module" src="./cvgenerator.js"></script>
+</body>
+</html>

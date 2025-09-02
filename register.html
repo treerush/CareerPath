@@ -254,7 +254,7 @@
         return;
       }
       if (password.length < 6) {
-        alert("Parol kamida 6 belgidan iborat bo'lishi kerak.");
+        alert("Parol kamida 6 belgidan iborat bo'lishi kerak!");
         return;
       }
 
@@ -273,7 +273,7 @@
           createdAt: serverTimestamp()
         });
 
-        alert("Ro'yxatdan muvaffaqiyatli o'tdingiz! Tasdiqlash xati emailingizga yuborildi. Iltimos, emailingizni tekshirib tasdiqlang.");
+        alert("Ro'yxatdan muvaffaqiyatli o'tdingiz! Tasdiqlash xati emailingizdagi SPAM jildini tekshiring va tasdiqlang.");
         window.location.href = "login.html";
       } catch (err) {
         console.error("Register (user) error:", err);
@@ -290,7 +290,7 @@
       const password = document.getElementById('employer-password').value;
 
       if (!company) { alert("Iltimos, kompaniya nomini kiriting."); return; }
-      if (password.length < 6) { alert("Parol kamida 6 belgidan iborat bo'lishi kerak."); return; }
+      if (password.length < 6) { alert("Parol kamida 6 belgidan iborat bo'lishi kerak!"); return; }
 
       try {
         setProcessing(employerSubmitBtn, true);
@@ -308,7 +308,7 @@
           createdAt: serverTimestamp()
         });
 
-        alert("Ro'yxatdan muvaffaqiyatli o'tdingiz! Tasdiqlash xati emailingizga yuborildi. Iltimos, emailingizni tekshirib tasdiqlang.");
+        alert("Ro'yxatdan muvaffaqiyatli o'tdingiz! Tasdiqlash xati emailingizdagi SPAM jildini tekshiring va tasdiqlang.");
         window.location.href = "login.html";
       } catch (err) {
         console.error("Register (employer) error:", err);

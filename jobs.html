@@ -7,8 +7,8 @@
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link rel="icon" type="image/jpeg" href="../images/careerpathlogo.jpg">
     <style>
+        /* ... stil hammasi siz yuborgandek ... */
         @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap');
-
         :root {
             --primary-color: #4CAF50;
             --secondary-color: #2196F3;
@@ -19,229 +19,67 @@
             --menu-bg: #2d3436;
             --border-color: #ddd;
         }
-
-        body {
-            font-family: 'Poppins', sans-serif;
-            margin: 0;
-            padding: 0;
-            display: flex;
-            min-height: 100vh;
-            background: var(--background-color);
-            color: var(--text-color);
-            position: relative;
-            overflow-x: hidden;
-        }
-
-        .side-nav {
-            position: fixed;
-            top: 0;
-            left: -250px;
-            width: 250px;
-            height: 100%;
-            background-color: var(--menu-bg);
-            color: var(--light-text-color);
-            padding-top: 60px;
-            transition: left 0.3s ease;
-            box-shadow: 2px 0 5px rgba(0, 0, 0, 0.3);
-            z-index: 20;
-        }
-
-        .side-nav.active {
-            left: 0;
-        }
-        
-        /* Menyudagi barcha havolalar uchun umumiy uslublar */
-        .side-nav a {
-            display: flex;
-            align-items: center;
-            padding: 15px 20px;
-            color: var(--light-text-color);
-            text-decoration: none;
-            font-weight: 500;
-            transition: background-color 0.3s ease;
-            gap: 15px; /* Ikona va matn orasidagi bo'shliq */
-        }
-        
-        .side-nav a:hover {
-            background-color: #444;
-        }
-        
-        /* Barcha ikonlar uchun umumiy sozlama */
-        .side-nav a .material-icons {
-            font-size: 24px;
-            width: 24px;
-            height: 24px;
-            text-align: center;
-        }
-
-        .main-content-container {
-            flex-grow: 1;
-            padding: 20px;
-            margin-left: 0;
-            transition: margin-left 0.3s ease;
-        }
-
-        .main-content-container.menu-open {
-            margin-left: 250px;
-        }
-        
-        .header {
-            background-color: var(--primary-color);
-            color: var(--light-text-color);
-            padding: 15px 20px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-        }
-
-        .header h1 {
-            margin: 0;
-            font-size: 1.5em;
-        }
-        
-        .menu-toggle {
-            display: flex;
-            flex-direction: column;
-            gap: 5px;
-            cursor: pointer;
-        }
-
-        .menu-toggle span {
-            display: block;
-            width: 25px;
-            height: 3px;
-            background-color: var(--light-text-color);
-            transition: transform 0.3s ease;
-        }
-
-        .menu-toggle.active span:nth-child(1) {
-            transform: rotate(45deg) translate(5px, 5px);
-        }
-        .menu-toggle.active span:nth-child(2) {
-            opacity: 0;
-        }
-        .menu-toggle.active span:nth-child(3) {
-            transform: rotate(-45deg) translate(5px, -5px);
-        }
-        
-        .container {
-            max-width: 1200px;
-            margin: 20px auto;
-            padding: 20px;
-            background-color: var(--card-bg);
-            border-radius: 15px;
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
-            line-height: 1.6;
-        }
-
-        .jobs-header {
-            text-align: center;
-            margin-bottom: 30px;
-        }
-        .jobs-header h2 {
-            color: var(--primary-color);
-            margin: 0;
-        }
-
-        .job-list {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 20px;
-        }
-        .job-card {
-            background-color: var(--background-color);
-            padding: 20px;
-            border-radius: 10px;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
-            transition: transform 0.3s ease;
-        }
-        .job-card:hover {
-            transform: translateY(-5px);
-        }
-        .job-card h3 {
-            margin: 0 0 10px 0;
-            color: var(--secondary-color);
-        }
-        .job-card p {
-            margin: 0 0 15px 0;
-        }
-        .job-card .job-actions {
-            display: flex;
-            gap: 10px;
-            margin-top: 15px;
-        }
-        .job-card .job-actions button {
-            background-color: var(--primary-color);
-            color: var(--light-text-color);
-            text-decoration: none;
-            padding: 8px 15px;
-            border-radius: 5px;
-            display: inline-block;
-            border: none;
-            cursor: pointer;
-            transition: background-color 0.3s ease;
-        }
-        .job-card .job-actions button.chat-btn {
-            background-color: var(--secondary-color);
-        }
-        .job-card .job-actions button:hover {
-            background-color: #45a049;
-        }
-        .job-card .job-actions button.chat-btn:hover {
-            background-color: #1a7bb9;
-        }
-        .company-info {
-            display: flex;
-            align-items: center;
-            gap: 15px;
-            margin-bottom: 15px;
-        }
-        .company-logo {
-            width: 50px;
-            height: 50px;
-            border-radius: 50%;
-            object-fit: cover;
-            flex-shrink: 0;
-        }
-        .logo-placeholder {
-            width: 50px;
-            height: 50px;
-            background: #ccc;
-            border-radius: 50%;
-            flex-shrink: 0;
-        }
+        body { font-family: 'Poppins', sans-serif; margin: 0; padding: 0; display: flex; min-height: 100vh; background: var(--background-color); color: var(--text-color); position: relative; overflow-x: hidden;}
+        .side-nav { position: fixed; top: 0; left: -250px; width: 250px; height: 100%; background-color: var(--menu-bg); color: var(--light-text-color); padding-top: 60px; transition: left 0.3s ease; box-shadow: 2px 0 5px rgba(0, 0, 0, 0.3); z-index: 20;}
+        .side-nav.active { left: 0; }
+        .side-nav a { display: flex; align-items: center; padding: 15px 20px; color: var(--light-text-color); text-decoration: none; font-weight: 500; transition: background-color 0.3s ease; gap: 15px;}
+        .side-nav a:hover { background-color: #444; }
+        .side-nav a .material-icons { font-size: 24px; width: 24px; height: 24px; text-align: center;}
+        .main-content-container { flex-grow: 1; padding: 20px; margin-left: 0; transition: margin-left 0.3s ease;}
+        .main-content-container.menu-open { margin-left: 250px; }
+        .header { background-color: var(--primary-color); color: var(--light-text-color); padding: 15px 20px; display: flex; justify-content: space-between; align-items: center; box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);}
+        .header h1 { margin: 0; font-size: 1.5em;}
+        .menu-toggle { display: flex; flex-direction: column; gap: 5px; cursor: pointer;}
+        .menu-toggle span { display: block; width: 25px; height: 3px; background-color: var(--light-text-color); transition: transform 0.3s ease;}
+        .menu-toggle.active span:nth-child(1) { transform: rotate(45deg) translate(5px, 5px);}
+        .menu-toggle.active span:nth-child(2) { opacity: 0;}
+        .menu-toggle.active span:nth-child(3) { transform: rotate(-45deg) translate(5px, -5px);}
+        .container { max-width: 1200px; margin: 20px auto; padding: 20px; background-color: var(--card-bg); border-radius: 15px; box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05); line-height: 1.6;}
+        .jobs-header { text-align: center; margin-bottom: 30px;}
+        .jobs-header h2 { color: var(--primary-color); margin: 0;}
+        .job-list { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px;}
+        .job-card { background-color: var(--background-color); padding: 20px; border-radius: 10px; box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05); transition: transform 0.3s ease;}
+        .job-card:hover { transform: translateY(-5px);}
+        .job-card h3 { margin: 0 0 10px 0; color: var(--secondary-color);}
+        .job-card p { margin: 0 0 15px 0;}
+        .job-card .job-actions { display: flex; gap: 10px; margin-top: 15px;}
+        .job-card .job-actions button { background-color: var(--primary-color); color: var(--light-text-color); text-decoration: none; padding: 8px 15px; border-radius: 5px; display: inline-block; border: none; cursor: pointer; transition: background-color 0.3s ease;}
+        .job-card .job-actions button.chat-btn { background-color: var(--secondary-color);}
+        .job-card .job-actions button:hover { background-color: #45a049;}
+        .job-card .job-actions button.chat-btn:hover { background-color: #1a7bb9;}
+        .company-info { display: flex; align-items: center; gap: 15px; margin-bottom: 15px;}
+        .company-logo { width: 50px; height: 50px; border-radius: 50%; object-fit: cover; flex-shrink: 0;}
+        .logo-placeholder { width: 50px; height: 50px; background: #ccc; border-radius: 50%; flex-shrink: 0;}
+        .job-form { max-width: 500px; margin: 30px auto; padding: 20px; background: #f8f8f8; border-radius: 10px; box-shadow: 0 2px 6px rgba(0,0,0,.08);}
+        .job-form label { display: block; margin-top: 15px; font-weight: 600;}
+        .job-form input, .job-form textarea { width: 100%; padding: 8px; margin-top: 5px; border-radius: 5px; border: 1px solid #ccc;}
+        .job-form button { margin-top: 20px; background: var(--primary-color); color: #fff; border: none; padding: 10px 22px; border-radius: 7px; font-weight: 600; cursor: pointer;}
+        .job-form button:hover { background: var(--secondary-color);}
     </style>
-
-    <script defer src="https://cdn.jsdelivr.net/npm/@vercel/speed-insights/dist/inject.min.js"></script>
-    
 </head>
 <body>
-    
     <div class="side-nav" id="side-nav">
         <a href="./index.html"><span class="material-icons">info</span> Bosh sahifa</a>
         <a href="./careerpath.html"><span class="material-icons">home</span> Asosiy sahifa</a>
         <a href="./dashboard.html"><span class="material-icons">person</span> Mening profilim</a>
         <a href="./tests.html"><span class="material-icons">menu_book</span> Testlar</a>
         <a href="./aichat.html"><span class="material-icons">auto_awesome</span>AI Maslahatchi</a>
+        <a href="./cvgenerator.html"><span class="material-icons">description</span> CV Generator</a>
         <a href="./kasblar.html"><span class="material-icons">lightbulb</span> Kasblar</a>
         <a href="./jobs.html"><span class="material-icons">work</span> Ish topish</a>
         <a href="./applications.html"><span class="material-icons">assignment</span> Arizalar</a>
         <a href="./about.html"><span class="material-icons">group</span> Biz haqimizda</a>
         <a href="./contact.html"><span class="material-icons">contact_mail</span> Bog'lanish</a>
     </div>
-
     <div class="main-content-container" id="main-content-container">
         <header class="header">
             <div class="menu-toggle" id="menu-toggle">
-                <span></span>
-                <span></span>
-                <span></span>
+                <span></span><span></span><span></span>
             </div>
             <h1>CareerPath</h1>
             <div class="profile-menu">
                 <button class="profile-btn" id="profile-btn">
-                    <span id="user-email-display">foydalanuvchi@gmail.com</span> ▼
+                    <span id="user-email-display">Yuklanmoqda...</span> ▼
                 </button>
                 <div class="profile-dropdown" id="profile-dropdown">
                     <a href="dashboard.html">Mening profilim</a>
@@ -249,43 +87,47 @@
                 </div>
             </div>
         </header>
-
         <div class="container">
             <div class="jobs-header">
                 <h2>Ish o'rinlari</h2>
-                <p>Sizning ko'nikmalaringizga mos keladigan ish e'lonlarini toping.</p>
+                <p id="jobs-header-desc">Sizning ko'nikmalaringizga mos keladigan ish e'lonlarini toping.</p>
             </div>
-            
-            <div class="job-list" id="job-list">
-            </div>
+            <form class="job-form" id="job-form" style="display:none;">
+                <h3>Ish e'lonini joylashtirish</h3>
+                <label for="job-title">Lavozim nomi</label>
+                <input type="text" id="job-title" required>
+                <label for="job-company">Kompaniya nomi</label>
+                <input type="text" id="job-company" required>
+                <label for="job-type">Ish turi</label>
+                <input type="text" id="job-type" required placeholder="Masalan: Full-time, Part-time, Remote">
+                <label for="job-location">Joylashuv</label>
+                <input type="text" id="job-location" required>
+                <label for="job-description">Ish haqida qisqacha</label>
+                <textarea id="job-description" rows="3" required></textarea>
+                <label for="job-logo">Kompaniya logosi (URL)</label>
+                <input type="text" id="job-logo">
+                <button type="submit">Joylashtirish</button>
+            </form>
+            <div class="job-list" id="job-list"></div>
         </div>
     </div>
-
     <script type="module">
-    // Firebase kutubxonalarni import qilish
     import { initializeApp } from "https://www.gstatic.com/firebasejs/12.2.1/firebase-app.js";
     import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/12.2.1/firebase-auth.js";
     import { getFirestore, collection, getDocs, doc, getDoc, addDoc, query, where } from "https://www.gstatic.com/firebasejs/12.2.1/firebase-firestore.js";
-
-    // Firebase config
     const firebaseConfig = {
         apiKey: "AIzaSyA86zhSVi4FSw-GvFBdOZsCPaHMS67XA78",
         authDomain: "carrer-path-a5810.firebaseapp.com",
         projectId: "carrer-path-a5810",
-        storageBucket: "carrer-path-a5810.firebasestorage.app",
+        storageBucket: "carrer-path-a5810.appspot.com",
         messagingSenderId: "693831778129",
         appId: "1:693831778129:web:911293c5c284eefe295d70"
     };
-
-    // Firebase init
     const app = initializeApp(firebaseConfig);
     const auth = getAuth(app);
     const db = getFirestore(app);
-
-    // Hozirgi foydalanuvchini saqlash
     let currentUser = null;
-
-    // HTML xavfsiz text
+    let userRole = "user"; // default
     function escapeHtml(s) {
         if (!s) return '';
         return String(s)
@@ -295,131 +137,111 @@
             .replace(/"/g, '&quot;')
             .replace(/'/g, '&#039;');
     }
-    
-    // Ishlarni chizish
-    const renderJobs = (jobs) => {
-        const jobListContainer = document.getElementById('job-list');
+    const jobListContainer = document.getElementById('job-list');
+    const jobForm = document.getElementById('job-form');
+    const jobsHeaderDesc = document.getElementById('jobs-header-desc');
+    function renderJobs(jobs) {
         jobListContainer.innerHTML = '';
-
         if (!jobs || jobs.length === 0) {
             jobListContainer.innerHTML = '<p style="text-align:center;">Ish e\'lonlari topilmadi.</p>';
             return;
         }
-
         const placeholder = 'https://placehold.co/50x50/cccccc/333333?text=Logo';
-
         jobs.forEach(job => {
             const jobCard = document.createElement('div');
             jobCard.className = 'job-card';
-
             const companyInfo = document.createElement('div');
             companyInfo.className = 'company-info';
-
             const img = document.createElement('img');
             img.className = 'company-logo';
             img.src = job.logoUrl || placeholder;
             img.alt = 'Kompaniya logosi';
-            img.onerror = function () {
-                this.onerror = null;
-                this.src = placeholder;
-            };
-
+            img.onerror = function () { this.onerror = null; this.src = placeholder; };
             const infoDiv = document.createElement('div');
             const h3 = document.createElement('h3');
             h3.textContent = job.title || '—';
-
             const pCompany = document.createElement('p');
             const strong = document.createElement('strong');
             strong.textContent = 'Kompaniya: ';
             pCompany.appendChild(strong);
             pCompany.appendChild(document.createTextNode(job.company || '—'));
-
             infoDiv.appendChild(h3);
             infoDiv.appendChild(pCompany);
-
             companyInfo.appendChild(img);
             companyInfo.appendChild(infoDiv);
-
             const pType = document.createElement('p');
             pType.innerHTML = `<strong>Ish turi:</strong> ${escapeHtml(job.type || '—')}`;
-
             const pLocation = document.createElement('p');
             pLocation.innerHTML = `<strong>Joylashuv:</strong> ${escapeHtml(job.location || '—')}`;
-
             const pDesc = document.createElement('p');
             pDesc.textContent = job.description || '';
-
             const pEmail = document.createElement('p');
             pEmail.innerHTML = `<strong>📧 Email:</strong> ${escapeHtml(job.employerEmail || '—')}`;
-            
-            const actions = document.createElement('div');
-            actions.className = 'job-actions';
-
-            const applyBtn = document.createElement('button');
-            applyBtn.className = 'apply-btn';
-            applyBtn.textContent = 'Ariza yuborish';
-            applyBtn.addEventListener('click', async () => {
-                if (!currentUser) {
-                    alert('Ariza yuborish uchun avval tizimga kiring.');
-                    window.location.href = 'login.html';
-                    return;
-                }
-                
-                if (currentUser.uid === job.employerId) {
-                    alert('O\'z e\'loningizga ariza yubora olmaysiz.');
-                    return;
-                }
-
-                try {
-                    const userProfileRef = doc(db, 'users', currentUser.uid);
-                    const userProfileSnap = await getDoc(userProfileRef);
-                    
-                    if (!userProfileSnap.exists()) {
-                        alert('Profil ma\'lumotlaringiz to\'liq emas. Iltimos, profil sahifasiga o\'tib, ma\'lumotlarni to\'ldiring.');
-                        window.location.href = 'dashboard.html';
+            // Faqat oddiy foydalanuvchi uchun ariza tugmasi
+            if (userRole === 'user') {
+                const actions = document.createElement('div');
+                actions.className = 'job-actions';
+                const applyBtn = document.createElement('button');
+                applyBtn.className = 'apply-btn';
+                applyBtn.textContent = 'Ariza yuborish';
+                applyBtn.addEventListener('click', async () => {
+                    if (!currentUser) {
+                        alert('Ariza yuborish uchun avval tizimga kiring.');
+                        window.location.href = 'login.html';
                         return;
                     }
-                    
-                    const userData = userProfileSnap.data();
-                    
-                    const newApplication = {
-                        jobId: job.id,
-                        jobTitle: job.title,
-                        company: job.company,
-                        employerEmail: job.employerEmail,
-                        userId: currentUser.uid,
-                        userEmail: currentUser.email,
-                        fullName: userData.fullName || 'Noma\'lum',
-                        location: userData.location || 'Noma\'lum',
-                        phoneNumber: userData.phoneNumber || 'Noma\'lum',
-                        status: 'pending',
-                        appliedAt: new Date()
-                    };
-                    
-                    await addDoc(collection(db, 'applications'), newApplication);
-                    
-                    alert('Arizangiz muvaffaqiyatli yuborildi!');
-                } catch (err) {
-                    console.error('Ariza yuborishda xato:', err);
-                    alert('Ariza yuborishda xato yuz berdi. Iltimos, keyinroq urinib ko\'ring.');
-                }
-            });
-            actions.appendChild(applyBtn);
-
-            jobCard.appendChild(companyInfo);
-            jobCard.appendChild(pType);
-            jobCard.appendChild(pLocation);
-            jobCard.appendChild(pDesc);
-            jobCard.appendChild(pEmail);
-            jobCard.appendChild(actions);
-
+                    if (currentUser.uid === job.employerId) {
+                        alert('O\'z e\'loningizga ariza yubora olmaysiz.');
+                        return;
+                    }
+                    try {
+                        const userProfileRef = doc(db, 'users', currentUser.uid);
+                        const userProfileSnap = await getDoc(userProfileRef);
+                        if (!userProfileSnap.exists()) {
+                            alert('Profil ma\'lumotlaringiz to\'liq emas. Iltimos, profil sahifasiga o\'tib, ma\'lumotlarni to\'ldiring.');
+                            window.location.href = 'dashboard.html';
+                            return;
+                        }
+                        const userData = userProfileSnap.data();
+                        const newApplication = {
+                            jobId: job.id,
+                            jobTitle: job.title,
+                            company: job.company,
+                            employerEmail: job.employerEmail,
+                            userId: currentUser.uid,
+                            userEmail: currentUser.email,
+                            fullName: userData.fullName || 'Noma\'lum',
+                            location: userData.location || 'Noma\'lum',
+                            phoneNumber: userData.phoneNumber || 'Noma\'lum',
+                            status: 'pending',
+                            appliedAt: new Date()
+                        };
+                        await addDoc(collection(db, 'applications'), newApplication);
+                        alert('Arizangiz muvaffaqiyatli yuborildi!');
+                    } catch (err) {
+                        console.error('Ariza yuborishda xato:', err);
+                        alert('Ariza yuborishda xato yuz berdi. Iltimos, keyinroq urinib ko\'ring.');
+                    }
+                });
+                actions.appendChild(applyBtn);
+                jobCard.appendChild(companyInfo);
+                jobCard.appendChild(pType);
+                jobCard.appendChild(pLocation);
+                jobCard.appendChild(pDesc);
+                jobCard.appendChild(pEmail);
+                jobCard.appendChild(actions);
+            } else {
+                // Ish beruvchi uchun faqat ko'rsatish
+                jobCard.appendChild(companyInfo);
+                jobCard.appendChild(pType);
+                jobCard.appendChild(pLocation);
+                jobCard.appendChild(pDesc);
+                jobCard.appendChild(pEmail);
+            }
             jobListContainer.appendChild(jobCard);
         });
-    };
-
-    // Firestore dan ishlarni olish
-    const fetchJobs = async () => {
-        const jobListContainer = document.getElementById('job-list');
+    }
+    async function fetchJobs() {
         jobListContainer.innerHTML = '<p style="text-align:center;">Ish e\'lonlari yuklanmoqda...</p>';
         try {
             const jobsCol = collection(db, 'jobs');
@@ -431,20 +253,62 @@
             console.error('Fetch jobs error:', err);
             jobListContainer.innerHTML = '<p style="text-align:center; color:red;">Ish e\'lonlarini yuklashda xato yuz berdi.</p>';
         }
-    };
-
-    // Foydalanuvchi state
+    }
+    async function getUserRole(user) {
+        // Foydalanuvchi hujjatidan role ni o'qish
+        try {
+            const userRef = doc(db, "users", user.uid);
+            const userSnap = await getDoc(userRef);
+            if (userSnap.exists() && userSnap.data().role) {
+                return userSnap.data().role;
+            }
+        } catch {}
+        return "user";
+    }
     onAuthStateChanged(auth, async (user) => {
         if (user) {
             currentUser = user;
             document.getElementById('user-email-display').textContent = user.email || user.uid;
+            userRole = await getUserRole(user);
+            if (userRole === "employer") {
+                jobsHeaderDesc.textContent = "Siz ish beruvchisiz. Quyida e'lonlarni ko'ring va yangi ish e'lonini joylashtiring.";
+                jobForm.style.display = "block";
+            } else {
+                jobsHeaderDesc.textContent = "Sizning ko'nikmalaringizga mos keladigan ish e'lonlarini toping.";
+                jobForm.style.display = "none";
+            }
             await fetchJobs();
         } else {
             window.location.href = 'login.html';
         }
     });
-
-    // Profil menyu
+    jobForm.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        if (!currentUser || userRole !== "employer") return;
+        const title = document.getElementById('job-title').value.trim();
+        const company = document.getElementById('job-company').value.trim();
+        const type = document.getElementById('job-type').value.trim();
+        const location = document.getElementById('job-location').value.trim();
+        const description = document.getElementById('job-description').value.trim();
+        const logoUrl = document.getElementById('job-logo').value.trim();
+        if (!title || !company || !type || !location || !description) {
+            alert("Barcha maydonlarni to'ldiring!");
+            return;
+        }
+        try {
+            await addDoc(collection(db, "jobs"), {
+                title, company, type, location, description, logoUrl,
+                employerId: currentUser.uid,
+                employerEmail: currentUser.email
+            });
+            alert("Ish e'loni joylashtirildi!");
+            jobForm.reset();
+            await fetchJobs();
+        } catch (err) {
+            alert("E'lon joylashtirishda xato.");
+        }
+    });
+    // Profil menyu va logout
     const profileBtn = document.getElementById('profile-btn');
     const profileDropdown = document.getElementById('profile-dropdown');
     profileBtn.addEventListener('click', (e) => {
@@ -454,8 +318,6 @@
     document.addEventListener('click', (e) => {
         if (profileBtn && !profileBtn.contains(e.target)) profileDropdown.style.display = 'none';
     });
-
-    // Logout
     const logoutLink = document.getElementById('logout-link');
     logoutLink.addEventListener('click', async (e) => {
         e.preventDefault();
@@ -466,7 +328,6 @@
             console.error('Sign out error', err);
         }
     });
-
     // Menu toggle
     const menuToggle = document.getElementById('menu-toggle');
     const sideNav = document.getElementById('side-nav');
